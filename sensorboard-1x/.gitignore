@@ -1,0 +1,8 @@
+*.gbr
+*bak
+*.gbrjob
+*.drl
+*.zip
+_autosave*
+*.tmp
+*cache
