@@ -1,0 +1,5 @@
+(fp_lib_table
+  (lib (name usbconnectors)(type KiCad)(uri ${KIPRJMOD}/Connector_USB.pretty)(options "")(descr ""))
+  (lib (name jumpers)(type KiCad)(uri ${KIPRJMOD}/Jumper.pretty)(options "")(descr ""))
+  (lib (name Testpoint)(type KiCad)(uri ${KIPRJMOD}/Testpoint.pretty)(options "")(descr ""))
+)

@@ -1,0 +1,5 @@
+(sym_lib_table
+  (lib (name AD8544)(type Legacy)(uri ${KIPRJMOD}/AD8544.lib)(options "")(descr ""))
+  (lib (name MCP1501)(type Legacy)(uri ${KIPRJMOD}/MCP1501.lib)(options "")(descr ""))
+  (lib (name ISL83490)(type Legacy)(uri ${KIPRJMOD}/ISL83490.lib)(options "")(descr ""))
+)
