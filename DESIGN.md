@@ -28,7 +28,7 @@
 
 # System Design
 
-The hardware/software system is based around the Vishay CNY70 optical
+The hardware/software system is based around the Vishay [CNY70](https://github.com/jkominek/piano-conversion/wiki/CNY70) optical
 reflectance sensor. It consists of an infrared LED, and a phototransistor
 sensitive to the LED, in a convenient package. It can measure distances
 in the (roughly!) 0-10mm range.
@@ -47,7 +47,7 @@ could also use that information to preload samples.
 That's 176 sensors in a piano. 22 are monitored by each of these
 boards.  The current through each one is converted to a voltage by a
 sense resistor on this board, buffered by an op amp, and monitored by
-an ADC channel of an STM32H742. Hopefully the STM32 will be able to
+an ADC channel of an [STM32H742](https://github.com/jkominek/piano-conversion/wiki/STM32H7). Hopefully the STM32 will be able to
 process all 22 signals at between 10kHz and 20kHz. I expect to apply
 some digital low pass filtering.
 
