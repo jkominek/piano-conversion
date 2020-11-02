@@ -1137,13 +1137,10 @@ $EndComp
 Wire Wire Line
 	900  900  900  1000
 Wire Wire Line
-	900  1000 1200 1000
-Wire Wire Line
 	1800 1000 1800 900 
 Connection ~ 1350 1000
 Wire Wire Line
 	1200 900  1200 1000
-Connection ~ 1200 1000
 Wire Wire Line
 	1200 1000 1350 1000
 Wire Wire Line
@@ -1509,17 +1506,6 @@ Text Label 2500 4750 0    50   ~ 0
 Sen20
 Text Label 6300 2650 2    50   ~ 0
 Sen1
-$Comp
-L power:+5V #PWR0123
-U 1 1 60B85816
-P -5400 1400
-F 0 "#PWR0123" H -5400 1250 50  0001 C CNN
-F 1 "+5V" H -5385 1573 50  0000 C CNN
-F 2 "" H -5400 1400 50  0001 C CNN
-F 3 "" H -5400 1400 50  0001 C CNN
-	1    -5400 1400
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	-5400 2200 -5400 1900
 Connection ~ -5400 2200
@@ -3080,4 +3066,18 @@ Text Notes 1400 2550 0    50   ~ 0
 Don't intend to need this crystal circuit
 Text Notes 6850 4350 0    50   ~ 0
 We don't take 3.3V from the programming header,\nbecause that won't feed VDDA, which violates data\nsheet. We must be fed via 12V.
+$Comp
+L power:+3.3VA #PWR0123
+U 1 1 5FA3D47D
+P -5400 1400
+F 0 "#PWR0123" H -5400 1250 50  0001 C CNN
+F 1 "+3.3VA" H -5385 1573 50  0000 C CNN
+F 2 "" H -5400 1400 50  0001 C CNN
+F 3 "" H -5400 1400 50  0001 C CNN
+	1    -5400 1400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1200 1000 900  1000
+Connection ~ 1200 1000
 $EndSCHEMATC
