@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 2 2
+Sheet 2 3
 Title ""
 Date ""
 Rev ""
@@ -73,19 +73,6 @@ F 3 "" H 6900 4350 50  0001 C CNN
 	1    6900 4350
 	1    0    0    -1  
 $EndComp
-$Comp
-L power:+12V #PWR?
-U 1 1 630647BE
-P 6800 3250
-AR Path="/630647BE" Ref="#PWR?"  Part="1" 
-AR Path="/62FDE2B6/630647BE" Ref="#PWR0135"  Part="1" 
-F 0 "#PWR0135" H 6800 3100 50  0001 C CNN
-F 1 "+12V" H 6815 3423 50  0000 C CNN
-F 2 "" H 6800 3250 50  0001 C CNN
-F 3 "" H 6800 3250 50  0001 C CNN
-	1    6800 3250
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	6700 4000 7100 4000
 Wire Wire Line
@@ -95,7 +82,7 @@ Wire Wire Line
 Wire Wire Line
 	6900 3600 6900 3800
 Wire Wire Line
-	7100 3800 6900 3800
+	7100 3800 7000 3800
 Connection ~ 6900 3800
 Wire Wire Line
 	6900 3800 6900 4350
@@ -104,7 +91,7 @@ Wire Wire Line
 Wire Wire Line
 	6800 3250 6800 3700
 Wire Wire Line
-	7100 3700 6800 3700
+	7100 3700 7000 3700
 Connection ~ 6800 3700
 Wire Wire Line
 	6800 3700 6800 3900
@@ -142,12 +129,12 @@ Wire Wire Line
 Wire Wire Line
 	6550 3600 6300 3600
 $Comp
-L Device:R_Small_US R24
+L Device:R_Small_US R61
 U 1 1 6316A97F
 P 6400 3500
-F 0 "R24" V 6195 3500 50  0000 C CNN
+F 0 "R61" V 6195 3500 50  0000 C CNN
 F 1 "120" V 6286 3500 50  0000 C CNN
-F 2 "Resistors_SMD:R_0805_HandSoldering" H 6400 3500 50  0001 C CNN
+F 2 "Resistors_SMD:R_0805" H 6400 3500 50  0001 C CNN
 F 3 "~" H 6400 3500 50  0001 C CNN
 	1    6400 3500
 	0    1    1    0   
@@ -163,12 +150,12 @@ Connection ~ 6500 3700
 Wire Wire Line
 	6500 3700 6250 3700
 $Comp
-L Device:C_Small C28
+L Device:C_Small C60
 U 1 1 6316C6B4
 P 3600 3750
-F 0 "C28" H 3692 3796 50  0000 L CNN
+F 0 "C60" H 3692 3796 50  0000 L CNN
 F 1 "DC" H 3692 3705 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0805_HandSoldering" H 3600 3750 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0805" H 3600 3750 50  0001 C CNN
 F 3 "~" H 3600 3750 50  0001 C CNN
 	1    3600 3750
 	1    0    0    -1  
@@ -202,12 +189,12 @@ Y
 Text Notes 7150 3200 0    50   ~ 0
 Note that ethernet cables don't flip pins.\nMain board MUST connect different pins to the receptable.
 $Comp
-L Device:R_Small_US R30
+L Device:R_Small_US R60
 U 1 1 640640AD
 P 6400 4050
-F 0 "R30" V 6195 4050 50  0000 C CNN
+F 0 "R60" V 6195 4050 50  0000 C CNN
 F 1 "120" V 6286 4050 50  0000 C CNN
-F 2 "Resistors_SMD:R_0805_HandSoldering" H 6400 4050 50  0001 C CNN
+F 2 "Resistors_SMD:R_0805" H 6400 4050 50  0001 C CNN
 F 3 "~" H 6400 4050 50  0001 C CNN
 	1    6400 4050
 	0    1    1    0   
@@ -222,4 +209,43 @@ Wire Wire Line
 Connection ~ 6500 3900
 Wire Wire Line
 	6500 3900 6250 3900
+$Comp
+L power:+5V #PWR0133
+U 1 1 60B07DD5
+P 6800 3250
+F 0 "#PWR0133" H 6800 3100 50  0001 C CNN
+F 1 "+5V" H 6815 3423 50  0000 C CNN
+F 2 "" H 6800 3250 50  0001 C CNN
+F 3 "" H 6800 3250 50  0001 C CNN
+	1    6800 3250
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:PWR_FLAG #FLG0101
+U 1 1 60B45280
+P 7000 3700
+F 0 "#FLG0101" H 7000 3775 50  0001 C CNN
+F 1 "PWR_FLAG" H 7000 3873 50  0000 C CNN
+F 2 "" H 7000 3700 50  0001 C CNN
+F 3 "~" H 7000 3700 50  0001 C CNN
+	1    7000 3700
+	1    0    0    -1  
+$EndComp
+Connection ~ 7000 3700
+Wire Wire Line
+	7000 3700 6800 3700
+$Comp
+L power:PWR_FLAG #FLG0102
+U 1 1 60B4653B
+P 7000 3800
+F 0 "#FLG0102" H 7000 3875 50  0001 C CNN
+F 1 "PWR_FLAG" H 7000 3973 50  0000 C CNN
+F 2 "" H 7000 3800 50  0001 C CNN
+F 3 "~" H 7000 3800 50  0001 C CNN
+	1    7000 3800
+	1    0    0    -1  
+$EndComp
+Connection ~ 7000 3800
+Wire Wire Line
+	7000 3800 6900 3800
 $EndSCHEMATC
