@@ -171,13 +171,9 @@ Wire Wire Line
 	3600 3900 3600 3850
 Connection ~ 4650 3900
 Wire Wire Line
-	6550 3800 6300 3800
-Wire Wire Line
 	6550 3800 6550 4100
 Wire Wire Line
 	6700 4000 6700 3900
-Wire Wire Line
-	6700 3900 6500 3900
 Text Label 6600 3400 0    50   ~ 0
 A
 Text Label 6600 3700 0    50   ~ 0
@@ -187,28 +183,7 @@ Z
 Text Label 6600 4100 0    50   ~ 0
 Y
 Text Notes 7150 3200 0    50   ~ 0
-Note that ethernet cables don't flip pins.\nMain board MUST connect different pins to the receptable.
-$Comp
-L Device:R_Small_US R60
-U 1 1 640640AD
-P 6400 4050
-F 0 "R60" V 6195 4050 50  0000 C CNN
-F 1 "120" V 6286 4050 50  0000 C CNN
-F 2 "Resistors_SMD:R_0805" H 6400 4050 50  0001 C CNN
-F 3 "~" H 6400 4050 50  0001 C CNN
-	1    6400 4050
-	0    1    1    0   
-$EndComp
-Wire Wire Line
-	6300 4050 6300 3800
-Connection ~ 6300 3800
-Wire Wire Line
-	6300 3800 6250 3800
-Wire Wire Line
-	6500 4050 6500 3900
-Connection ~ 6500 3900
-Wire Wire Line
-	6500 3900 6250 3900
+Note that ethernet cables don't flip pins.\nMain board MUST connect different pins to the receptacle.
 $Comp
 L power:+5V #PWR0133
 U 1 1 60B07DD5
@@ -248,4 +223,8 @@ $EndComp
 Connection ~ 7000 3800
 Wire Wire Line
 	7000 3800 6900 3800
+Wire Wire Line
+	6250 3800 6550 3800
+Wire Wire Line
+	6250 3900 6700 3900
 $EndSCHEMATC

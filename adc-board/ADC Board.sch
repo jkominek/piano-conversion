@@ -965,7 +965,7 @@ L MCP1501:MCP1501 U10
 U 1 1 61AB3524
 P 12400 7400
 F 0 "U10" H 12400 7915 50  0000 C CNN
-F 1 "MCP1501T-30E/SN" H 12400 7824 50  0000 C CNN
+F 1 "MCP1501-20E/SN" H 12400 7824 50  0000 C CNN
 F 2 "SMD_Packages:SOIC-8-N" H 12400 7400 50  0001 C CNN
 F 3 "DOCUMENTATION" H 12400 7400 50  0001 C CNN
 	1    12400 7400
@@ -1587,8 +1587,8 @@ F 3 "~" H 7250 3350 50  0001 C CNN
 	1    7050 3350
 	1    0    0    -1  
 $EndComp
-Text Notes 14150 6900 2    50   ~ 0
-Vref will be 3.0V, leaving some headroom\nbetween it at VDDA at 3.3V.
+Text Notes 14300 6800 2    50   ~ 0
+Vref will be 2.048V, leaving much headroom between it at VDDA at 3.3V.\nThe resistors need to be chosen to keep (VDDA - R*maxcurrent) >> Vcesat (0.3V).\nR*maxcurrent should also be slightly less than Vref, which has to be chosen from\navailable voltage reference parts.
 Text Notes 3600 10550 0    79   ~ 0
 Reference STMicroelectronics Application Note AN4938\nfor details on basic STMH74x circuits
 Text Notes 14550 8250 2    50   ~ 0
