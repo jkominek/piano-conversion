@@ -8,7 +8,7 @@
   one that still has strings in it, it should not require huge
   modification. I'd like to ensure that if you converted a working
   condition piano, it could be more or less returned to normal
-  condition by removing this parts and restringing it.
+  condition by removing these parts and restringing it.
 * It must be possible to make this work with just the extracted action
   of a grand piano. Mechanics are largely outside of the scope of what
   this project intends to worry about, but it would be ideal if a MIDI
@@ -19,7 +19,20 @@
   sensors that would be suitable for measuring the state of pedals
   still in their original piano.
 
+### "Stage 1" Goals
+
+* To require fewer sensors and boards be fabricated, step one is to
+  attempt to get note on and note off velocities from the key sticks
+  themselves, not the hammers.
+* Pedal On/Off from a standard TRS pedal
+  
 ### "Stage 2" Goals
+
+* Finish fabrication of all PCBs, and take note on measurements directly
+  from hammer strikes.
+* Continuous Pedal measurements from a TRS pedal
+
+### "Stage N" Goals
 
 * Integration with a Raspberry Pi 4 Compute Module capable of running
   Pianoteq so that a standalone piano can be produced.
