@@ -1,4 +1,4 @@
-update=2020-11-16 08:51:10 PM
+update=2020-11-17 09:39:29 AM
 version=1
 last_client=kicad
 [general]
@@ -238,3 +238,13 @@ uViaDrill=0.25
 dPairWidth=0.2
 dPairGap=0.25
 dPairViaGap=0.25
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=C:/Users/Jay Kominek/Dropbox/Piano Conversion/adc-board/
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=Pcbnew
+SpiceAjustPassiveValues=0
+LabSize=50
+ERC_TestSimilarLabels=1
