@@ -1,4 +1,4 @@
-update=Fri 13 Nov 2020 10:02:48 PM MST
+update=2020-11-16 06:06:49 PM
 version=1
 last_client=kicad
 [general]
@@ -240,7 +240,7 @@ dPairViaGap=0.25
 [schematic_editor]
 version=1
 PageLayoutDescrFile=
-PlotDirectoryName=
+PlotDirectoryName=C:/Users/Jay Kominek/Dropbox/Piano Conversion/link-adapter/
 SubpartIdSeparator=0
 SubpartFirstId=65
 NetFmtName=Pcbnew

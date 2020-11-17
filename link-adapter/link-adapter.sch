@@ -195,17 +195,6 @@ F 3 "" H 4300 2350 50  0001 C CNN
 	1    4300 2350
 	1    0    0    -1  
 $EndComp
-$Comp
-L Connector:Conn_01x02_Male J5
-U 1 1 5FB070F2
-P 8100 1350
-F 0 "J5" H 8208 1531 50  0000 C CNN
-F 1 "PowerJumper" H 8208 1440 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 8100 1350 50  0001 C CNN
-F 3 "~" H 8100 1350 50  0001 C CNN
-	1    8100 1350
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	8300 1350 8550 1350
 Wire Wire Line
@@ -251,8 +240,8 @@ $Comp
 L Connector:8P8C J1
 U 1 1 5FB0D205
 P 10000 2250
-F 0 "J1" H 9670 2346 50  0000 R CNN
-F 1 "ToADC" H 9670 2255 50  0000 R CNN
+F 0 "J1" H 9650 2150 50  0000 R CNN
+F 1 "ToADC" H 9650 2050 50  0000 R CNN
 F 2 "Connectors:RJ45_8" V 10000 2275 50  0001 C CNN
 F 3 "~" V 10000 2275 50  0001 C CNN
 	1    10000 2250
@@ -315,22 +304,22 @@ Wire Wire Line
 	9350 2350 9600 2350
 Connection ~ 9350 2150
 Wire Wire Line
-	8850 2950 8600 2950
+	8900 2950 8600 2950
 Wire Wire Line
 	8500 3050 8800 3050
 Wire Wire Line
-	8500 3150 8900 3150
+	8500 3150 9100 3150
 Wire Wire Line
-	8500 3250 8950 3250
+	8500 3250 9200 3250
 Text Notes 10600 1550 2    50   ~ 0
 Supply power to ADC boards
 Wire Wire Line
 	9450 2250 9450 3650
 Connection ~ 9450 3650
 Wire Wire Line
-	9150 2550 9600 2550
+	8900 2550 9600 2550
 Wire Wire Line
-	9600 2450 9300 2450
+	9600 2450 9000 2450
 Wire Wire Line
 	9200 1850 9600 1850
 Wire Wire Line
@@ -813,7 +802,7 @@ F 3 "" H 5050 4600 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Text Notes 9150 1000 2    50   ~ 0
-short jumper when using 5V FTDI cable\n(and no FTDI chip of course)
+short jumper when using 5V FTDI cable\n(and no FTDI chip of course)\nor use header to inject +5V
 Text Notes 4150 2250 2    50   ~ 0
 Use FT_Prog from FTDI to reprogram for 500mA draw\nand make any other desired changes.
 Text Label 3400 3100 0    50   ~ 0
@@ -1190,13 +1179,13 @@ Connection ~ 9350 1750
 Wire Wire Line
 	9350 1750 9350 2150
 Wire Wire Line
-	9200 1850 8950 3250
+	9200 1850 9200 3250
 Wire Wire Line
-	8850 2950 9150 2550
+	8900 2950 8900 2550
 Wire Wire Line
-	8850 3050 9300 2450
+	9000 3050 9000 2450
 Wire Wire Line
-	8900 3150 9100 1950
+	9100 3150 9100 1950
 Wire Wire Line
 	9150 3550 9600 3550
 Wire Wire Line
@@ -1235,5 +1224,32 @@ Wire Wire Line
 	8800 2700 8800 3050
 Connection ~ 8800 3050
 Wire Wire Line
-	8800 3050 8850 3050
+	8800 3050 9000 3050
+$Comp
+L Connector:Conn_01x04_Male J5
+U 1 1 5FB79CB6
+P 8100 1450
+F 0 "J5" H 8208 1731 50  0000 C CNN
+F 1 "PowerJumper" H 8208 1640 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x04_Pitch2.54mm" H 8100 1450 50  0001 C CNN
+F 3 "~" H 8100 1450 50  0001 C CNN
+	1    8100 1450
+	1    0    0    -1  
+$EndComp
+NoConn ~ 8300 1550
+Wire Wire Line
+	8300 1650 8550 1650
+Wire Wire Line
+	8550 1650 8550 1700
+$Comp
+L power:GND #PWR0128
+U 1 1 5FB95E11
+P 8550 1700
+F 0 "#PWR0128" H 8550 1450 50  0001 C CNN
+F 1 "GND" H 8555 1527 50  0000 C CNN
+F 2 "" H 8550 1700 50  0001 C CNN
+F 3 "" H 8550 1700 50  0001 C CNN
+	1    8550 1700
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
