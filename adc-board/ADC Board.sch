@@ -1168,8 +1168,8 @@ $Comp
 L Connector:USB_A J5
 U 1 1 62BFF5D3
 P 12500 5300
-F 0 "J5" H 12557 5767 50  0000 C CNN
-F 1 "UE27AC5410H" H 12557 5676 50  0000 C CNN
+F 0 "J5" H 12500 6150 50  0000 C CNN
+F 1 "UE27AC5410H" H 12450 5650 50  0000 C CNN
 F 2 "usbconnectors:USB_A_Molex_67643_Horizontal" H 12650 5250 50  0001 C CNN
 F 3 " ~" H 12650 5250 50  0001 C CNN
 	1    12500 5300
@@ -1579,13 +1579,13 @@ Vref will be 2.048V, leaving much headroom between it at VDDA at 3.3V.\nThe resi
 Text Notes 3600 10550 0    79   ~ 0
 Reference STMicroelectronics Application Note AN4938\nfor details on basic STMH74x circuits
 Text Notes 14550 8250 2    50   ~ 0
-Monolithic switching regulator 12V->5V\nSo the linears don't have to drop 8.7V
+Monolithic switching regulator ~~5V->3.3V
 Text Notes 13850 9700 0    50   ~ 0
 Represents single connection between GNDD and GNDA\nnear the 5V regulator. Could be cut and choke inserted.
 Text Notes 2150 4050 0    50   ~ 0
 Don't intend to need this crystal circuit
 Text Notes 10450 4500 0    50   ~ 0
-We don't take 3.3V from the programming header,\nbecause that won't feed VDDA, which violates data\nsheet. We must be fed via 12V.
+We don't take 3.3V from the programming header,\nbecause that won't feed VDDA, which violates data\nsheet. We must be fed via 5V.
 Wire Wire Line
 	1300 1550 1000 1550
 Connection ~ 1300 1550
@@ -1932,11 +1932,9 @@ F 3 "~" H 12550 4500 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	12800 5100 12850 5100
+	13150 5100 13150 4750
 Wire Wire Line
-	12850 5100 12850 4750
-Wire Wire Line
-	12850 4750 12550 4750
+	13150 4750 12550 4750
 Wire Wire Line
 	12550 4750 12550 4700
 Wire Wire Line
@@ -1984,8 +1982,8 @@ Wire Wire Line
 	12800 5300 13700 5300
 Wire Wire Line
 	12800 5400 13700 5400
-Connection ~ 12850 5100
-Text Label 13450 5100 2    50   ~ 0
+Connection ~ 13150 5100
+Text Label 13550 5100 2    50   ~ 0
 USB_VBUS
 Wire Wire Line
 	6350 3250 8300 3250
@@ -2020,8 +2018,6 @@ Wire Wire Line
 	8300 3550 8300 3600
 Wire Wire Line
 	8300 2950 8300 2900
-Wire Wire Line
-	8300 2900 8650 2900
 $Comp
 L power:GNDD #PWR0145
 U 1 1 5FC74AD6
@@ -2036,22 +2032,20 @@ $EndComp
 $Comp
 L Device:Ferrite_Bead_Small FB1
 U 1 1 5FC76527
-P 8750 2900
-F 0 "FB1" V 8513 2900 50  0000 C CNN
-F 1 "Ferrite_Bead_Small" V 8604 2900 50  0000 C CNN
-F 2 "Inductors_SMD:L_0805" V 8680 2900 50  0001 C CNN
-F 3 "~" H 8750 2900 50  0001 C CNN
-	1    8750 2900
+P 12950 5100
+F 0 "FB1" V 12713 5100 50  0000 C CNN
+F 1 "MPZ2012S601AT000" V 12800 5400 50  0000 C CNN
+F 2 "Inductors_SMD:L_0805" V 12880 5100 50  0001 C CNN
+F 3 "~" H 12950 5100 50  0001 C CNN
+	1    12950 5100
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	8850 2900 9450 2900
-Text Label 9450 2900 2    50   ~ 0
+	8300 2900 8900 2900
+Text Label 8900 2900 2    50   ~ 0
 USB_VBUS
 Text Label 8250 3250 2    50   ~ 0
 VBUS_SENSE
-Text Label 8600 2900 2    50   ~ 0
-VBUS_FB
 NoConn ~ 6350 6450
 NoConn ~ 3850 5450
 Wire Wire Line
@@ -2113,5 +2107,11 @@ Wire Wire Line
 Wire Wire Line
 	15100 5350 14650 5350
 Wire Wire Line
-	12850 5100 13600 5100
+	13150 5100 13600 5100
+Text Notes 8400 3300 0    50   ~ 0
+when power is off, PA9 can't exceed 4V.\nthis brings a 5.25V VBUS down to 3.47V.
+Wire Wire Line
+	12800 5100 12850 5100
+Wire Wire Line
+	13050 5100 13150 5100
 $EndSCHEMATC
