@@ -1349,11 +1349,7 @@ $EndComp
 Wire Wire Line
 	12800 7800 12850 7800
 Wire Wire Line
-	10800 7800 10800 7600
-Wire Wire Line
 	10800 7600 10850 7600
-Wire Wire Line
-	12800 7800 12800 7600
 Wire Wire Line
 	12800 7600 12850 7600
 $Comp
@@ -1380,10 +1376,8 @@ F 3 "" H 12800 7900 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	12800 7800 12800 7900
-Connection ~ 12800 7800
 Wire Wire Line
 	10800 7800 10800 7900
-Connection ~ 10800 7800
 $Comp
 L Device:Opamp_Quad_Generic U1
 U 5 1 600B8969
@@ -1815,4 +1809,30 @@ Wire Wire Line
 	5350 6500 5700 6500
 Text Notes 650  3450 0    50   ~ 0
 These resistors should be chosen so that VDDA minus R times the maximum expected\nphototransistor current remains well above Vcesat at all times. Ideally near 1V. Otherwise\nthe phototransistors will start behaving very nonlinearly as the current flow changes.
+$Comp
+L power:+3.3VA #PWR0137
+U 1 1 5FB624A5
+P 10800 7550
+F 0 "#PWR0137" H 10800 7400 50  0001 C CNN
+F 1 "+3.3VA" H 10815 7723 50  0000 C CNN
+F 2 "" H 10800 7550 50  0001 C CNN
+F 3 "" H 10800 7550 50  0001 C CNN
+	1    10800 7550
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3VA #PWR0140
+U 1 1 5FB64A1B
+P 12800 7550
+F 0 "#PWR0140" H 12800 7400 50  0001 C CNN
+F 1 "+3.3VA" H 12815 7723 50  0000 C CNN
+F 2 "" H 12800 7550 50  0001 C CNN
+F 3 "" H 12800 7550 50  0001 C CNN
+	1    12800 7550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	12800 7600 12800 7550
+Wire Wire Line
+	10800 7600 10800 7550
 $EndSCHEMATC
