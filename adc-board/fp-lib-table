@@ -2,4 +2,5 @@
   (lib (name usbconnectors)(type KiCad)(uri ${KIPRJMOD}/Connector_USB.pretty)(options "")(descr ""))
   (lib (name jumpers)(type KiCad)(uri ${KIPRJMOD}/Jumper.pretty)(options "")(descr ""))
   (lib (name Testpoint)(type KiCad)(uri ${KIPRJMOD}/Testpoint.pretty)(options "")(descr ""))
+  (lib (name footprints)(type KiCad)(uri "C:/Users/Jay Kominek/Dropbox/Piano Conversion/footprints.pretty")(options "")(descr ""))
 )

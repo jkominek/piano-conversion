@@ -1108,8 +1108,6 @@ F 3 "" H 13700 9100 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	13700 8950 13700 9050
-NoConn ~ 10850 4800
-NoConn ~ 11350 4800
 $Comp
 L Device:CP1_Small C53
 U 1 1 62AC126C
@@ -1573,8 +1571,8 @@ Text Notes 13850 9700 0    50   ~ 0
 Represents single connection between GNDD and GNDA\nnear the 5V regulator. Could be cut and choke inserted.
 Text Notes 2150 4050 0    50   ~ 0
 Don't intend to need this crystal circuit
-Text Notes 10450 4500 0    50   ~ 0
-We don't take 3.3V from the programming header,\nbecause that won't feed VDDA, which violates data\nsheet. We must be fed via 5V.
+Text Notes 10300 4400 0    50   ~ 0
+We feed 3.3V back to the programmer so they\nknow what voltage we run at, and whether or\nnot we're live.
 Wire Wire Line
 	1300 1550 1000 1550
 Connection ~ 1300 1550
@@ -2114,4 +2112,26 @@ F 3 "" H 11400 7000 50  0001 C CNN
 	1    11400 7000
 	1    0    0    -1  
 $EndComp
+$Comp
+L power:+3.3V #PWR?
+U 1 1 5FBC7EC8
+P 10750 4600
+F 0 "#PWR?" H 10750 4450 50  0001 C CNN
+F 1 "+3.3V" H 10765 4773 50  0000 C CNN
+F 2 "" H 10750 4600 50  0001 C CNN
+F 3 "" H 10750 4600 50  0001 C CNN
+	1    10750 4600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10750 4800 10850 4800
+Wire Wire Line
+	10750 4600 11500 4600
+Wire Wire Line
+	11500 4600 11500 4800
+Wire Wire Line
+	11500 4800 11350 4800
+Connection ~ 10750 4600
+Wire Wire Line
+	10750 4600 10750 4800
 $EndSCHEMATC

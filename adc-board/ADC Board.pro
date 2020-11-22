@@ -1,4 +1,4 @@
-update=2020-11-19 11:09:50 AM
+update=Sun 22 Nov 2020 02:19:04 PM MST
 version=1
 last_client=kicad
 [general]
@@ -241,7 +241,7 @@ dPairViaGap=0.25
 [schematic_editor]
 version=1
 PageLayoutDescrFile=
-PlotDirectoryName=C:/Users/Jay Kominek/Dropbox/Piano Conversion/adc-board/
+PlotDirectoryName=./
 SubpartIdSeparator=0
 SubpartFirstId=65
 NetFmtName=Pcbnew
