@@ -60,7 +60,7 @@ could also use that information to preload samples.
 That's 176 sensors in a piano. 22 are monitored by each of these
 boards.  The current through each one is converted to a voltage by a
 sense resistor on this board, buffered by an op amp, and monitored by
-an ADC channel of an [STM32H742](https://github.com/jkominek/piano-conversion/wiki/STM32H7). Hopefully the STM32 will be able to
+an ADC channel of an [STM32H743](https://github.com/jkominek/piano-conversion/wiki/STM32H7). Hopefully the STM32 will be able to
 process all 22 signals at between 10kHz and 20kHz. I expect to apply
 some digital low pass filtering.
 
@@ -99,17 +99,23 @@ the ADC board via twisted pair. The other two correspond to the LED.
 The LEDs should be chained together in rather long strings. Likely 22
 sensors per string.
 
-The LED power board will manage each string with a linear constant
-current regulator. If the strings are fed 48V, and tend to need ~33V
-at 20mA, the linear regulators will only need to shed 300mW. That
-should be easy.  If an adjustable 48V supply is used, that can be
-reduced further.  Regardless, the board will be designed with thermal
-considerations in mind.
+The LED power board is designed (as of rev0) to take two off the shelf
+power supplies, one 48V and the other 15V, and provide a constant
+~20mA to 8 different strings of LEDs. Each string is intended to have 22
+CNY70 LEDs on it. The 48V powers the strings, and the 15V supplies the
+various analog control electronics. The design as it stands should produce
+constant currents which are extremely stable from time scales of a year,
+down to 100kHz. The deterioration of the LEDs themselves is expected to
+be the main source of change in the optical output.
+
+rev1 of the LED power board should add the discussed control lines. Either
+I2C to an IO expander, or maybe a current-loop controlled optoisolator that
+can shut down the voltage reference. (Which would in turn force the op amps
+to drive the FETs fully off.)
 
 ### Main board
 
-Intended to use either a STM32H742 like the ADC board, or some pin
-compatible part (STM32H74x).
+Intended to use either a STM32H743 like the ADC board.
 
 8 RS485 serial links, along with 12V distribution to the ADC boards.
 Likely per-board high-side MOSFET control of power, so that boards
@@ -123,21 +129,34 @@ over DIN connector.
 Possible 10/100Mbps ethernet.
 
 A few ADC channels, on possibly another sub-board for 1/4" TRS plugs
-commonly used for sustain pedals.
+commonly used for sustain pedals. An I2C ADC on that board would suffice.
+Attaching a Sparkfun Qwiic-style I2C port or two might be a good idea,
+regardless.
 
 A few GPIO links to connect it to the LED power board for
 diagnostics/control.  (Calibration process may want to turn the LEDs
-off, to measure "dark" current.)
+off, to measure "dark" current.) This didn't make it onto rev0 of the
+LED power board.
 
 Firmware is expected to process the fairly raw velocity messages
 from the ADC boards, appyling any calibration, and sending them out
 over any of the many MIDI links available to it (serial, USB, ethernet,
 maybe even bluetooth).
 
+#### Link board
+
+To facilitate development/testing of the ADC boards without the main board,
+a "link board" has been designed. It is a full duplex RS485 board with power
+injection comparable to what the main board will provide.
+
+As an alternative to using the main board, a PC with enough link boards to
+talk to all of the ADC boards simultaneously could skip out on the use of
+a main board, in exchange for running more complicated software locally.
+
 # Construction/assembly requirements
 
 * Everything necessary for surface mount board assembly.
-* AC to DC power supples, 12V and 48V enclosed. I suggest Meanwell.
+* AC to DC power supples: 5V, 15V and 48V enclosed. I suggest Meanwell, DIN mount may be nice depending on the space available.
 * 8 ethernet cables.
 * Lots of bulk Cat5 cable to pull apart for the twisted pairs.
 * Crimpers and such to turn the twisted pair into 176 cables for
