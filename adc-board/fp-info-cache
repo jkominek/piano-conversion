@@ -1,4 +1,4 @@
-345018457058280
+346710659432055
 Air_Coils_SML_NEOSID
 Neosid_Air-Coil_SML_1turn_HDM0131A
 
@@ -52067,11 +52067,18 @@ SolderWirePad_single_SMD_5x10mm
 0
 footprints
 E5908-0T03yz-L
-
-RJ45
+Double 8p8c modular connector, right angle
+RJ45 Modular jack 8p8c Right Angle
 0
 16
 16
+footprints
+PPB-11861
+
+
+0
+0
+0
 footprints
 RJ45_8
 
