@@ -288,12 +288,12 @@ Wire Wire Line
 $Comp
 L power:+5V #PWR0112
 U 1 1 5FB16EF9
-P 9350 1700
-F 0 "#PWR0112" H 9350 1550 50  0001 C CNN
-F 1 "+5V" H 9365 1873 50  0000 C CNN
-F 2 "" H 9350 1700 50  0001 C CNN
-F 3 "" H 9350 1700 50  0001 C CNN
-	1    9350 1700
+P 9350 1350
+F 0 "#PWR0112" H 9350 1200 50  0001 C CNN
+F 1 "+5V" H 9365 1523 50  0000 C CNN
+F 2 "" H 9350 1350 50  0001 C CNN
+F 3 "" H 9350 1350 50  0001 C CNN
+	1    9350 1350
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -1166,8 +1166,6 @@ Connection ~ 10050 5450
 Text Notes 9650 6250 0    50   ~ 0
 bring master power line down to a\n+3.3V signal for FT230XS GPIO
 Wire Wire Line
-	9350 1700 9350 1750
-Wire Wire Line
 	10600 1650 10600 1750
 Wire Wire Line
 	10600 1650 9450 1650
@@ -1252,4 +1250,19 @@ F 3 "" H 8550 1700 50  0001 C CNN
 	1    8550 1700
 	1    0    0    -1  
 $EndComp
+$Comp
+L Connector:Conn_01x02_Male J9
+U 1 1 5FCCBCDB
+P 9150 1500
+F 0 "J9" H 9258 1681 50  0000 C CNN
+F 1 "CurrentProbe" H 9258 1590 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 9150 1500 50  0001 C CNN
+F 3 "~" H 9150 1500 50  0001 C CNN
+	1    9150 1500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9350 1600 9350 1750
+Wire Wire Line
+	9350 1500 9350 1350
 $EndSCHEMATC
