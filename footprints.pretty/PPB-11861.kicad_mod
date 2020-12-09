@@ -1,0 +1,8 @@
+(module PPB-11861 (layer F.Cu) (tedit 5FBBF7FF)
+  (fp_text reference REF** (at 0 0.5) (layer F.SilkS)
+    (effects (font (size 1 1) (thickness 0.15)))
+  )
+  (fp_text value PPB-11861 (at 0 -0.5) (layer F.Fab)
+    (effects (font (size 1 1) (thickness 0.15)))
+  )
+)
