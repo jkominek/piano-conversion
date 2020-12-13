@@ -156,17 +156,6 @@ Wire Wire Line
 	10700 1150 10700 1200
 Wire Wire Line
 	10700 1350 10700 1450
-$Comp
-L Regulator_Linear:LM7805_TO220 U10
-U 1 1 5FAD8BDA
-P 14450 2000
-F 0 "U10" H 14450 2242 50  0000 C CNN
-F 1 "L78L05ACZ-AP" H 14450 2151 50  0000 C CNN
-F 2 "TO_SOT_Packages_THT:TO-92_Inline_Wide" H 14450 2225 50  0001 C CIN
-F 3 "https://www.onsemi.cn/PowerSolutions/document/MC7800-D.PDF" H 14450 1950 50  0001 C CNN
-	1    14450 2000
-	-1   0    0    -1  
-$EndComp
 Wire Wire Line
 	14150 2000 14000 2000
 Wire Wire Line
@@ -2240,4 +2229,15 @@ NoConn ~ 10500 5950
 NoConn ~ 10500 5850
 NoConn ~ 10500 5750
 NoConn ~ 10500 5650
+$Comp
+L Regulator_Linear:AP2204RB-3.3 U10
+U 1 1 626D114E
+P 14450 2000
+F 0 "U10" H 14450 2242 50  0000 C CNN
+F 1 "L78L05ACZ-AP" H 14450 2151 50  0000 C CNN
+F 2 "TO_SOT_Packages_THT:TO-92_Inline_Wide" H 14450 2225 50  0001 C CNN
+F 3 "https://www.diodes.com/assets/Datasheets/AP2204.pdf" H 14450 2000 50  0001 C CNN
+	1    14450 2000
+	-1   0    0    -1  
+$EndComp
 $EndSCHEMATC
