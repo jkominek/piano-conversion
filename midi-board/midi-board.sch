@@ -958,4 +958,38 @@ Wire Wire Line
 Connection ~ 8750 2100
 Wire Wire Line
 	8750 2100 8900 2100
+$Comp
+L Connector:Conn_01x03_Male J7
+U 1 1 5FFC58E3
+P 7800 4800
+F 0 "J7" H 7772 4732 50  0000 R CNN
+F 1 "UART" H 7772 4823 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch2.54mm" H 7800 4800 50  0001 C CNN
+F 3 "~" H 7800 4800 50  0001 C CNN
+	1    7800 4800
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	7600 4900 7500 4900
+Wire Wire Line
+	7500 4900 7500 5000
+$Comp
+L power:GND #PWR0119
+U 1 1 5FFCB599
+P 7500 5000
+F 0 "#PWR0119" H 7500 4750 50  0001 C CNN
+F 1 "GND" H 7505 4827 50  0000 C CNN
+F 2 "" H 7500 5000 50  0001 C CNN
+F 3 "" H 7500 5000 50  0001 C CNN
+	1    7500 5000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7600 4800 7300 4800
+Wire Wire Line
+	7600 4700 7300 4700
+Text Label 7300 4700 0    50   ~ 0
+TX
+Text Label 7300 4800 0    50   ~ 0
+RX
 $EndSCHEMATC
