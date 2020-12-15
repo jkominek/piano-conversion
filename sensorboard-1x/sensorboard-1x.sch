@@ -76,17 +76,6 @@ F 3 "~" H 7000 2200 50  0001 C CNN
 	1    7000 2200
 	1    0    0    -1  
 $EndComp
-$Comp
-L Mechanical:MountingHole H2
-U 1 1 5F9EDDDA
-P 7000 2400
-F 0 "H2" H 7100 2446 50  0000 L CNN
-F 1 "MountingHole" H 7100 2355 50  0000 L CNN
-F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 7000 2400 50  0001 C CNN
-F 3 "~" H 7000 2400 50  0001 C CNN
-	1    7000 2400
-	1    0    0    -1  
-$EndComp
 Text Label 5700 3500 2    50   ~ 0
 Anode
 Text Label 5800 3500 0    50   ~ 0

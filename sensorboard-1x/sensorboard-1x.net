@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source "C:\\Users\\Jay Kominek\\Dropbox\\Piano Conversion\\sensorboard-1x\\sensorboard-1x.sch")
-    (date "2020-11-01 01:08:07 AM")
+    (date "2020-12-14 10:29:58 PM")
     (tool "Eeschema (5.1.7)-1")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -36,13 +36,6 @@
       (libsource (lib Mechanical) (part MountingHole) (description "Mounting Hole without connection"))
       (sheetpath (names /) (tstamps /))
       (tstamp 5F9ED769))
-    (comp (ref H2)
-      (value MountingHole)
-      (footprint Mounting_Holes:MountingHole_3.2mm_M3)
-      (datasheet ~)
-      (libsource (lib Mechanical) (part MountingHole) (description "Mounting Hole without connection"))
-      (sheetpath (names /) (tstamps /))
-      (tstamp 5F9EDDDA))
     (comp (ref Coll1)
       (value TestPoint)
       (footprint TestPoint:TestPoint_Pad_D1.0mm)
