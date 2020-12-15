@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP 8P8CDouble
+D RJ connector, 8P8C (8 positions 8 connected)
+K 8P8C RJ female connector
+F ~
+$ENDCMP
+#
+#End Doc Library

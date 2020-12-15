@@ -1,0 +1,6 @@
+(sym_lib_table
+  (lib (name SPI_UART)(type Legacy)(uri "${KIPRJMOD}/SC16IS741AIPW SPI.lib")(options "")(descr ""))
+  (lib (name KSZ8041MLL)(type Legacy)(uri ${KIPRJMOD}/KSZ8041MLL.lib)(options "")(descr ""))
+  (lib (name ISL83490)(type Legacy)(uri ${KIPRJMOD}/ISL83490.lib)(options "")(descr ""))
+  (lib (name 8P8CDouble)(type Legacy)(uri ${KIPRJMOD}/8P8CDouble.lib)(options "")(descr ""))
+)
