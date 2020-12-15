@@ -22,7 +22,7 @@ See the [Status page](https://github.com/jkominek/piano-conversion/wiki/Status) 
 * adc-board
   * An STM32H743 reading 22 ADC channels and sending the results over RS485.
 * led-power
-  * Provides power to 8 strings of 22 CNY70 IR LEDs. Needs +48V and +15V.
+  * Provides power to 8 strings of 22 CNY70 IR LEDs. Needs +48V and +15V. optional I2C control.
 * led-test-bar
   * For development only: little bar that holds a bunch of LEDs for testing the LED power board.
 * link-adapter
@@ -30,14 +30,20 @@ See the [Status page](https://github.com/jkominek/piano-conversion/wiki/Status) 
 * main-board
   * 8 ADC boards can plug in, their processed signals are managed
     by another STM32H743 and converted to MIDI in its various forms.
-    USB headers and possibly ethernet will be on-board.
+    Intended mainly for USB use, also has ethernet designed in.
+    For all of the optional accessories, there are three I2C ports in
+    the form of Qwiic connectors, for plugging in MIDI & pedal boards,
+    and whatever other craziness you can conjure up.
 * midi-board
-  * A TTL to MIDI DIN board. Gets the DIN connectors off the main board
-    so they're not taking up space if you don't need them.
+  * An I2C to MIDI DIN board (via a UART). Gets the extra UART, optos
+    and DIN connectors off the main board so they're not taking up
+    space if you don't need them.
 * pedal-board
-  * 4 1/4" TRS receptacles for common MIDI keyboard pedals. 4 channel SPI ADC for reading their values.
+  * 4 1/4" TRS jacks for common MIDI keyboard pedals. 8 channel ADC for reading the values; 4 used for the jacks, the others on headers if you want them.
 * sensorboard-1x
   * Holds a single CNY70 and 2x2 0.100" header for connecting to power and ADC.
+* sensorboard-tester
+  * For development/manufacture only, for testing/measuring sensorboards/CNY70s.
 
 To put a sensor on every hammer and key of an 88 key piano, you would need:
 
