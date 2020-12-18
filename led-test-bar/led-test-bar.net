@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source "C:\\Users\\Jay Kominek\\Dropbox\\Piano Conversion\\led-test-bar\\led-test-bar.sch")
-    (date "2020-12-01 01:46:34 PM")
+    (date "2020-12-17 08:38:08 PM")
     (tool "Eeschema (5.1.7)-1")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
