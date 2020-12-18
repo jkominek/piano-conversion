@@ -408,8 +408,6 @@ F 3 "~" H 7750 3450 50  0001 C CNN
 	1    7550 3450
 	1    0    0    -1  
 $EndComp
-Text Notes 1700 1500 0    50   ~ 0
-Op amps taking the "raw" voltage off the sense\nresistors, and buffering it for the ADCs. Also protects\nthe ADC inputs. Op amp output voltage is limited to\nVDDA, and they're cheap/easy to replace if damaged.
 $Comp
 L power:+3.3VA #PWR0123
 U 1 1 5FB3F774
@@ -1345,8 +1343,8 @@ NoConn ~ 7050 1200
 NoConn ~ 5050 1200
 Wire Wire Line
 	5350 6500 5700 6500
-Text Notes 650  3450 0    50   ~ 0
-These resistors should be chosen so that VDDA minus R times the maximum expected\nphototransistor current remains well above Vcesat at all times. Ideally near 1V. Otherwise\nthe phototransistors will start behaving very nonlinearly as the current flow changes.
+Text Notes 7850 2750 0    50   ~ 0
+The resistors here set the gain of the transimpedance amplifiers.\nThey should be (max expected current) * R =~ VREF+
 $Comp
 L power:+3.3VA #PWR0137
 U 1 1 5FB624A5
@@ -1432,7 +1430,7 @@ P 4950 7950
 AR Path="/61D87A67" Ref="U?"  Part="1" 
 AR Path="/5FA7E425/61D87A67" Ref="U10"  Part="1" 
 F 0 "U10" H 4950 8317 50  0000 C CNN
-F 1 "MIC5366-3.3YC5" H 4950 8226 50  0000 C CNN
+F 1 "MIC5366-2.0YC5" H 4950 8226 50  0000 C CNN
 F 2 "TO_SOT_Packages_SMD:SOT-353_SC-70-5_Handsoldering" H 4950 8300 50  0001 C CNN
 F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/mic5365.pdf" H 4650 8750 50  0001 C CNN
 	1    4950 7950
