@@ -171,14 +171,12 @@ Wire Wire Line
 	3600 3900 3600 3850
 Connection ~ 4650 3900
 Wire Wire Line
-	6550 3800 6550 4100
-Wire Wire Line
-	6700 4000 6700 3900
+	6700 4000 6700 3800
 Text Label 6600 3400 0    50   ~ 0
 A
 Text Label 6600 3700 0    50   ~ 0
 B
-Text Label 6600 3900 0    50   ~ 0
+Text Label 6600 3800 0    50   ~ 0
 Z
 Text Label 6600 4100 0    50   ~ 0
 Y
@@ -224,7 +222,9 @@ Connection ~ 7000 3800
 Wire Wire Line
 	7000 3800 6900 3800
 Wire Wire Line
-	6250 3800 6550 3800
+	6250 3800 6700 3800
 Wire Wire Line
-	6250 3900 6700 3900
+	6550 4100 6550 3900
+Wire Wire Line
+	6550 3900 6250 3900
 $EndSCHEMATC
