@@ -752,7 +752,7 @@ U 1 1 601EC46F
 P 13150 4050
 F 0 "J4" H 13258 4331 50  0000 C CNN
 F 1 "USART1" H 13258 4240 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch1.27mm" H 13150 4050 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch2.54mm" H 13150 4050 50  0001 C CNN
 F 3 "~" H 13150 4050 50  0001 C CNN
 	1    13150 4050
 	1    0    0    -1  
@@ -1106,9 +1106,9 @@ Wire Wire Line
 Wire Wire Line
 	11950 3800 11400 3800
 Text Label 11400 3600 0    50   ~ 0
-USART1_RX
+USART3_RX
 Text Label 11400 3800 0    50   ~ 0
-USART1_TX
+USART3_TX
 $Comp
 L Device:LED D1
 U 1 1 633E3B17
