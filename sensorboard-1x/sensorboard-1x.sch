@@ -90,7 +90,7 @@ U 1 1 5F9F141D
 P 6100 2800
 F 0 "Coll1" V 6054 2988 50  0000 L CNN
 F 1 "TestPoint" V 6145 2988 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 6300 2800 50  0001 C CNN
+F 2 "TestPoint:TestPoint_Pad_D1.5mm" H 6300 2800 50  0001 C CNN
 F 3 "~" H 6300 2800 50  0001 C CNN
 	1    6100 2800
 	0    1    1    0   
@@ -104,7 +104,7 @@ U 1 1 5F9F22A3
 P 5400 3050
 F 0 "Emit1" V 5595 3122 50  0000 C CNN
 F 1 "TestPoint" V 5504 3122 50  0000 C CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 5600 3050 50  0001 C CNN
+F 2 "TestPoint:TestPoint_Pad_D1.5mm" H 5600 3050 50  0001 C CNN
 F 3 "~" H 5600 3050 50  0001 C CNN
 	1    5400 3050
 	0    -1   -1   0   
@@ -120,7 +120,7 @@ U 1 1 5F9F308A
 P 5800 3600
 F 0 "Cath1" V 5754 3788 50  0000 L CNN
 F 1 "TestPoint" V 5845 3788 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 6000 3600 50  0001 C CNN
+F 2 "TestPoint:TestPoint_Pad_1.5x1.5mm" H 6000 3600 50  0001 C CNN
 F 3 "~" H 6000 3600 50  0001 C CNN
 	1    5800 3600
 	0    1    1    0   
@@ -132,7 +132,7 @@ U 1 1 5F9F39CC
 P 5700 3550
 F 0 "An1" V 5895 3622 50  0000 C CNN
 F 1 "TestPoint" V 5804 3622 50  0000 C CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 5900 3550 50  0001 C CNN
+F 2 "TestPoint:TestPoint_Pad_1.5x1.5mm" H 5900 3550 50  0001 C CNN
 F 3 "~" H 5900 3550 50  0001 C CNN
 	1    5700 3550
 	0    -1   -1   0   
