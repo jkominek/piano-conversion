@@ -200,7 +200,7 @@ Wire Wire Line
 Wire Wire Line
 	8550 1350 8550 1250
 Wire Wire Line
-	8300 1450 8700 1450
+	8300 1450 8650 1450
 Wire Wire Line
 	8700 1450 8700 1250
 $Comp
@@ -1265,4 +1265,26 @@ Wire Wire Line
 	9350 1600 9350 1750
 Wire Wire Line
 	9350 1500 9350 1350
+$Comp
+L power:PWR_FLAG #FLG0101
+U 1 1 5FDF6D1C
+P 8650 1450
+F 0 "#FLG0101" H 8650 1525 50  0001 C CNN
+F 1 "PWR_FLAG" H 8650 1623 50  0000 C CNN
+F 2 "" H 8650 1450 50  0001 C CNN
+F 3 "~" H 8650 1450 50  0001 C CNN
+	1    8650 1450
+	1    0    0    -1  
+$EndComp
+Connection ~ 8650 1450
+Wire Wire Line
+	8650 1450 8700 1450
+Text Label 5250 3300 0    50   ~ 0
+CBUS1
+Text Label 5250 3500 0    50   ~ 0
+CBUS0
+Text Label 5250 3400 0    50   ~ 0
+CBUS3
+Text Label 5250 3600 0    50   ~ 0
+CBUS2
 $EndSCHEMATC
