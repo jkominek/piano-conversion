@@ -3192,17 +3192,17 @@ LINK1_Y
 Text Label 10350 10950 2    50   ~ 0
 LINK1_Z
 Text Label 10350 11450 2    50   ~ 0
-LINK1_A
-Text Label 10350 11550 2    50   ~ 0
 LINK1_B
+Text Label 10350 11550 2    50   ~ 0
+LINK1_A
 Text Label 12100 10850 2    50   ~ 0
 LINK2_Y
 Text Label 12100 10950 2    50   ~ 0
 LINK2_Z
 Text Label 12100 11450 2    50   ~ 0
-LINK2_A
-Text Label 12100 11550 2    50   ~ 0
 LINK2_B
+Text Label 12100 11550 2    50   ~ 0
+LINK2_A
 Wire Wire Line
 	10650 8000 9900 8000
 Wire Wire Line
@@ -3271,49 +3271,49 @@ LINK3_Y
 Text Label 10350 12350 2    50   ~ 0
 LINK3_Z
 Text Label 10350 12850 2    50   ~ 0
-LINK3_A
-Text Label 10350 12950 2    50   ~ 0
 LINK3_B
+Text Label 10350 12950 2    50   ~ 0
+LINK3_A
 Text Label 12100 12250 2    50   ~ 0
 LINK4_Y
 Text Label 12100 12350 2    50   ~ 0
 LINK4_Z
 Text Label 12100 12850 2    50   ~ 0
-LINK4_A
-Text Label 12100 12950 2    50   ~ 0
 LINK4_B
+Text Label 12100 12950 2    50   ~ 0
+LINK4_A
 Text Label 10350 13650 2    50   ~ 0
 LINK5_Y
 Text Label 10350 13750 2    50   ~ 0
 LINK5_Z
 Text Label 10350 14250 2    50   ~ 0
-LINK5_A
-Text Label 10350 14350 2    50   ~ 0
 LINK5_B
+Text Label 10350 14350 2    50   ~ 0
+LINK5_A
 Text Label 10350 15050 2    50   ~ 0
 LINK7_Y
 Text Label 10350 15150 2    50   ~ 0
 LINK7_Z
 Text Label 10350 15650 2    50   ~ 0
-LINK7_A
-Text Label 10350 15750 2    50   ~ 0
 LINK7_B
+Text Label 10350 15750 2    50   ~ 0
+LINK7_A
 Text Label 12100 13650 2    50   ~ 0
 LINK6_Y
 Text Label 12100 13750 2    50   ~ 0
 LINK6_Z
 Text Label 12100 14250 2    50   ~ 0
-LINK6_A
-Text Label 12100 14350 2    50   ~ 0
 LINK6_B
+Text Label 12100 14350 2    50   ~ 0
+LINK6_A
 Text Label 12100 15050 2    50   ~ 0
 LINK8_Y
 Text Label 12100 15150 2    50   ~ 0
 LINK8_Z
 Text Label 12100 15650 2    50   ~ 0
-LINK8_A
-Text Label 12100 15750 2    50   ~ 0
 LINK8_B
+Text Label 12100 15750 2    50   ~ 0
+LINK8_A
 $Comp
 L Device:Ferrite_Bead_Small FB6
 U 1 1 60B6D0F6
