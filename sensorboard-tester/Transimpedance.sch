@@ -22,33 +22,33 @@ OP_OUT
 $Comp
 L Connector_Generic:Conn_02x02_Odd_Even J?
 U 1 1 5FC69E13
-P 3550 1700
+P 3600 3850
 AR Path="/5FC34DE6/5FC69E13" Ref="J?"  Part="1" 
 AR Path="/5FC566FE/5FC69E13" Ref="J7"  Part="1" 
-F 0 "J7" V 3554 1780 50  0000 L CNN
-F 1 "Sensor" V 3645 1780 50  0000 L CNN
-F 2 "Pin_Headers:Pin_Header_Straight_2x02_Pitch2.54mm" H 3550 1700 50  0001 C CNN
-F 3 "~" H 3550 1700 50  0001 C CNN
-	1    3550 1700
+F 0 "J7" V 3604 3930 50  0000 L CNN
+F 1 "Sensor" V 3695 3930 50  0000 L CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x02_Pitch2.54mm" H 3600 3850 50  0001 C CNN
+F 3 "~" H 3600 3850 50  0001 C CNN
+	1    3600 3850
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	3550 1500 3550 1300
+	3600 3650 3600 3450
 Wire Wire Line
-	3450 1500 3450 1300
+	3500 3650 3500 3450
 Wire Wire Line
-	3450 1300 3000 1300
+	3500 3450 3050 3450
 Wire Wire Line
-	3450 2000 3450 2200
+	3500 4150 3500 4350
 Wire Wire Line
-	3450 2200 3250 2200
+	3500 4350 3300 4350
 Wire Wire Line
-	3550 2000 3550 2200
+	3600 4150 3600 4350
 Wire Wire Line
-	3550 2200 3750 2200
-Text Label 3000 1300 0    50   ~ 0
+	3600 4350 3800 4350
+Text Label 3050 3450 0    50   ~ 0
 Emitter
-Text Label 4050 1300 2    50   ~ 0
+Text Label 4100 3450 2    50   ~ 0
 Collector
 $Comp
 L Connector:TestPoint_Probe TP?
@@ -169,23 +169,23 @@ $EndComp
 $Comp
 L Connector:Conn_01x02_Male J8
 U 1 1 5FC791F7
-P 3550 900
-F 0 "J8" V 3612 944 50  0000 L CNN
-F 1 "PTVoltage" V 3703 944 50  0000 L CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 3550 900 50  0001 C CNN
-F 3 "~" H 3550 900 50  0001 C CNN
-	1    3550 900 
+P 3600 3050
+F 0 "J8" V 3662 3094 50  0000 L CNN
+F 1 "PTVoltage" V 3753 3094 50  0000 L CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 3600 3050 50  0001 C CNN
+F 3 "~" H 3600 3050 50  0001 C CNN
+	1    3600 3050
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	3450 1300 3450 1100
-Connection ~ 3450 1300
+	3500 3450 3500 3300
+Connection ~ 3500 3450
 Wire Wire Line
-	3550 1300 3550 1100
-Connection ~ 3550 1300
-Text HLabel 3250 2200 0    50   BiDi ~ 0
+	3600 3450 3600 3300
+Connection ~ 3600 3450
+Text HLabel 3300 4350 0    50   BiDi ~ 0
 Anode
-Text HLabel 3750 2200 2    50   BiDi ~ 0
+Text HLabel 3800 4350 2    50   BiDi ~ 0
 Cathode
 Wire Wire Line
 	5600 2850 5950 2850
@@ -201,18 +201,18 @@ Wire Wire Line
 Text Label 6100 2500 2    50   ~ 0
 Emitter
 Wire Wire Line
-	4200 1300 4200 1150
+	4250 3450 4250 3300
 Wire Wire Line
-	3550 1300 4200 1300
+	3600 3450 4250 3450
 $Comp
 L power:+3.3V #PWR0111
 U 1 1 64677130
-P 4200 1150
-F 0 "#PWR0111" H 4200 1000 50  0001 C CNN
-F 1 "+3.3V" H 4215 1323 50  0000 C CNN
-F 2 "" H 4200 1150 50  0001 C CNN
-F 3 "" H 4200 1150 50  0001 C CNN
-	1    4200 1150
+P 4250 3300
+F 0 "#PWR0111" H 4250 3150 50  0001 C CNN
+F 1 "+3.3V" H 4265 3473 50  0000 C CNN
+F 2 "" H 4250 3300 50  0001 C CNN
+F 3 "" H 4250 3300 50  0001 C CNN
+	1    4250 3300
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -416,4 +416,47 @@ Wire Wire Line
 	6700 3150 6700 3000
 Wire Wire Line
 	6450 3150 6700 3150
+$Comp
+L Connector_Generic:Conn_02x02_Odd_Even J?
+U 1 1 5FE14A6D
+P 3600 2650
+AR Path="/5FC34DE6/5FE14A6D" Ref="J?"  Part="1" 
+AR Path="/5FC566FE/5FE14A6D" Ref="J11"  Part="1" 
+F 0 "J11" V 3604 2730 50  0000 L CNN
+F 1 "Sensor" V 3695 2730 50  0000 L CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x02_Pitch2.54mm" H 3600 2650 50  0001 C CNN
+F 3 "~" H 3600 2650 50  0001 C CNN
+	1    3600 2650
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3500 2950 3350 2950
+Wire Wire Line
+	3350 2950 3350 3300
+Wire Wire Line
+	3350 3300 3500 3300
+Connection ~ 3500 3300
+Wire Wire Line
+	3500 3300 3500 3250
+Wire Wire Line
+	3600 2950 3750 2950
+Wire Wire Line
+	3750 2950 3750 3300
+Wire Wire Line
+	3750 3300 3600 3300
+Connection ~ 3600 3300
+Wire Wire Line
+	3600 3300 3600 3250
+Wire Wire Line
+	3500 2450 3500 2350
+Wire Wire Line
+	3500 2350 3300 2350
+Wire Wire Line
+	3600 2450 3600 2350
+Wire Wire Line
+	3600 2350 3800 2350
+Text HLabel 3300 2350 0    50   BiDi ~ 0
+Anode
+Text HLabel 3800 2350 2    50   BiDi ~ 0
+Cathode
 $EndSCHEMATC

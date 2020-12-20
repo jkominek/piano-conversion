@@ -214,4 +214,33 @@ $EndComp
 Wire Wire Line
 	5400 1450 5400 1250
 Connection ~ 5400 1450
+$Comp
+L Connector_Generic:Conn_02x02_Odd_Even J10
+U 1 1 5FE12BB4
+P 3600 2100
+F 0 "J10" V 3604 2180 50  0000 L CNN
+F 1 "MirrorSensor" V 3695 2180 50  0000 L CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x02_Pitch2.54mm" H 3600 2100 50  0001 C CNN
+F 3 "~" H 3600 2100 50  0001 C CNN
+	1    3600 2100
+	0    1    1    0   
+$EndComp
+Connection ~ 3600 2400
+Connection ~ 3500 2400
+Wire Wire Line
+	3500 1900 3500 1800
+Wire Wire Line
+	3500 1800 3200 1800
+Wire Wire Line
+	3600 1900 3600 1800
+Wire Wire Line
+	3600 1800 3900 1800
+Text HLabel 3200 1800 0    50   BiDi ~ 0
+Anode
+Text HLabel 3900 1800 2    50   BiDi ~ 0
+Cathode
+Text Label 3900 1800 2    50   ~ 0
+Cathode
+Text Label 3500 1800 2    50   ~ 0
+Anode
 $EndSCHEMATC
