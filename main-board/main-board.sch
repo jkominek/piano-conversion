@@ -646,9 +646,9 @@ UART5_RX
 Text Label 13850 7700 2    50   ~ 0
 UART5_TX
 Text Label 13850 7600 2    50   ~ 0
-UART4_TX
-Text Label 13850 7500 2    50   ~ 0
 UART4_RX
+Text Label 13850 7500 2    50   ~ 0
+UART4_TX
 Wire Wire Line
 	13150 4400 13900 4400
 Wire Wire Line
@@ -1872,7 +1872,6 @@ ETH_CRS
 Text Label 2000 7800 0    50   ~ 0
 ETH_RX_DV
 NoConn ~ 2500 6500
-NoConn ~ 2500 7300
 $Comp
 L Device:R_Small_US R7
 U 1 1 61825F95
@@ -1940,7 +1939,6 @@ Wire Wire Line
 	1900 9450 2100 9450
 Wire Wire Line
 	2300 9450 2500 9450
-NoConn ~ 2500 9350
 NoConn ~ 13150 8900
 NoConn ~ 13150 7800
 NoConn ~ 13150 7900
@@ -1984,7 +1982,6 @@ NoConn ~ 13150 3500
 NoConn ~ 13150 4100
 NoConn ~ 13150 5000
 NoConn ~ 13150 5300
-NoConn ~ 13150 5400
 NoConn ~ 13150 5700
 NoConn ~ 13150 7300
 NoConn ~ 13150 7400
@@ -3477,12 +3474,12 @@ Connection ~ 1250 6300
 Wire Wire Line
 	1250 6300 1600 6300
 Wire Wire Line
-	13150 5600 13850 5600
+	13150 5400 13850 5400
 Wire Wire Line
 	13150 5500 13850 5500
 Text Label 13850 5500 2    50   ~ 0
 I2C1_SDA
-Text Label 13850 5600 2    50   ~ 0
+Text Label 13850 5400 2    50   ~ 0
 I2C1_SCL
 Wire Wire Line
 	10650 6600 9900 6600
@@ -3824,8 +3821,6 @@ Text GLabel 11750 15450 2    50   Input ~ 0
 PWR8
 Text GLabel 10000 15450 2    50   Input ~ 0
 PWR7
-NoConn ~ 13150 3700
-NoConn ~ 13150 3600
 Wire Wire Line
 	10650 6100 9900 6100
 Wire Wire Line
@@ -4217,4 +4212,21 @@ Text Label 13850 9300 2    50   ~ 0
 PWR8_CTRL
 Text Label 13850 9200 2    50   ~ 0
 PWR7_CTRL
+NoConn ~ 13150 5600
+Wire Wire Line
+	2500 7300 2000 7300
+Text Label 2000 7300 0    50   ~ 0
+ETH_RXER
+Wire Wire Line
+	13150 3700 13900 3700
+Text Label 13900 3700 2    50   ~ 0
+ETH_INTRP
+Wire Wire Line
+	13150 3600 13900 3600
+Text Label 13900 3600 2    50   ~ 0
+ETH_RXER
+Wire Wire Line
+	2500 9350 2000 9350
+Text Label 2000 9350 0    50   ~ 0
+ETH_INTRP
 $EndSCHEMATC
