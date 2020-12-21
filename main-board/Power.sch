@@ -166,7 +166,7 @@ L Device:R_Small_US R24
 U 1 1 611C95FE
 P 4650 1050
 F 0 "R24" H 4718 1096 50  0000 L CNN
-F 1 "10k" H 4718 1005 50  0000 L CNN
+F 1 "4700" H 4718 1005 50  0000 L CNN
 F 2 "Resistors_SMD:R_0805" H 4650 1050 50  0001 C CNN
 F 3 "~" H 4650 1050 50  0001 C CNN
 	1    4650 1050
@@ -184,21 +184,6 @@ Wire Wire Line
 Wire Wire Line
 	4650 1200 4750 1200
 Connection ~ 4650 1200
-Wire Wire Line
-	4650 1300 4650 1200
-$Comp
-L Device:R_Small_US R25
-U 1 1 611CCFA1
-P 4650 1400
-F 0 "R25" H 4718 1446 50  0000 L CNN
-F 1 "100" H 4718 1355 50  0000 L CNN
-F 2 "Resistors_SMD:R_0805" H 4650 1400 50  0001 C CNN
-F 3 "~" H 4650 1400 50  0001 C CNN
-	1    4650 1400
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	4650 1550 4650 1500
 Wire Wire Line
 	4650 1950 4650 2000
 $Comp
@@ -245,7 +230,7 @@ F 1 "P Channel" H 5154 1155 50  0000 L CNN
 F 2 "TO_SOT_Packages_SMD:SOT-323_SC-70_Handsoldering" H 5150 1300 50  0001 C CNN
 F 3 "~" H 4950 1200 50  0001 C CNN
 	1    4950 1200
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L power:+5V #PWR0159
@@ -267,7 +252,7 @@ L Device:R_Small_US R36
 U 1 1 611DCBA3
 P 6850 1050
 F 0 "R36" H 6918 1096 50  0000 L CNN
-F 1 "10k" H 6918 1005 50  0000 L CNN
+F 1 "4700" H 6918 1005 50  0000 L CNN
 F 2 "Resistors_SMD:R_0805" H 6850 1050 50  0001 C CNN
 F 3 "~" H 6850 1050 50  0001 C CNN
 	1    6850 1050
@@ -285,21 +270,6 @@ Wire Wire Line
 Wire Wire Line
 	6850 1200 6950 1200
 Connection ~ 6850 1200
-Wire Wire Line
-	6850 1300 6850 1200
-$Comp
-L Device:R_Small_US R37
-U 1 1 611DCBB1
-P 6850 1400
-F 0 "R37" H 6918 1446 50  0000 L CNN
-F 1 "100" H 6918 1355 50  0000 L CNN
-F 2 "Resistors_SMD:R_0805" H 6850 1400 50  0001 C CNN
-F 3 "~" H 6850 1400 50  0001 C CNN
-	1    6850 1400
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	6850 1550 6850 1500
 Wire Wire Line
 	6850 1950 6850 2000
 $Comp
@@ -325,7 +295,7 @@ F 3 "~" H 6450 1750 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	6350 1750 5800 1750
+	6350 1750 6150 1750
 $Comp
 L Device:Q_NMOS_GSD Q9
 U 1 1 611DCBC7
@@ -346,7 +316,7 @@ F 1 "P Channel" H 7354 1155 50  0000 L CNN
 F 2 "TO_SOT_Packages_SMD:SOT-323_SC-70_Handsoldering" H 7350 1300 50  0001 C CNN
 F 3 "~" H 7150 1200 50  0001 C CNN
 	1    7150 1200
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L power:+5V #PWR0163
@@ -368,7 +338,7 @@ L Device:R_Small_US R26
 U 1 1 611F4F1D
 P 4650 2600
 F 0 "R26" H 4718 2646 50  0000 L CNN
-F 1 "10k" H 4718 2555 50  0000 L CNN
+F 1 "4700" H 4718 2555 50  0000 L CNN
 F 2 "Resistors_SMD:R_0805" H 4650 2600 50  0001 C CNN
 F 3 "~" H 4650 2600 50  0001 C CNN
 	1    4650 2600
@@ -386,21 +356,6 @@ Wire Wire Line
 Wire Wire Line
 	4650 2750 4750 2750
 Connection ~ 4650 2750
-Wire Wire Line
-	4650 2850 4650 2750
-$Comp
-L Device:R_Small_US R27
-U 1 1 611F4F2B
-P 4650 2950
-F 0 "R27" H 4718 2996 50  0000 L CNN
-F 1 "100" H 4718 2905 50  0000 L CNN
-F 2 "Resistors_SMD:R_0805" H 4650 2950 50  0001 C CNN
-F 3 "~" H 4650 2950 50  0001 C CNN
-	1    4650 2950
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	4650 3100 4650 3050
 Wire Wire Line
 	4650 3500 4650 3550
 $Comp
@@ -447,7 +402,7 @@ F 1 "P Channel" H 5154 2705 50  0000 L CNN
 F 2 "TO_SOT_Packages_SMD:SOT-323_SC-70_Handsoldering" H 5150 2850 50  0001 C CNN
 F 3 "~" H 4950 2750 50  0001 C CNN
 	1    4950 2750
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L power:+5V #PWR0167
@@ -469,7 +424,7 @@ L Device:R_Small_US R38
 U 1 1 611F4F57
 P 6850 2600
 F 0 "R38" H 6918 2646 50  0000 L CNN
-F 1 "10k" H 6918 2555 50  0000 L CNN
+F 1 "4700" H 6918 2555 50  0000 L CNN
 F 2 "Resistors_SMD:R_0805" H 6850 2600 50  0001 C CNN
 F 3 "~" H 6850 2600 50  0001 C CNN
 	1    6850 2600
@@ -487,21 +442,6 @@ Wire Wire Line
 Wire Wire Line
 	6850 2750 6950 2750
 Connection ~ 6850 2750
-Wire Wire Line
-	6850 2850 6850 2750
-$Comp
-L Device:R_Small_US R39
-U 1 1 611F4F65
-P 6850 2950
-F 0 "R39" H 6918 2996 50  0000 L CNN
-F 1 "100" H 6918 2905 50  0000 L CNN
-F 2 "Resistors_SMD:R_0805" H 6850 2950 50  0001 C CNN
-F 3 "~" H 6850 2950 50  0001 C CNN
-	1    6850 2950
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	6850 3100 6850 3050
 Wire Wire Line
 	6850 3500 6850 3550
 $Comp
@@ -527,7 +467,7 @@ F 3 "~" H 6450 3300 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	6350 3300 5800 3300
+	6350 3300 6150 3300
 $Comp
 L Device:Q_NMOS_GSD Q10
 U 1 1 611F4F7B
@@ -548,7 +488,7 @@ F 1 "P Channel" H 7354 2705 50  0000 L CNN
 F 2 "TO_SOT_Packages_SMD:SOT-323_SC-70_Handsoldering" H 7350 2850 50  0001 C CNN
 F 3 "~" H 7150 2750 50  0001 C CNN
 	1    7150 2750
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L power:+5V #PWR0171
@@ -570,7 +510,7 @@ L Device:R_Small_US R28
 U 1 1 611FB59A
 P 4650 4100
 F 0 "R28" H 4718 4146 50  0000 L CNN
-F 1 "10k" H 4718 4055 50  0000 L CNN
+F 1 "4700" H 4718 4055 50  0000 L CNN
 F 2 "Resistors_SMD:R_0805" H 4650 4100 50  0001 C CNN
 F 3 "~" H 4650 4100 50  0001 C CNN
 	1    4650 4100
@@ -588,21 +528,6 @@ Wire Wire Line
 Wire Wire Line
 	4650 4250 4750 4250
 Connection ~ 4650 4250
-Wire Wire Line
-	4650 4350 4650 4250
-$Comp
-L Device:R_Small_US R29
-U 1 1 611FB5A8
-P 4650 4450
-F 0 "R29" H 4718 4496 50  0000 L CNN
-F 1 "100" H 4718 4405 50  0000 L CNN
-F 2 "Resistors_SMD:R_0805" H 4650 4450 50  0001 C CNN
-F 3 "~" H 4650 4450 50  0001 C CNN
-	1    4650 4450
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	4650 4600 4650 4550
 Wire Wire Line
 	4650 5000 4650 5050
 $Comp
@@ -649,7 +574,7 @@ F 1 "P Channel" H 5154 4205 50  0000 L CNN
 F 2 "TO_SOT_Packages_SMD:SOT-323_SC-70_Handsoldering" H 5150 4350 50  0001 C CNN
 F 3 "~" H 4950 4250 50  0001 C CNN
 	1    4950 4250
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L power:+5V #PWR0177
@@ -671,7 +596,7 @@ L Device:R_Small_US R40
 U 1 1 611FB5D4
 P 6850 4100
 F 0 "R40" H 6918 4146 50  0000 L CNN
-F 1 "10k" H 6918 4055 50  0000 L CNN
+F 1 "4700" H 6918 4055 50  0000 L CNN
 F 2 "Resistors_SMD:R_0805" H 6850 4100 50  0001 C CNN
 F 3 "~" H 6850 4100 50  0001 C CNN
 	1    6850 4100
@@ -689,21 +614,6 @@ Wire Wire Line
 Wire Wire Line
 	6850 4250 6950 4250
 Connection ~ 6850 4250
-Wire Wire Line
-	6850 4350 6850 4250
-$Comp
-L Device:R_Small_US R41
-U 1 1 611FB5E2
-P 6850 4450
-F 0 "R41" H 6918 4496 50  0000 L CNN
-F 1 "100" H 6918 4405 50  0000 L CNN
-F 2 "Resistors_SMD:R_0805" H 6850 4450 50  0001 C CNN
-F 3 "~" H 6850 4450 50  0001 C CNN
-	1    6850 4450
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	6850 4600 6850 4550
 Wire Wire Line
 	6850 5000 6850 5050
 $Comp
@@ -729,7 +639,7 @@ F 3 "~" H 6450 4800 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	6350 4800 5800 4800
+	6350 4800 6150 4800
 $Comp
 L Device:Q_NMOS_GSD Q11
 U 1 1 611FB5F8
@@ -750,7 +660,7 @@ F 1 "P Channel" H 7354 4205 50  0000 L CNN
 F 2 "TO_SOT_Packages_SMD:SOT-323_SC-70_Handsoldering" H 7350 4350 50  0001 C CNN
 F 3 "~" H 7150 4250 50  0001 C CNN
 	1    7150 4250
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L power:+5V #PWR0179
@@ -772,7 +682,7 @@ L Device:R_Small_US R30
 U 1 1 6120341F
 P 4650 5550
 F 0 "R30" H 4718 5596 50  0000 L CNN
-F 1 "10k" H 4718 5505 50  0000 L CNN
+F 1 "4700" H 4718 5505 50  0000 L CNN
 F 2 "Resistors_SMD:R_0805" H 4650 5550 50  0001 C CNN
 F 3 "~" H 4650 5550 50  0001 C CNN
 	1    4650 5550
@@ -790,21 +700,6 @@ Wire Wire Line
 Wire Wire Line
 	4650 5700 4750 5700
 Connection ~ 4650 5700
-Wire Wire Line
-	4650 5800 4650 5700
-$Comp
-L Device:R_Small_US R31
-U 1 1 6120342D
-P 4650 5900
-F 0 "R31" H 4718 5946 50  0000 L CNN
-F 1 "100" H 4718 5855 50  0000 L CNN
-F 2 "Resistors_SMD:R_0805" H 4650 5900 50  0001 C CNN
-F 3 "~" H 4650 5900 50  0001 C CNN
-	1    4650 5900
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	4650 6050 4650 6000
 Wire Wire Line
 	4650 6450 4650 6500
 $Comp
@@ -851,7 +746,7 @@ F 1 "P Channel" H 5154 5655 50  0000 L CNN
 F 2 "TO_SOT_Packages_SMD:SOT-323_SC-70_Handsoldering" H 5150 5800 50  0001 C CNN
 F 3 "~" H 4950 5700 50  0001 C CNN
 	1    4950 5700
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L power:+5V #PWR0181
@@ -873,7 +768,7 @@ L Device:R_Small_US R42
 U 1 1 61203459
 P 6850 5550
 F 0 "R42" H 6918 5596 50  0000 L CNN
-F 1 "10k" H 6918 5505 50  0000 L CNN
+F 1 "4700" H 6918 5505 50  0000 L CNN
 F 2 "Resistors_SMD:R_0805" H 6850 5550 50  0001 C CNN
 F 3 "~" H 6850 5550 50  0001 C CNN
 	1    6850 5550
@@ -891,21 +786,6 @@ Wire Wire Line
 Wire Wire Line
 	6850 5700 6950 5700
 Connection ~ 6850 5700
-Wire Wire Line
-	6850 5800 6850 5700
-$Comp
-L Device:R_Small_US R43
-U 1 1 61203467
-P 6850 5900
-F 0 "R43" H 6918 5946 50  0000 L CNN
-F 1 "100" H 6918 5855 50  0000 L CNN
-F 2 "Resistors_SMD:R_0805" H 6850 5900 50  0001 C CNN
-F 3 "~" H 6850 5900 50  0001 C CNN
-	1    6850 5900
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	6850 6050 6850 6000
 Wire Wire Line
 	6850 6450 6850 6500
 $Comp
@@ -931,7 +811,7 @@ F 3 "~" H 6450 6250 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	6350 6250 5800 6250
+	6350 6250 6150 6250
 $Comp
 L Device:Q_NMOS_GSD Q12
 U 1 1 6120347D
@@ -952,7 +832,7 @@ F 1 "P Channel" H 7354 5655 50  0000 L CNN
 F 2 "TO_SOT_Packages_SMD:SOT-323_SC-70_Handsoldering" H 7350 5800 50  0001 C CNN
 F 3 "~" H 7150 5700 50  0001 C CNN
 	1    7150 5700
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L Connector:Screw_Terminal_01x02 J4
@@ -1305,17 +1185,17 @@ Text HLabel 3600 1750 0    50   Input ~ 0
 PWR1_CTRL
 Text HLabel 3600 3300 0    50   Input ~ 0
 PWR3_CTRL
-Text HLabel 5800 1750 0    50   Input ~ 0
+Text HLabel 6150 1750 0    50   Input ~ 0
 PWR2_CTRL
-Text HLabel 5800 3300 0    50   Input ~ 0
+Text HLabel 6150 3300 0    50   Input ~ 0
 PWR4_CTRL
-Text HLabel 5800 4800 0    50   Input ~ 0
+Text HLabel 6150 4800 0    50   Input ~ 0
 PWR6_CTRL
 Text HLabel 3600 4800 0    50   Input ~ 0
 PWR5_CTRL
 Text HLabel 3600 6250 0    50   Input ~ 0
 PWR7_CTRL
-Text HLabel 5800 6250 0    50   Input ~ 0
+Text HLabel 6150 6250 0    50   Input ~ 0
 PWR8_CTRL
 Connection ~ 6850 2000
 Connection ~ 6850 3550
@@ -1325,4 +1205,20 @@ Connection ~ 7250 1550
 Connection ~ 7250 3100
 Connection ~ 7250 4600
 Connection ~ 7250 6050
+Wire Wire Line
+	4650 1200 4650 1550
+Wire Wire Line
+	6850 1200 6850 1550
+Wire Wire Line
+	6850 2750 6850 3100
+Wire Wire Line
+	4650 2750 4650 3100
+Wire Wire Line
+	4650 4250 4650 4600
+Wire Wire Line
+	6850 4250 6850 4600
+Wire Wire Line
+	6850 5700 6850 6050
+Wire Wire Line
+	4650 5700 4650 6050
 $EndSCHEMATC
