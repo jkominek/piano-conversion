@@ -55,14 +55,20 @@ used to signal to the synthesizer that the damper has been raised
 (permitting resonsnace) before the hammer strikes. Sample based synths
 could also use that information to preload samples.
 
+(During the initial design of this I completely forgot that pianos usually
+don't dampen the highest strings. If you want to leave the top 22 notes
+undampened, you could eliminate one of the ADC boards. Or you could convert
+a >88 key piano.)
+
 ### ADC Board
 
 That's 176 sensors in a piano. 22 are monitored by each of these
 boards.  The current through each one is converted to a voltage by a
 sense resistor on this board, buffered by an op amp, and monitored by
-an ADC channel of an [STM32H743](https://github.com/jkominek/piano-conversion/wiki/STM32H7). Hopefully the STM32 will be able to
-process all 22 signals at between 10kHz and 20kHz. I expect to apply
-some digital low pass filtering.
+an ADC channel of an
+[STM32H743](https://github.com/jkominek/piano-conversion/wiki/STM32H7). Hopefully
+the STM32 will be able to process all 22 signals at between 10kHz and
+20kHz. I expect to apply some digital low pass filtering.
 
 Once the processor has determined that a note on, or off, is occurring
 and measured the velocity, it is sent out over a RS485 serial
@@ -74,16 +80,15 @@ just taking advantage of the large supply of high quality premade
 cabling and jacks.) Having two twisted pairs permits full duplex
 communication.
 
-The same cable also carries 12V power. Each board includes a single
-switching regulator to bring the 12V down to 5V. From there the 3.3V
-digital and analog power planes are fed by linear regulators, to minimize
-noise on those rails. Each linear regulator is tied to both of its
-relevant power planes with multiple vias, for thermal reasons.
+The same cable also carries ~5V power. Each board includes a single
+switching regulator to bring the 5V down to 3.3V. The 3.3V analog
+power plane is produced by a linear regulator, to reduce noise on
+the rail.
 
 The board can be populated with optional components to make it into
 a USB device. This isn't expected to be necessary, but may be more
-convenient during the sensor calibration process. A second UART is
-also brought out to 0.100" header pins.
+convenient during the sensor calibration process. Two additional UARTs
+are brought out to 0.100" header pins. Just in case.
 
 Programming is performed over the JTAG header, intended for use with the
 ST-Link/v2 programmer.
@@ -91,13 +96,15 @@ ST-Link/v2 programmer.
 There is space for four LEDs, and a number of otherwise-unused pins are
 brought out to sizable test points.
 
-### Sensor board & LED power board
+### Sensor board
 
 Each sensor board will consist of nothing but a CNY70, and a 4 pin 0.100"
 header. Two pins will connect to the phototransistor, and come back to
 the ADC board via twisted pair. The other two correspond to the LED.
 The LEDs should be chained together in rather long strings. Likely 22
 sensors per string.
+
+### LED power board
 
 The LED power board is designed (as of rev0) to take two off the shelf
 power supplies, one 48V and the other 15V, and provide a constant
@@ -108,42 +115,54 @@ constant currents which are extremely stable from time scales of a year,
 down to 100kHz. The deterioration of the LEDs themselves is expected to
 be the main source of change in the optical output.
 
-rev1 of the LED power board should add the discussed control lines. Either
-I2C to an IO expander, or maybe a current-loop controlled optoisolator that
-can shut down the voltage reference. (Which would in turn force the op amps
-to drive the FETs fully off.)
+Rev1 of the board adds an IO expander which can monitor the LED strings
+individually to detect errors, and also turn all the LEDs off by shutting
+down the precision voltage reference.
 
 ### Main board
 
-Intended to use either a STM32H743 like the ADC board.
+Intended to use a STM32H743 like the ADC board.
 
-8 RS485 serial links, along with 12V distribution to the ADC boards.
-Likely per-board high-side MOSFET control of power, so that boards
-can be brought up in sequence once power has stabilized.
+8 RS485 serial links, along with 5V distribution to the ADC boards.
+Per-board high-side MOSFET control of power, so that boards
+can be brought up in sequence once power has stabilized. Also allows
+them to be power cycled in event of error, or to reflash them.
 
 USB B device link, as the main/intended link to the host computer.
 
-Additional UART added via SPI and used to provide MIDI 1.0 signalling
-over DIN connector.
+Three I2C controllers are brought out to three separate Qwiic headers,
+so that a variety of common I/O devices can be attached without requiring
+special development.
 
-Possible 10/100Mbps ethernet.
-
-A few ADC channels, on possibly another sub-board for 1/4" TRS plugs
-commonly used for sustain pedals. An I2C ADC on that board would suffice.
-Attaching a Sparkfun Qwiic-style I2C port or two might be a good idea,
-regardless.
-
-A few GPIO links to connect it to the LED power board for
-diagnostics/control.  (Calibration process may want to turn the LEDs
-off, to measure "dark" current.) This didn't make it onto rev0 of the
-LED power board.
+10/100Mbps ethernet is optional, but planned & designed in.
 
 Firmware is expected to process the fairly raw velocity messages
 from the ADC boards, appyling any calibration, and sending them out
 over any of the many MIDI links available to it (serial, USB, ethernet,
 maybe even bluetooth).
 
-#### Link board
+#### Pedal board
+
+A simple 8 channel I2C ADC on a board with Qwiic headers, and 4 1/4"
+TRS jacks for standard sustain pedals. The other 4 ADC inputs are
+brought out on a 0.100" header, just in case.
+
+Requires pull up/pull down configuration to make it work with the
+user's selection of pedals.
+
+I might dub this the "simple pedal board" and design a v2 with a
+simple STM32 on it, which can use TRS jacks with switches, and engage
+in some local signal generation/detection in order to autoconfigure
+for whatever kind of pedal is plugged in.
+
+#### MIDI board
+
+Like the pedal board, the MIDI board is designed as a Qwiic device.
+It is an I2C UART, appropriate oscillator, and isolation circuitry
+to convert the logic level signals from the UART into MIDI compatible
+current signals.
+
+### Link board
 
 To facilitate development/testing of the ADC boards without the main board,
 a "link board" has been designed. It is a full duplex RS485 board with power
