@@ -1,377 +1,293 @@
-1610762538356
-Capacitors_SMD
-CP_Elec_3x5.3
+1610767890297
+Resistors_SMD
+R_0201
 
 
 0
 0
 0
-Capacitors_SMD
-CP_Elec_4x4.5
+Resistors_SMD
+R_0201_NoSilk
 
 
 0
 0
 0
-Capacitors_SMD
-CP_Elec_4x5.3
+Resistors_SMD
+R_0402
 
 
 0
 0
 0
-Capacitors_SMD
-CP_Elec_4x5.7
+Resistors_SMD
+R_0402_NoSilk
 
 
 0
 0
 0
-Capacitors_SMD
-CP_Elec_4x5.8
+Resistors_SMD
+R_0603
 
 
 0
 0
 0
-Capacitors_SMD
-CP_Elec_5x4.5
+Resistors_SMD
+R_0603_HandSoldering
 
 
 0
 0
 0
-Capacitors_SMD
-CP_Elec_5x5.3
+Resistors_SMD
+R_0612
 
 
 0
 0
 0
-Capacitors_SMD
-CP_Elec_5x5.7
+Resistors_SMD
+R_0805
 
 
 0
 0
 0
-Capacitors_SMD
-CP_Elec_5x5.8
+Resistors_SMD
+R_0805_HandSoldering
 
 
 0
 0
 0
-Capacitors_SMD
-CP_Elec_6.3x4.5
+Resistors_SMD
+R_1206
 
 
 0
 0
 0
-Capacitors_SMD
-CP_Elec_6.3x5.3
+Resistors_SMD
+R_1206_HandSoldering
 
 
 0
 0
 0
-Capacitors_SMD
-CP_Elec_6.3x5.7
+Resistors_SMD
+R_1210
 
 
 0
 0
 0
-Capacitors_SMD
-CP_Elec_6.3x5.8
+Resistors_SMD
+R_1210_HandSoldering
 
 
 0
 0
 0
-Capacitors_SMD
-CP_Elec_6.3x7.7
+Resistors_SMD
+R_1218
 
 
 0
 0
 0
-Capacitors_SMD
-CP_Elec_8x5.4
+Resistors_SMD
+R_1218_HandSoldering
 
 
 0
 0
 0
-Capacitors_SMD
-CP_Elec_8x6.5
+Resistors_SMD
+R_1508_Wide
 
 
 0
 0
 0
-Capacitors_SMD
-CP_Elec_8x6.7
+Resistors_SMD
+R_1812
 
 
 0
 0
 0
-Capacitors_SMD
-CP_Elec_8x10
+Resistors_SMD
+R_1812_HandSoldering
 
 
 0
 0
 0
-Capacitors_SMD
-CP_Elec_8x10.5
+Resistors_SMD
+R_2010
 
 
 0
 0
 0
-Capacitors_SMD
-CP_Elec_10x7.7
+Resistors_SMD
+R_2010_HandSoldering
 
 
 0
 0
 0
-Capacitors_SMD
-CP_Elec_10x10
+Resistors_SMD
+R_2512
 
 
 0
 0
 0
-Capacitors_SMD
-CP_Elec_10x10.5
+Resistors_SMD
+R_2512_HandSoldering
 
 
 0
 0
 0
-Capacitors_SMD
-C_0201
+Resistors_SMD
+R_2816
 
 
 0
 0
 0
-Capacitors_SMD
-C_0201_NoSilk
+Resistors_SMD
+R_2816_HandSoldering
 
 
 0
 0
 0
-Capacitors_SMD
-C_0402
+Resistors_SMD
+R_Array_Concave_2x0603
 
 
 0
 0
 0
-Capacitors_SMD
-C_0402_NoSilk
+Resistors_SMD
+R_Array_Concave_4x0402
 
 
 0
 0
 0
-Capacitors_SMD
-C_0603
+Resistors_SMD
+R_Array_Concave_4x0603
 
 
 0
 0
 0
-Capacitors_SMD
-C_0603_HandSoldering
+Resistors_SMD
+R_Array_Convex_2x0402
 
 
 0
 0
 0
-Capacitors_SMD
-C_0805
+Resistors_SMD
+R_Array_Convex_2x0603
 
 
 0
 0
 0
-Capacitors_SMD
-C_0805_HandSoldering
+Resistors_SMD
+R_Array_Convex_2x1206
 
 
 0
 0
 0
-Capacitors_SMD
-C_1206
+Resistors_SMD
+R_Array_Convex_4x0402
 
 
 0
 0
 0
-Capacitors_SMD
-C_1206_HandSoldering
+Resistors_SMD
+R_Array_Convex_4x0603
 
 
 0
 0
 0
-Capacitors_SMD
-C_1210
+Resistors_SMD
+R_Array_Convex_4x1206
 
 
 0
 0
 0
-Capacitors_SMD
-C_1210_HandSoldering
+Resistors_SMD
+R_Array_Convex_5x0603
 
 
 0
 0
 0
-Capacitors_SMD
-C_1812
+Resistors_SMD
+R_Array_Convex_5x1206
 
 
 0
 0
 0
-Capacitors_SMD
-C_1812_HandSoldering
+Resistors_SMD
+R_Array_Convex_8x0602
 
 
 0
 0
 0
-Capacitors_SMD
-C_1825
+Resistors_SMD
+R_Cat16-2
 
 
 0
 0
 0
-Capacitors_SMD
-C_1825_HandSoldering
+Resistors_SMD
+R_Cat16-4
 
 
 0
 0
 0
-Capacitors_SMD
-C_2220
+Resistors_SMD
+R_Cat16-8
 
 
 0
 0
 0
-Capacitors_SMD
-C_2220_HandSoldering
+Resistors_SMD
+R_MELF_MMB-0207
 
 
 0
 0
 0
-Capacitors_SMD
-C_2225
+Resistors_SMD
+R_MicroMELF_MMU-0102
 
 
 0
 0
 0
-Capacitors_SMD
-C_2225_HandSoldering
-
-
-0
-0
-0
-Capacitors_SMD
-C_Trimmer_Murata_TZB4-A
-
-
-0
-0
-0
-Capacitors_SMD
-C_Trimmer_Murata_TZB4-B
-
-
-0
-0
-0
-Capacitors_SMD
-C_Trimmer_Murata_TZC3
-
-
-0
-0
-0
-Capacitors_SMD
-C_Trimmer_Murata_TZR1
-
-
-0
-0
-0
-Capacitors_SMD
-C_Trimmer_Murata_TZW4
-
-
-0
-0
-0
-Capacitors_SMD
-C_Trimmer_Murata_TZY2
-
-
-0
-0
-0
-Capacitors_SMD
-C_Trimmer_Sprague-Goodman_SGC3
-
-
-0
-0
-0
-Capacitors_SMD
-C_Trimmer_Voltronics_JN
-
-
-0
-0
-0
-Capacitors_SMD
-C_Trimmer_Voltronics_JQ
-
-
-0
-0
-0
-Capacitors_SMD
-C_Trimmer_Voltronics_JR
-
-
-0
-0
-0
-Capacitors_SMD
-C_Trimmer_Voltronics_JV
-
-
-0
-0
-0
-Capacitors_SMD
-C_Trimmer_Voltronics_JZ
+Resistors_SMD
+R_MiniMELF_MMA-0204
 
 
 0

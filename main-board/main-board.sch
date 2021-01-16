@@ -1169,7 +1169,6 @@ NoConn ~ 13150 8500
 NoConn ~ 13150 8600
 NoConn ~ 10650 9700
 NoConn ~ 10650 9600
-NoConn ~ 10650 9500
 NoConn ~ 10650 9400
 NoConn ~ 10650 9300
 NoConn ~ 10650 9200
@@ -1197,7 +1196,6 @@ NoConn ~ 10650 4800
 NoConn ~ 10650 4900
 NoConn ~ 13150 3500
 NoConn ~ 13150 4100
-NoConn ~ 13150 5000
 NoConn ~ 13150 5300
 NoConn ~ 13150 5700
 NoConn ~ 13150 7300
@@ -2781,7 +2779,6 @@ Text Label 21300 11150 2    50   ~ 0
 I2C3_SCL
 Text Label 21300 11250 2    50   ~ 0
 I2C3_SDA
-NoConn ~ 13150 5800
 Wire Wire Line
 	13150 9000 13850 9000
 Text Label 13850 9000 2    50   ~ 0
@@ -3405,11 +3402,7 @@ NoConn ~ 13150 6700
 NoConn ~ 13150 6800
 NoConn ~ 13150 6900
 NoConn ~ 13150 7000
-NoConn ~ 13150 6100
-NoConn ~ 13150 6000
-NoConn ~ 13150 5900
 NoConn ~ 13150 4900
-NoConn ~ 13150 4800
 NoConn ~ 13150 3100
 NoConn ~ 13150 3200
 NoConn ~ 13150 3300
@@ -3417,4 +3410,243 @@ NoConn ~ 13150 3400
 NoConn ~ 13150 3600
 NoConn ~ 13150 3700
 NoConn ~ 13150 3800
+$Comp
+L power:GND #PWR0130
+U 1 1 6183E985
+P 7400 4100
+F 0 "#PWR0130" H 7400 3850 50  0001 C CNN
+F 1 "GND" V 7400 3900 50  0000 C CNN
+F 2 "" H 7400 4100 50  0001 C CNN
+F 3 "" H 7400 4100 50  0001 C CNN
+	1    7400 4100
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	7050 4100 7350 4100
+$Comp
+L power:+3.3V #PWR0131
+U 1 1 618A7E7A
+P 7400 3900
+F 0 "#PWR0131" H 7400 3750 50  0001 C CNN
+F 1 "+3.3V" V 7400 4150 50  0000 C CNN
+F 2 "" H 7400 3900 50  0001 C CNN
+F 3 "" H 7400 3900 50  0001 C CNN
+	1    7400 3900
+	0    1    -1   0   
+$EndComp
+Wire Wire Line
+	7050 3900 7350 3900
+$Comp
+L Device:C_Small C21
+U 1 1 61912635
+P 7850 4000
+F 0 "C21" H 7942 4046 50  0000 L CNN
+F 1 "DC" H 7942 3955 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0805" H 7850 4000 50  0001 C CNN
+F 3 "~" H 7850 4000 50  0001 C CNN
+	1    7850 4000
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	7350 4100 7350 4150
+Wire Wire Line
+	7350 4150 7850 4150
+Wire Wire Line
+	7850 4150 7850 4100
+Connection ~ 7350 4100
+Wire Wire Line
+	7350 4100 7400 4100
+Wire Wire Line
+	7350 3900 7350 3850
+Wire Wire Line
+	7350 3850 7850 3850
+Wire Wire Line
+	7850 3850 7850 3900
+Connection ~ 7350 3900
+Wire Wire Line
+	7350 3900 7400 3900
+$Comp
+L Connector:Micro_SD_Card_Det J14
+U 1 1 61A5F6B9
+P 6150 4000
+F 0 "J14" H 6100 4817 50  0000 C CNN
+F 1 "Micro_SD_Card_Det" H 6100 4726 50  0000 C CNN
+F 2 "footprints:114-00841-68" H 8200 4700 50  0001 C CNN
+F 3 "https://www.hirose.com/product/en/download_file/key_name/DM3/category/Catalog/doc_file_id/49662/?file_category_id=4&item_id=195&is_series=1" H 6150 4100 50  0001 C CNN
+	1    6150 4000
+	-1   0    0    -1  
+$EndComp
+NoConn ~ 7050 3600
+Wire Wire Line
+	7050 4000 7500 4000
+Wire Wire Line
+	7050 3800 7500 3800
+Wire Wire Line
+	7050 3700 7500 3700
+NoConn ~ 7050 4300
+Wire Wire Line
+	7050 4200 7100 4250
+Wire Wire Line
+	7100 4250 7500 4250
+NoConn ~ 5350 4500
+Text Label 7500 4250 2    50   ~ 0
+SPI6_MISO
+Text Label 7500 4000 2    50   ~ 0
+SPI6_SCK
+Text Label 7500 3800 2    50   ~ 0
+SPI6_MOSI
+Text Label 7500 3700 2    50   ~ 0
+SDCARD_CS
+Wire Wire Line
+	7050 4400 7500 4400
+Text Label 7500 4400 2    50   ~ 0
+SDCARD_DET
+$Comp
+L power:GND #PWR0132
+U 1 1 620DCDB0
+P 7500 4400
+F 0 "#PWR0132" H 7500 4150 50  0001 C CNN
+F 1 "GND" V 7500 4200 50  0000 C CNN
+F 2 "" H 7500 4400 50  0001 C CNN
+F 3 "" H 7500 4400 50  0001 C CNN
+	1    7500 4400
+	0    -1   1    0   
+$EndComp
+$Comp
+L Device:R_Small_US R25
+U 1 1 620DDDC8
+P 7050 4650
+F 0 "R25" H 6982 4604 50  0000 R CNN
+F 1 "10k" H 6982 4695 50  0000 R CNN
+F 2 "Resistors_SMD:R_0805" H 7050 4650 50  0001 C CNN
+F 3 "~" H 7050 4650 50  0001 C CNN
+	1    7050 4650
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:+3.3V #PWR0133
+U 1 1 620DFCF5
+P 7050 4850
+F 0 "#PWR0133" H 7050 4700 50  0001 C CNN
+F 1 "+3.3V" V 7050 5100 50  0000 C CNN
+F 2 "" H 7050 4850 50  0001 C CNN
+F 3 "" H 7050 4850 50  0001 C CNN
+	1    7050 4850
+	0    1    -1   0   
+$EndComp
+Wire Wire Line
+	7050 4850 7050 4750
+Wire Wire Line
+	7050 4550 7050 4500
+Wire Wire Line
+	10650 9500 9950 9500
+Text Label 9950 9500 0    50   ~ 0
+SDCARD_DET
+Wire Wire Line
+	13150 4800 13900 4800
+Text Label 13900 4800 2    50   ~ 0
+SDCARD_CS
+NoConn ~ 13150 5000
+Wire Wire Line
+	13150 6100 13850 6100
+Wire Wire Line
+	13150 6000 13850 6000
+Wire Wire Line
+	13150 5900 13850 5900
+Wire Wire Line
+	13150 5800 13850 5800
+Text Label 13850 6100 2    50   ~ 0
+QWIIC_EXTI13
+Text Label 13850 6000 2    50   ~ 0
+QWIIC_EXTI12
+Text Label 13850 5900 2    50   ~ 0
+QWIIC_EXTI11
+Text Label 13850 5800 2    50   ~ 0
+QWIIC_EXTI10
+$Comp
+L Connector_Generic:Conn_02x03_Odd_Even J15
+U 1 1 625720F8
+P 16350 7250
+F 0 "J15" H 16400 7567 50  0000 C CNN
+F 1 "Interrupts1" H 16400 7476 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x03_Pitch2.54mm" H 16350 7250 50  0001 C CNN
+F 3 "~" H 16350 7250 50  0001 C CNN
+	1    16350 7250
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_02x03_Odd_Even J16
+U 1 1 62572804
+P 16350 7750
+F 0 "J16" H 16400 8067 50  0000 C CNN
+F 1 "Interrupts2" H 16400 7976 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x03_Pitch2.54mm" H 16350 7750 50  0001 C CNN
+F 3 "~" H 16350 7750 50  0001 C CNN
+	1    16350 7750
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0134
+U 1 1 62573DB3
+P 16750 7950
+F 0 "#PWR0134" H 16750 7700 50  0001 C CNN
+F 1 "GND" H 16755 7777 50  0000 C CNN
+F 2 "" H 16750 7950 50  0001 C CNN
+F 3 "" H 16750 7950 50  0001 C CNN
+	1    16750 7950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	16650 7150 16750 7150
+Wire Wire Line
+	16750 7150 16750 7250
+Wire Wire Line
+	16650 7850 16750 7850
+Connection ~ 16750 7850
+Wire Wire Line
+	16750 7850 16750 7950
+Wire Wire Line
+	16650 7750 16750 7750
+Connection ~ 16750 7750
+Wire Wire Line
+	16750 7750 16750 7850
+Wire Wire Line
+	16650 7650 16750 7650
+Connection ~ 16750 7650
+Wire Wire Line
+	16750 7650 16750 7750
+Wire Wire Line
+	16650 7350 16750 7350
+Connection ~ 16750 7350
+Wire Wire Line
+	16750 7350 16750 7650
+Wire Wire Line
+	16650 7250 16750 7250
+Connection ~ 16750 7250
+Wire Wire Line
+	16750 7250 16750 7350
+Wire Wire Line
+	16150 7150 15600 7150
+Wire Wire Line
+	16150 7250 15600 7250
+Wire Wire Line
+	16150 7350 15600 7350
+Wire Wire Line
+	16150 7650 15600 7650
+Wire Wire Line
+	16150 7750 15600 7750
+Wire Wire Line
+	16150 7850 15600 7850
+Text Label 15600 7150 0    50   ~ 0
+QWIIC_EXTI10
+Text Label 15600 7650 0    50   ~ 0
+QWIIC_EXTI13
+Text Label 15600 7250 0    50   ~ 0
+QWIIC_EXTI11
+Text Label 15600 7350 0    50   ~ 0
+QWIIC_EXTI11
+Text Label 15600 7750 0    50   ~ 0
+QWIIC_EXTI12
+Text Label 15600 7850 0    50   ~ 0
+QWIIC_EXTI10
 $EndSCHEMATC
