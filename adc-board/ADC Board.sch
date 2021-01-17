@@ -624,7 +624,7 @@ U 1 1 5FF241D9
 P 1000 1350
 F 0 "H1" H 1100 1399 50  0000 L CNN
 F 1 "MountingHole_Pad" H 1100 1308 50  0000 L CNN
-F 2 "Mounting_Holes:MountingHole_3.2mm_M3_Pad" H 1000 1350 50  0001 C CNN
+F 2 "Mounting_Holes:MountingHole_3.2mm_M3_Pad_Via" H 1000 1350 50  0001 C CNN
 F 3 "~" H 1000 1350 50  0001 C CNN
 	1    1000 1350
 	1    0    0    -1  
@@ -635,7 +635,7 @@ U 1 1 5FF253E7
 P 1300 1350
 F 0 "H2" H 1400 1399 50  0000 L CNN
 F 1 "MountingHole_Pad" H 1400 1308 50  0000 L CNN
-F 2 "Mounting_Holes:MountingHole_3.2mm_M3_Pad" H 1300 1350 50  0001 C CNN
+F 2 "Mounting_Holes:MountingHole_3.2mm_M3_Pad_Via" H 1300 1350 50  0001 C CNN
 F 3 "~" H 1300 1350 50  0001 C CNN
 	1    1300 1350
 	1    0    0    -1  
@@ -646,7 +646,7 @@ U 1 1 5FF263BA
 P 1600 1350
 F 0 "H3" H 1700 1399 50  0000 L CNN
 F 1 "MountingHole_Pad" H 1700 1308 50  0000 L CNN
-F 2 "Mounting_Holes:MountingHole_3.2mm_M3_Pad" H 1600 1350 50  0001 C CNN
+F 2 "Mounting_Holes:MountingHole_3.2mm_M3_Pad_Via" H 1600 1350 50  0001 C CNN
 F 3 "~" H 1600 1350 50  0001 C CNN
 	1    1600 1350
 	1    0    0    -1  
@@ -657,7 +657,7 @@ U 1 1 5FF27900
 P 1900 1350
 F 0 "H4" H 2000 1399 50  0000 L CNN
 F 1 "MountingHole_Pad" H 2000 1308 50  0000 L CNN
-F 2 "Mounting_Holes:MountingHole_3.2mm_M3_Pad" H 1900 1350 50  0001 C CNN
+F 2 "Mounting_Holes:MountingHole_3.2mm_M3_Pad_Via" H 1900 1350 50  0001 C CNN
 F 3 "~" H 1900 1350 50  0001 C CNN
 	1    1900 1350
 	1    0    0    -1  
@@ -992,7 +992,7 @@ U 1 1 62AC126C
 P 11800 7700
 F 0 "C53" H 11891 7746 50  0000 L CNN
 F 1 "10uF EEA-GA1V100" H 11891 7655 50  0000 L CNN
-F 2 "Capacitors_SMD:CP_Elec_4x4.5" H 11800 7700 50  0001 C CNN
+F 2 "Capacitors_SMD:CP_Elec_5x5.3" H 11800 7700 50  0001 C CNN
 F 3 "~" H 11800 7700 50  0001 C CNN
 	1    11800 7700
 	1    0    0    -1  
@@ -1003,7 +1003,7 @@ U 1 1 62AC2BA4
 P 12600 7700
 F 0 "C54" H 12691 7746 50  0000 L CNN
 F 1 "22uF ECE-A1HKA220" H 12691 7655 50  0000 L CNN
-F 2 "Capacitors_SMD:CP_Elec_5x5.3" H 12600 7700 50  0001 C CNN
+F 2 "Capacitors_SMD:CP_Elec_6.3x5.3" H 12600 7700 50  0001 C CNN
 F 3 "~" H 12600 7700 50  0001 C CNN
 	1    12600 7700
 	1    0    0    -1  
