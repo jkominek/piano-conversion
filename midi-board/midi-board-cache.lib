@@ -73,6 +73,29 @@ X Pin_4 4 200 -200 150 L 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
+# Connector_Generic_Conn_02x02_Odd_Even
+#
+DEF Connector_Generic_Conn_02x02_Odd_Even J 0 40 Y N 1 F N
+F0 "J" 50 100 50 H V C CNN
+F1 "Connector_Generic_Conn_02x02_Odd_Even" 50 -200 50 H V C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+$FPLIST
+ Connector*:*_2x??_*
+$ENDFPLIST
+DRAW
+S -50 -95 0 -105 1 1 6 N
+S -50 5 0 -5 1 1 6 N
+S -50 50 150 -150 1 1 10 f
+S 150 -95 100 -105 1 1 6 N
+S 150 5 100 -5 1 1 6 N
+X Pin_1 1 -200 0 150 R 50 50 1 1 P
+X Pin_2 2 300 0 150 L 50 50 1 1 P
+X Pin_3 3 -200 -100 150 R 50 50 1 1 P
+X Pin_4 4 300 -100 150 L 50 50 1 1 P
+ENDDRAW
+ENDDEF
+#
 # Device_C_Small
 #
 DEF Device_C_Small C 0 10 N N 1 F N
@@ -307,7 +330,6 @@ F0 "#PWR" 0 -150 50 H I C CNN
 F1 "power_+3.3V" 0 140 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
-ALIAS +3.3V
 DRAW
 P 2 0 1 0 -30 50 0 100 N
 P 2 0 1 0 0 0 0 100 N
@@ -323,6 +345,7 @@ F0 "#PWR" 0 -150 50 H I C CNN
 F1 "power_+3V3" 0 140 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
+ALIAS +3.3V
 DRAW
 P 2 0 1 0 -30 50 0 100 N
 P 2 0 1 0 0 0 0 100 N
