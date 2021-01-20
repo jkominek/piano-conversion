@@ -160,18 +160,45 @@ X ~ 2 0 -100 40 U 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# Mechanical_MountingHole
+# Device_Voltage_Divider
 #
-DEF Mechanical_MountingHole H 0 40 Y Y 1 F N
-F0 "H" 0 200 50 H V C CNN
-F1 "Mechanical_MountingHole" 0 125 50 H V C CNN
+DEF Device_Voltage_Divider RN 0 0 Y N 1 F N
+F0 "RN" -175 0 50 V V C CNN
+F1 "Device_Voltage_Divider" -100 0 50 V V C CNN
+F2 "" 475 0 50 V I C CNN
+F3 "" 200 0 50 H I C CNN
+$FPLIST
+ R?Array?SIP*
+ SOT?23
+$ENDFPLIST
+DRAW
+C 0 1 10 0 1 0 F
+S -50 -150 50 150 0 1 10 f
+S -20 -133 20 -33 0 1 10 N
+S -20 133 20 33 0 1 10 N
+P 2 0 1 0 0 -200 0 -135 N
+P 2 0 1 0 0 35 0 -35 N
+P 2 0 1 0 0 200 0 133 N
+P 2 0 1 0 50 0 0 0 N
+X ~ 1 0 250 100 D 50 50 1 1 P
+X ~ 2 150 0 100 L 50 50 1 1 P
+X ~ 3 0 -250 100 U 50 50 1 1 P
+ENDDRAW
+ENDDEF
+#
+# Mechanical_MountingHole_Pad
+#
+DEF Mechanical_MountingHole_Pad H 0 40 N N 1 F N
+F0 "H" 0 250 50 H V C CNN
+F1 "Mechanical_MountingHole_Pad" 0 175 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
- MountingHole*
+ MountingHole*Pad*
 $ENDFPLIST
 DRAW
-C 0 0 50 0 1 50 N
+C 0 50 50 0 1 50 N
+X 1 1 0 -100 100 U 50 50 1 1 I
 ENDDRAW
 ENDDEF
 #
