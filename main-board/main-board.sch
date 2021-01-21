@@ -3776,7 +3776,7 @@ Wire Wire Line
 Wire Wire Line
 	19200 1800 19600 1800
 Wire Wire Line
-	19050 1450 19300 1450
+	19050 1450 19200 1450
 Text Notes 15900 8250 2    50   ~ 0
 No decoupling cap on this osc\nPlace adjacent to Vbat and LSE pins
 $Comp
@@ -3793,4 +3793,18 @@ $EndComp
 Wire Wire Line
 	9550 3400 10650 3400
 Connection ~ 9550 3400
+$Comp
+L power:PWR_FLAG #FLG0101
+U 1 1 60118BE6
+P 19200 1450
+F 0 "#FLG0101" H 19200 1525 50  0001 C CNN
+F 1 "PWR_FLAG" H 19200 1623 50  0000 C CNN
+F 2 "" H 19200 1450 50  0001 C CNN
+F 3 "~" H 19200 1450 50  0001 C CNN
+	1    19200 1450
+	1    0    0    -1  
+$EndComp
+Connection ~ 19200 1450
+Wire Wire Line
+	19200 1450 19300 1450
 $EndSCHEMATC
