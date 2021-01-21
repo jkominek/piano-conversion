@@ -467,8 +467,6 @@ Wire Wire Line
 Connection ~ 2300 3850
 Wire Wire Line
 	2300 3850 2300 3800
-Wire Wire Line
-	1450 2900 1450 3000
 $Comp
 L Device:C_Small C2
 U 1 1 5FB05575
@@ -1523,12 +1521,12 @@ $EndComp
 $Comp
 L power:+15V #PWR0120
 U 1 1 5FC5B32C
-P 1450 2900
-F 0 "#PWR0120" H 1450 2750 50  0001 C CNN
-F 1 "+15V" H 1465 3073 50  0000 C CNN
-F 2 "" H 1450 2900 50  0001 C CNN
-F 3 "" H 1450 2900 50  0001 C CNN
-	1    1450 2900
+P 1450 2850
+F 0 "#PWR0120" H 1450 2700 50  0001 C CNN
+F 1 "+15V" H 1465 3023 50  0000 C CNN
+F 2 "" H 1450 2850 50  0001 C CNN
+F 3 "" H 1450 2850 50  0001 C CNN
+	1    1450 2850
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -1680,11 +1678,6 @@ F 3 "~" H 750 5100 50  0001 C CNN
 	1    750  5100
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	750  3250 750  3000
-Wire Wire Line
-	750  3000 1450 3000
-Connection ~ 1450 3000
 Wire Wire Line
 	1450 4750 750  4750
 Wire Wire Line
@@ -1901,7 +1894,6 @@ F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf" H 8400 5250 
 	1    0    0    -1  
 $EndComp
 NoConn ~ 7500 6150
-NoConn ~ 7500 6250
 $Comp
 L power:GND #PWR0137
 U 1 1 600ECF78
@@ -2713,4 +2705,47 @@ Text Label 10000 5650 2    50   ~ 0
 48V_SENSE
 Text Notes 14900 3750 0    50   ~ 0
 To drain the VREF net\nwhen /SHDN is active.
+Wire Wire Line
+	1450 2950 750  2950
+Wire Wire Line
+	750  2950 750  3250
+Wire Wire Line
+	1450 3000 1450 2950
+Wire Wire Line
+	1450 2950 1450 2850
+Connection ~ 1450 2950
+$Comp
+L Connector:Conn_01x02_Male J17
+U 1 1 6027517F
+P 10750 7600
+F 0 "J17" H 10858 7781 50  0000 C CNN
+F 1 "IRQ" H 10858 7690 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 10750 7600 50  0001 C CNN
+F 3 "~" H 10750 7600 50  0001 C CNN
+	1    10750 7600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0154
+U 1 1 60277C7E
+P 11050 7800
+F 0 "#PWR0154" H 11050 7550 50  0001 C CNN
+F 1 "GND" H 11055 7627 50  0000 C CNN
+F 2 "" H 11050 7800 50  0001 C CNN
+F 3 "" H 11050 7800 50  0001 C CNN
+	1    11050 7800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10950 7700 11050 7700
+Wire Wire Line
+	11050 7700 11050 7800
+Wire Wire Line
+	10950 7600 11200 7600
+Text Label 11200 7600 2    50   ~ 0
+~IRQ
+Wire Wire Line
+	7500 6250 7050 6250
+Text Label 7050 6250 0    50   ~ 0
+~IRQ
 $EndSCHEMATC
