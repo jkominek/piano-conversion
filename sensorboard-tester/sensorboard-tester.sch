@@ -299,7 +299,7 @@ P 6250 4750
 AR Path="/5FC34DE6/5FC7E376" Ref="J?"  Part="1" 
 AR Path="/5FC7E376" Ref="J2"  Part="1" 
 F 0 "J2" H 6358 4931 50  0000 C CNN
-F 1 "LEDCurrentProbe" H 6358 4840 50  0000 C CNN
+F 1 "LEDCurrentShunt" H 6358 4840 50  0000 C CNN
 F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 6250 4750 50  0001 C CNN
 F 3 "~" H 6250 4750 50  0001 C CNN
 	1    6250 4750
@@ -329,31 +329,31 @@ Cathode
 $Comp
 L Device:R_POT RV?
 U 1 1 5FC7E386
-P 8250 4700
+P 8250 4750
 AR Path="/5FC34DE6/5FC7E386" Ref="RV?"  Part="1" 
 AR Path="/5FC7E386" Ref="RV1"  Part="1" 
-F 0 "RV1" V 8135 4700 50  0000 C CNN
-F 1 "R_POT" V 8044 4700 50  0000 C CNN
-F 2 "Potentiometers:Potentiometer_WirePads_Small" H 8250 4700 50  0001 C CNN
-F 3 "~" H 8250 4700 50  0001 C CNN
-	1    8250 4700
+F 0 "RV1" V 8135 4750 50  0000 C CNN
+F 1 "R_POT" V 8044 4750 50  0000 C CNN
+F 2 "Potentiometers:Potentiometer_WirePads_Small" H 8250 4750 50  0001 C CNN
+F 3 "~" H 8250 4750 50  0001 C CNN
+	1    8250 4750
 	0    -1   -1   0   
 $EndComp
 $Comp
 L power:+5V #PWR?
 U 1 1 5FC7E38C
-P 8250 4400
+P 8250 4450
 AR Path="/5FC34DE6/5FC7E38C" Ref="#PWR?"  Part="1" 
 AR Path="/5FC7E38C" Ref="#PWR0102"  Part="1" 
-F 0 "#PWR0102" H 8250 4250 50  0001 C CNN
-F 1 "+5V" H 8265 4573 50  0000 C CNN
-F 2 "" H 8250 4400 50  0001 C CNN
-F 3 "" H 8250 4400 50  0001 C CNN
-	1    8250 4400
+F 0 "#PWR0102" H 8250 4300 50  0001 C CNN
+F 1 "+5V" H 8265 4623 50  0000 C CNN
+F 2 "" H 8250 4450 50  0001 C CNN
+F 3 "" H 8250 4450 50  0001 C CNN
+	1    8250 4450
 	1    0    0    -1  
 $EndComp
-NoConn ~ 8400 4700
-Text Label 7450 4700 0    50   ~ 0
+NoConn ~ 8400 4750
+Text Label 7450 4750 0    50   ~ 0
 Anode
 Wire Wire Line
 	6500 1800 6800 1800
@@ -372,9 +372,9 @@ Anode
 Text Label 6600 3200 0    50   ~ 0
 Cathode
 Wire Wire Line
-	7450 4700 8100 4700
+	7450 4750 8100 4750
 Wire Wire Line
-	8250 4400 8250 4550
+	8250 4450 8250 4600
 $Comp
 L Connector:TestPoint_Probe TP?
 U 1 1 5FC96168

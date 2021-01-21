@@ -24,10 +24,6 @@ F 3 "~" H 5650 3350 50  0001 C CNN
 	1    5650 3350
 	0    -1   1    0   
 $EndComp
-Wire Wire Line
-	5250 3350 5400 3350
-Wire Wire Line
-	5650 3500 5650 3600
 $Comp
 L power:GND #PWR0103
 U 1 1 5FC3F65B
@@ -39,19 +35,6 @@ F 3 "" H 5650 3600 50  0001 C CNN
 	1    5650 3600
 	1    0    0    -1  
 $EndComp
-$Comp
-L Connector:Conn_01x02_Male J4
-U 1 1 5FC3F661
-P 5250 3150
-F 0 "J4" V 5550 3050 50  0000 L CNN
-F 1 "PTVoltage" V 5650 3050 50  0000 L CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 5250 3150 50  0001 C CNN
-F 3 "~" H 5250 3150 50  0001 C CNN
-	1    5250 3150
-	0    1    1    0   
-$EndComp
-Wire Wire Line
-	5150 3350 4800 3350
 Text Label 4800 3350 0    50   ~ 0
 Emitter
 $Comp
@@ -59,7 +42,7 @@ L Connector:Conn_01x02_Male J6
 U 1 1 5FC3F669
 P 5250 3900
 F 0 "J6" V 5550 3800 50  0000 L CNN
-F 1 "PTCurrent" V 5650 3800 50  0000 L CNN
+F 1 "PTCurrentShunt" V 5650 3800 50  0000 L CNN
 F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 5250 3900 50  0001 C CNN
 F 3 "~" H 5250 3900 50  0001 C CNN
 	1    5250 3900
@@ -74,93 +57,93 @@ Collector
 $Comp
 L Connector:TestPoint_Probe TP1
 U 1 1 5FC3F672
-P 6700 3700
-F 0 "TP1" H 6853 3801 50  0000 L CNN
-F 1 "TestPoint_Probe" H 6853 3710 50  0000 L CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 6900 3700 50  0001 C CNN
-F 3 "~" H 6900 3700 50  0001 C CNN
-	1    6700 3700
+P 6900 3250
+F 0 "TP1" H 7053 3351 50  0000 L CNN
+F 1 "TestPoint_Probe" H 7053 3260 50  0000 L CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 7100 3250 50  0001 C CNN
+F 3 "~" H 7100 3250 50  0001 C CNN
+	1    6900 3250
 	1    0    0    -1  
 $EndComp
 $Comp
 L Connector:TestPoint_Probe TP2
 U 1 1 5FC3F678
-P 6700 3900
-F 0 "TP2" H 6853 4001 50  0000 L CNN
-F 1 "TestPoint_Probe" H 6853 3910 50  0000 L CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 6900 3900 50  0001 C CNN
-F 3 "~" H 6900 3900 50  0001 C CNN
-	1    6700 3900
+P 6900 3450
+F 0 "TP2" H 7053 3551 50  0000 L CNN
+F 1 "TestPoint_Probe" H 7053 3460 50  0000 L CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 7100 3450 50  0001 C CNN
+F 3 "~" H 7100 3450 50  0001 C CNN
+	1    6900 3450
 	1    0    0    -1  
 $EndComp
 $Comp
 L Connector:TestPoint_Probe TP3
 U 1 1 5FC3F67E
-P 6700 4100
-F 0 "TP3" H 6853 4201 50  0000 L CNN
-F 1 "TestPoint_Probe" H 6853 4110 50  0000 L CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 6900 4100 50  0001 C CNN
-F 3 "~" H 6900 4100 50  0001 C CNN
-	1    6700 4100
+P 6900 3650
+F 0 "TP3" H 7053 3751 50  0000 L CNN
+F 1 "TestPoint_Probe" H 7053 3660 50  0000 L CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 7100 3650 50  0001 C CNN
+F 3 "~" H 7100 3650 50  0001 C CNN
+	1    6900 3650
 	1    0    0    -1  
 $EndComp
 $Comp
 L Connector:TestPoint_Probe TP4
 U 1 1 5FC3F684
-P 6700 4300
-F 0 "TP4" H 6853 4401 50  0000 L CNN
-F 1 "TestPoint_Probe" H 6853 4310 50  0000 L CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 6900 4300 50  0001 C CNN
-F 3 "~" H 6900 4300 50  0001 C CNN
-	1    6700 4300
+P 6900 3850
+F 0 "TP4" H 7053 3951 50  0000 L CNN
+F 1 "TestPoint_Probe" H 7053 3860 50  0000 L CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 7100 3850 50  0001 C CNN
+F 3 "~" H 7100 3850 50  0001 C CNN
+	1    6900 3850
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	6700 3700 6250 3700
+	6900 3250 6450 3250
 Wire Wire Line
-	6700 3900 6250 3900
+	6900 3450 6450 3450
 Wire Wire Line
-	6700 4100 6250 4100
+	6900 3650 6450 3650
 Wire Wire Line
-	6700 4300 6250 4300
-Text Label 6250 3700 0    50   ~ 0
+	6900 3850 6450 3850
+Text Label 6450 3250 0    50   ~ 0
 Cathode
-Text Label 6250 3900 0    50   ~ 0
+Text Label 6450 3450 0    50   ~ 0
 Collector
-Text Label 6250 4100 0    50   ~ 0
+Text Label 6450 3650 0    50   ~ 0
 Anode
-Text Label 6250 4300 0    50   ~ 0
+Text Label 6450 3850 0    50   ~ 0
 Emitter
 $Comp
 L Connector_Generic:Conn_02x02_Odd_Even J3
 U 1 1 5FC3F692
-P 3600 2800
-F 0 "J3" V 3604 2880 50  0000 L CNN
-F 1 "Sensor" V 3695 2880 50  0000 L CNN
-F 2 "Pin_Headers:Pin_Header_Straight_2x02_Pitch2.54mm" H 3600 2800 50  0001 C CNN
-F 3 "~" H 3600 2800 50  0001 C CNN
-	1    3600 2800
+P 3650 3800
+F 0 "J3" V 3654 3880 50  0000 L CNN
+F 1 "Sensor" V 3745 3880 50  0000 L CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x02_Pitch2.54mm" H 3650 3800 50  0001 C CNN
+F 3 "~" H 3650 3800 50  0001 C CNN
+	1    3650 3800
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	3600 2600 3600 2400
+	3650 3600 3650 3400
 Wire Wire Line
-	3600 2400 4100 2400
+	3650 3400 4150 3400
 Wire Wire Line
-	3500 2600 3500 2400
+	3550 3600 3550 3400
 Wire Wire Line
-	3500 2400 3050 2400
+	3550 3400 3100 3400
 Wire Wire Line
-	3500 3100 3500 3300
+	3550 4100 3550 4300
 Wire Wire Line
-	3500 3300 3200 3300
+	3550 4300 3250 4300
 Wire Wire Line
-	3600 3100 3600 3300
+	3650 4100 3650 4300
 Wire Wire Line
-	3600 3300 3900 3300
-Text Label 3050 2400 0    50   ~ 0
+	3650 4300 3950 4300
+Text Label 3100 3400 0    50   ~ 0
 Emitter
-Text Label 4100 2400 2    50   ~ 0
+Text Label 4150 3400 2    50   ~ 0
 Collector
 $Comp
 L power:+5V #PWR0104
@@ -173,74 +156,64 @@ F 3 "" H 5600 4100 50  0001 C CNN
 	1    5600 4100
 	1    0    0    -1  
 $EndComp
-Text HLabel 5850 1450 2    50   BiDi ~ 0
+Text HLabel 5850 2700 2    50   BiDi ~ 0
 OP+
-Text HLabel 5850 1600 2    50   BiDi ~ 0
+Text HLabel 5850 2850 2    50   BiDi ~ 0
 OP-
-Text HLabel 5850 1750 2    50   BiDi ~ 0
+Text HLabel 5850 3000 2    50   BiDi ~ 0
 OP_OUT
-Text HLabel 3200 3300 0    50   BiDi ~ 0
+Text HLabel 3250 4300 0    50   BiDi ~ 0
 Anode
-Text HLabel 3900 3300 2    50   BiDi ~ 0
+Text HLabel 3950 4300 2    50   BiDi ~ 0
 Cathode
-Text Label 3900 3300 2    50   ~ 0
+Text Label 3950 4300 2    50   ~ 0
 Cathode
-Text Label 3500 3300 2    50   ~ 0
+Text Label 3550 4300 2    50   ~ 0
 Anode
 Wire Wire Line
-	5850 1600 5600 1600
+	5850 2850 5600 2850
 Wire Wire Line
-	5600 1600 5600 1750
+	5600 2850 5600 3000
 Wire Wire Line
-	5600 1750 5850 1750
+	5600 3000 5850 3000
 Wire Wire Line
-	5400 3350 5400 1450
+	5400 3350 5400 2700
 Wire Wire Line
-	5400 1450 5850 1450
+	5400 2700 5850 2700
 Connection ~ 5400 3350
 Wire Wire Line
 	5400 3350 5500 3350
 $Comp
-L Connector:TestPoint_Probe TP9
-U 1 1 5FC933E2
-P 5400 1250
-F 0 "TP9" H 5553 1351 50  0000 L CNN
-F 1 "BufferedOut" H 5553 1260 50  0000 L CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 5600 1250 50  0001 C CNN
-F 3 "~" H 5600 1250 50  0001 C CNN
-	1    5400 1250
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	5400 1450 5400 1250
-Connection ~ 5400 1450
-$Comp
 L Connector_Generic:Conn_02x02_Odd_Even J10
 U 1 1 5FE12BB4
-P 3600 2100
-F 0 "J10" V 3604 2180 50  0000 L CNN
-F 1 "MirrorSensor" V 3695 2180 50  0000 L CNN
-F 2 "Pin_Headers:Pin_Header_Straight_2x02_Pitch2.54mm" H 3600 2100 50  0001 C CNN
-F 3 "~" H 3600 2100 50  0001 C CNN
-	1    3600 2100
+P 3650 3100
+F 0 "J10" V 3654 3180 50  0000 L CNN
+F 1 "MirrorSensor" V 3745 3180 50  0000 L CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x02_Pitch2.54mm" H 3650 3100 50  0001 C CNN
+F 3 "~" H 3650 3100 50  0001 C CNN
+	1    3650 3100
 	0    1    1    0   
 $EndComp
-Connection ~ 3600 2400
-Connection ~ 3500 2400
+Connection ~ 3650 3400
+Connection ~ 3550 3400
 Wire Wire Line
-	3500 1900 3500 1800
+	3550 2900 3550 2800
 Wire Wire Line
-	3500 1800 3200 1800
+	3550 2800 3250 2800
 Wire Wire Line
-	3600 1900 3600 1800
+	3650 2900 3650 2800
 Wire Wire Line
-	3600 1800 3900 1800
-Text HLabel 3200 1800 0    50   BiDi ~ 0
+	3650 2800 3950 2800
+Text HLabel 3250 2800 0    50   BiDi ~ 0
 Anode
-Text HLabel 3900 1800 2    50   BiDi ~ 0
+Text HLabel 3950 2800 2    50   BiDi ~ 0
 Cathode
-Text Label 3900 1800 2    50   ~ 0
+Text Label 3950 2800 2    50   ~ 0
 Cathode
-Text Label 3500 1800 2    50   ~ 0
+Text Label 3550 2800 2    50   ~ 0
 Anode
+Wire Wire Line
+	4800 3350 5400 3350
+Wire Wire Line
+	5650 3500 5650 3600
 $EndSCHEMATC
