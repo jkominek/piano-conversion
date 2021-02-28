@@ -10,10 +10,11 @@ Later work may expand that scope.
 It was inspired by Evgeni Kumanov (CyberGene)'s "Cybrid" controller:
 https://github.com/ekumanov/cybrid/
 
-# Warning
+# Warning!
 
-Not only are the hardware designs unfinished, they have not been
-fabricated, tested, or had firmware written for them.
+The hardware designs are unfinished. Some have not been fabricated.
+Most have barely been tested, and there is no published firmware for
+any of them.
 
 See the [Status page](https://github.com/jkominek/piano-conversion/wiki/Status) for where things stand.
 
@@ -40,10 +41,10 @@ See the [Status page](https://github.com/jkominek/piano-conversion/wiki/Status) 
     space if you don't need them.
 * pedal-board
   * 4 1/4" TRS jacks for common MIDI keyboard pedals. 8 channel ADC for reading the values; 4 used for the jacks, the others on headers if you want them.
-* sensorboard-1x
-  * Holds a single CNY70 and 2x2 0.100" header for connecting to power and ADC.
 * sensorboard-tester
   * For development/manufacture only, for testing/measuring sensorboards/CNY70s.
+* sensorboards
+  * Directory with a variety of board configurations for holding CNY70 sensors.
 
 To put a sensor on every hammer and key of an 88 key piano, you would need:
 
