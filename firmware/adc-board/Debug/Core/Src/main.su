@@ -1,0 +1,17 @@
+core_cm7.h:2156:34:__NVIC_SystemReset	4	static,ignoring_inline_asm
+main.c:134:5:main	32	static,ignoring_inline_asm
+main.c:263:6:SystemClock_Config	152	static
+main.c:337:6:PeriphCommonClock_Config	200	static
+main.c:375:13:MX_ADC1_Init	48	static
+main.c:488:13:MX_ADC2_Init	40	static
+main.c:593:13:MX_ADC3_Init	40	static
+main.c:706:13:MX_TIM2_Init	24	static
+main.c:745:13:MX_TIM4_Init	64	static
+main.c:803:13:MX_USART1_UART_Init	8	static
+main.c:851:13:MX_USART2_UART_Init	8	static
+main.c:899:13:MX_USART3_UART_Init	8	static
+main.c:945:13:MX_DMA_Init	16	static
+main.c:973:13:MX_GPIO_Init	56	static
+main.c:1031:6:HAL_TIM_PeriodElapsedCallback	16	static
+main.c:1056:6:HAL_ADC_ConvCpltCallback	96	static
+main.c:1167:6:Error_Handler	8	static

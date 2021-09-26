@@ -1,0 +1,5 @@
+core_cm7.h:2156:34:__NVIC_SystemReset	4	static,ignoring_inline_asm
+hdlc.c:24:6:HDLC_Init	16	static
+hdlc.c:50:6:HDLC_Send_Frame	56	dynamic
+hdlc.c:87:6:HDLC_Process_Frame	56	static
+hdlc.c:140:6:HDLC_Process_Input	32	static
