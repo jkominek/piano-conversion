@@ -26,7 +26,10 @@ axs[0].set_ylim(bottom=0)
 axs[0].set_ylabel('signals')
 axs[0].grid(True)
 
-cxy, f = axs[1].cohere(s1, s2, 256, 1. / dt)
+try:
+    cxy, f = axs[1].cohere(s1, s2, 256, 1. / dt)
+except ValueError:
+    pass
 axs[1].set_ylabel('coherence')
 
 fig.tight_layout()
