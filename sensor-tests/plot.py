@@ -1,12 +1,19 @@
+#!/usr/bin/env python3
+
 import numpy as np
 import matplotlib.pyplot as plt
+import argparse
 
 #plt.style.use('fivethirtyeight')
 #plt.xkcd() 
 
-s1 = np.loadtxt("test.txt", usecols=0).flatten()
-s2 = np.loadtxt("test.txt", usecols=1).flatten()
-s3 = np.loadtxt("test.txt", usecols=2).flatten()
+parser = argparse.ArgumentParser()
+parser.add_argument("filename")
+args = parser.parse_args()
+
+s1 = np.loadtxt(args.filename, usecols=0).flatten()
+s2 = np.loadtxt(args.filename, usecols=1).flatten()
+s3 = np.loadtxt(args.filename, usecols=2).flatten()
 
 dt = 0.05 
 t = dt * np.arange(len(s1))
@@ -23,4 +30,5 @@ cxy, f = axs[1].cohere(s1, s2, 256, 1. / dt)
 axs[1].set_ylabel('coherence')
 
 fig.tight_layout()
-plt.savefig("a.png", dpi=300)
+
+plt.savefig(args.filename[:-4] + ".png", dpi=300)
