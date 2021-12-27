@@ -16,8 +16,11 @@ int main() {
     // 0b0111 = 0x07 is all of them 
     adc_set_round_robin(7);
 
-    int interval = 500;
-    printf("Interval of %dms", interval);
+    // some time to start minicom or similar
+    sleep_ms(2000);
+
+    int interval = 50;
+    printf("Interval of %dms\n", interval);
     uint16_t r1, r2, r3;
     while (1) {
         r1 = adc_read();
