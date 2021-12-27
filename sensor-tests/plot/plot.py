@@ -20,6 +20,7 @@ t = dt * np.arange(len(s1))
 
 fig, axs = plt.subplots(2, 1)
 axs[0].plot(t, s1, t, s2, t, s3)
+axs[0].legend(["CNY70", "QRE1113", "EAITRCA6"])
 axs[0].set_xlim(0, t[-1])
 axs[0].set_xlabel('time')
 axs[0].set_ylim(bottom=0)
