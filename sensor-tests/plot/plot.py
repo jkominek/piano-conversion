@@ -39,4 +39,4 @@ axs[1].set_ylabel('coherence')
 
 fig.tight_layout()
 
-plt.savefig(args.filename[:-4] + ".png", dpi=300)
+plt.savefig(args.filename[:-4] + ".png", dpi=300, bbox_inches='tight')
