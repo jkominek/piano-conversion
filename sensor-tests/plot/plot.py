@@ -50,28 +50,39 @@ def display_scroll(data_gen):
     def init():
         ax.set_ylim(0, MAX_VAL)
         ax.set_xlim(0, 10)
-        del xdata[:]
-        del ydata[:]
-        line.set_data(xdata, ydata)
-        return line,
+        for line in lines:
+            line.set_data([],[])
+        return lines
 
     def run(data):
         # update the data
-        t, y = data
-        xdata.append(t)
-        ydata.append(y)
+        t1, y1, t2, y2 = data
+        xdata1.append(t1)
+        ydata1.append(y1)
+        xdata2.append(t2)
+        ydata2.append(y2)
         xmin, xmax = ax.get_xlim()
 
-        if t >= xmax:
+        if t1 >= xmax:
             ax.set_xlim(xmin+dt, xmax+dt)
             ax.figure.canvas.draw()
-        line.set_data(xdata, ydata)
+
+        #for lnum,line in enumerate(lines):
+        #    line.set_data(xlist[lnum], ylist[lnum])
+        lines[0].set_data(xdata1, ydata1)
+        lines[1].set_data(xdata2, ydata2)
         return line,
 
     fig, ax = plt.subplots()
     line, = ax.plot([], [], lw=2)
     ax.grid()
-    xdata, ydata = [], []
+    xdata1, ydata1 = [], []
+    xdata2, ydata2 = [], []
+
+    lines = []
+    for index in range(2):
+        lines.append(ax.plot([],[],lw=2)[0])
+
     ani = animation.FuncAnimation(fig, run, data_gen, blit=False, interval=10, repeat=False, init_func=init)
     plt.show()
 
@@ -85,7 +96,7 @@ else:
             t = -dt
             while (True):
                 t +=dt
-                yield t, random.randrange(MAX_VAL)
+                yield t, random.randrange(MAX_VAL), t, random.randrange(MAX_VAL)
         data = random_data
     else:
         def real_data():
