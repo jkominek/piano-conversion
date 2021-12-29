@@ -103,18 +103,18 @@ def get_USB_data():
               timeout=1
             )
             prefix = ser.readline()
-            to_be_yield = lambda : (yield ser.readline())
+            next_data = ser.readline
             break
         except serial.serialutil.SerialException as e:
             if "could not open port /dev/ttyACM0" in str(e):
                 if tries == 10:
                     print("too many failures, bailing out")
-                    prefix = "Interval of 50ms. Number of ADC is 3"
-                    def to_be_yield():
-                        output = ""
+                    prefix = b'Interval of 50ms. Number of ADC is 3\r\n'
+                    def next_data():
+                        output = b""
                         for i in range(parse_prefix(prefix)[1]):
-                            output += str(500*(i+1)) + ", "
-                        yield output[:-2]
+                            output += str(500*(i+1)).encode() + b", "
+                        return output[:-2]
                     break
                 else:
                     print("could not open port /dev/ttyACM0, retrying")
@@ -123,6 +123,8 @@ def get_USB_data():
             else:
                 raise e
 
+    prefix = prefix.decode().strip()
+    print(prefix)
     parsed = parse_prefix(prefix)
     yield (parsed[0], parsed[1])
 
@@ -132,8 +134,7 @@ def get_USB_data():
     value_format = value_format[:-2]
 
     while(True):
-        data = to_be_yield()
-        parsed = parse(value_format, next(data))
+        parsed = parse(value_format, next_data().decode().strip())
         to_be_returned = []
         for x in parsed:
             to_be_returned.append(int(x))
