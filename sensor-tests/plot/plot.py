@@ -95,17 +95,18 @@ def get_USB_data():
     while(True):
         try:
             ser = serial.Serial(
-              port='/dev/ttyUSB0',
+              port='/dev/ttyACM0',
               baudrate = 115200,
               parity=serial.PARITY_NONE,
               stopbits=serial.STOPBITS_ONE,
               bytesize=serial.EIGHTBITS,
               timeout=1
             )
-            prefix = ser.read()
-            to_be_yield = lambda : (yield ser.read())
+            prefix = ser.readline()
+            to_be_yield = lambda : (yield ser.readline())
+            break
         except serial.serialutil.SerialException as e:
-            if "could not open port /dev/ttyUSB0" in str(e):
+            if "could not open port /dev/ttyACM0" in str(e):
                 if tries == 10:
                     print("too many failures, bailing out")
                     prefix = "Interval of 50ms. Number of ADC is 3"
@@ -116,7 +117,7 @@ def get_USB_data():
                         yield output[:-2]
                     break
                 else:
-                    print("could not open port /dev/ttyUSB0, retrying")
+                    print("could not open port /dev/ttyACM0, retrying")
                     tries += 1
                     time.sleep(1)
             else:
