@@ -20,7 +20,7 @@ int main() {
     sleep_ms(2000);
 
     int interval = 50;
-    printf("Interval of %dms\n", interval);
+    printf("Interval of %dms. Number of ADC is %d\n", interval, 3);
     uint16_t r1, r2, r3;
     while (1) {
         r1 = adc_read();
