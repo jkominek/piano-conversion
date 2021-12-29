@@ -56,28 +56,27 @@ def display_scroll(data_gen):
 
     def run(data):
         # update the data
-        t1, y1, t2, y2 = data
-        xdata1.append(t1)
+        t, y1, y2 = data
+        xdata.append(t)
         ydata1.append(y1)
-        xdata2.append(t2)
         ydata2.append(y2)
         xmin, xmax = ax.get_xlim()
 
-        if t1 >= xmax:
+        if t >= xmax:
             ax.set_xlim(xmin+dt, xmax+dt)
             ax.figure.canvas.draw()
 
         #for lnum,line in enumerate(lines):
         #    line.set_data(xlist[lnum], ylist[lnum])
-        lines[0].set_data(xdata1, ydata1)
-        lines[1].set_data(xdata2, ydata2)
+        lines[0].set_data(xdata, ydata1)
+        lines[1].set_data(xdata, ydata2)
         return line,
 
     fig, ax = plt.subplots()
     line, = ax.plot([], [], lw=2)
     ax.grid()
-    xdata1, ydata1 = [], []
-    xdata2, ydata2 = [], []
+    xdata = []
+    ydata1, ydata2 = [], []
 
     lines = []
     for index in range(2):
@@ -96,14 +95,14 @@ else:
             t = -dt
             while (True):
                 t +=dt
-                yield t, random.randrange(MAX_VAL), t, random.randrange(MAX_VAL)
+                yield t, random.randrange(MAX_VAL), random.randrange(MAX_VAL)
         data = random_data
     else:
         def real_data():
             t = -dt
             while (True):
                 t +=dt
-                yield t, 500 # must communicate with minicom
+                yield t, 500, 1000 # must communicate with minicom for actual data
         data = real_data
 
     display_scroll(data)
