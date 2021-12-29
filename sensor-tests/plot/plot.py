@@ -84,7 +84,8 @@ def display_scroll(data_gen):
     ani = animation.FuncAnimation(fig, run, data_gen, blit=False, interval=10, repeat=False, init_func=init)
     plt.show()
 
-import serial, time, parse
+import serial, time
+from parse import parse
 def get_USB_data():
     not_connected = True
     tries = 0
@@ -118,7 +119,8 @@ def get_USB_data():
             else:
                 raise e
 
-    yield prefix                      # need to parse
+    parsed = parse("Interval of {}ms. Number of ADC is {}", prefix)
+    yield (int(parsed[0])/1000, int(parsed[1]))
     while(True):
         yield to_be_yield()           # need to parse
 
@@ -140,7 +142,7 @@ else:
                 yield output
         data = random_data
     else:
-        dt, KEY_SENSORS = get_USB_data()
+        dt, KEY_SENSORS = next(get_USB_data())
         def real_data():
             t = -dt
             while (True):
