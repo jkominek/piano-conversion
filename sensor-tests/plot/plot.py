@@ -86,10 +86,13 @@ def display_scroll(data_gen):
 
 import serial, time
 from parse import parse
+def parse_prefix(prefix):
+    parsed = parse("Interval of {}ms. Number of ADC is {}", prefix)
+    return int(parsed[0])/1000, int(parsed[1])
+
 def get_USB_data():
-    not_connected = True
     tries = 0
-    while(not_connected):
+    while(True):
         try:
             ser = serial.Serial(
               port='/dev/ttyUSB0',
@@ -100,7 +103,7 @@ def get_USB_data():
               timeout=1
             )
             prefix = ser.read()
-            to_be_yield = ser.read
+            to_be_yield = lambda : (yield ser.read())
         except serial.serialutil.SerialException as e:
             if "could not open port /dev/ttyUSB0" in str(e):
                 if tries == 10:
@@ -108,10 +111,10 @@ def get_USB_data():
                     prefix = "Interval of 50ms. Number of ADC is 3"
                     def to_be_yield():
                         output = ""
-                        for i in range(int(prefix[-1])):
-                            output += str(100*i) + ","
-                        yield output[:-1]
-                    not_connected = False
+                        for i in range(parse_prefix(prefix)[1]):
+                            output += str(500*(i+1)) + ", "
+                        yield output[:-2]
+                    break
                 else:
                     print("could not open port /dev/ttyUSB0, retrying")
                     tries += 1
@@ -119,10 +122,21 @@ def get_USB_data():
             else:
                 raise e
 
-    parsed = parse("Interval of {}ms. Number of ADC is {}", prefix)
-    yield (int(parsed[0])/1000, int(parsed[1]))
+    parsed = parse_prefix(prefix)
+    yield (parsed[0], parsed[1])
+
+    value_format = ""
+    for i in range(parsed[1]):
+        value_format += "{}, "
+    value_format = value_format[:-2]
+
     while(True):
-        yield to_be_yield()           # need to parse
+        data = to_be_yield()
+        parsed = parse(value_format, next(data))
+        to_be_returned = []
+        for x in parsed:
+            to_be_returned.append(int(x))
+        yield to_be_returned
 
 
 if args.filename:
@@ -142,13 +156,14 @@ else:
                 yield output
         data = random_data
     else:
-        dt, KEY_SENSORS = next(get_USB_data())
+        USB = get_USB_data()
+        dt, KEY_SENSORS = next(USB)
         def real_data():
             t = -dt
             while (True):
                 t +=dt
                 output = [t]
-                curr_data = get_USB_data()
+                curr_data = next(USB)
                 for d in curr_data:
                     output.append(d)
                 yield output
