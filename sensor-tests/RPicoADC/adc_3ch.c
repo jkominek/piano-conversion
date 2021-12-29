@@ -26,7 +26,7 @@ int main() {
         r1 = adc_read();
         r2 = adc_read();
         r3 = adc_read();
-        printf("0x%03x 0x%03x 0x%03x\n", r1, r2, r3);
+        printf("%d, %d, %d\n", r1, r2, r3);
         sleep_ms(interval);
     }
 }
