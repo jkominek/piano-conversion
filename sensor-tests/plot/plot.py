@@ -2,6 +2,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib import animation
 import argparse
 
 #plt.style.use('fivethirtyeight')
@@ -12,12 +13,14 @@ parser.add_argument("--filename")
 parser.add_argument("--dummy", action='store_true')
 args = parser.parse_args()
 
+dt = 0.05
+MAX_VAL=4095
+
 def plot(args):    
     s1 = np.loadtxt(args.filename, usecols=0).flatten()
     s2 = np.loadtxt(args.filename, usecols=1).flatten()
     s3 = np.loadtxt(args.filename, usecols=2).flatten()
 
-    dt = 0.05 
     t = dt * np.arange(len(s1))
 
     fig, axs = plt.subplots(2, 1)
@@ -43,10 +46,55 @@ def plot(args):
 
     plt.savefig(args.filename[:-4] + ".png", dpi=300, bbox_inches='tight')
 
+def display_scroll(data_gen):
+    def init():
+        ax.set_ylim(0, MAX_VAL)
+        ax.set_xlim(0, 10)
+        del xdata[:]
+        del ydata[:]
+        line.set_data(xdata, ydata)
+        return line,
+
+    def run(data):
+        # update the data
+        t, y = data
+        xdata.append(t)
+        ydata.append(y)
+        xmin, xmax = ax.get_xlim()
+
+        if t >= xmax:
+            ax.set_xlim(xmin, 2*xmax)
+            ax.figure.canvas.draw()
+        line.set_data(xdata, ydata)
+        return line,
+
+    fig, ax = plt.subplots()
+    line, = ax.plot([], [], lw=2)
+    ax.grid()
+    xdata, ydata = [], []
+    ani = animation.FuncAnimation(fig, run, data_gen, blit=False, interval=10, repeat=False, init_func=init)
+    plt.show()
+
 
 if args.filename:
     plot(args)
 else:
-    print("TBD")
+    if args.dummy:
+        import random
+        def random_data():
+            t = -dt
+            while (True):
+                t +=dt
+                yield t, random.randrange(MAX_VAL)
+        data = random_data
+    else:
+        def real_data():
+            t = -dt
+            while (True):
+                t +=dt
+                yield t, 500 # must communicate with minicom
+        data = real_data
+
+    display_scroll(data)
 
 
