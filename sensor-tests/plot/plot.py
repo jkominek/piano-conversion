@@ -15,6 +15,7 @@ args = parser.parse_args()
 
 dt = 0.05
 MAX_VAL=4095
+KEY_SENSORS=9
 
 def plot(args):    
     s1 = np.loadtxt(args.filename, usecols=0).flatten()
@@ -56,30 +57,30 @@ def display_scroll(data_gen):
 
     def run(data):
         # update the data
-        t, y1, y2 = data
+        t, *y = data
         xdata.append(t)
-        ydata1.append(y1)
-        ydata2.append(y2)
+        for i, yi in enumerate(y):
+            ydata[i].append(yi)
         xmin, xmax = ax.get_xlim()
 
         if t >= xmax:
             ax.set_xlim(xmin+dt, xmax+dt)
             ax.figure.canvas.draw()
 
-        #for lnum,line in enumerate(lines):
-        #    line.set_data(xlist[lnum], ylist[lnum])
-        lines[0].set_data(xdata, ydata1)
-        lines[1].set_data(xdata, ydata2)
-        return line,
+        for i,line in enumerate(lines):
+            line.set_data(xdata, ydata[i])
+        return lines,
 
     fig, ax = plt.subplots()
     line, = ax.plot([], [], lw=2)
     ax.grid()
     xdata = []
-    ydata1, ydata2 = [], []
+    ydata = [] 
+    for i in range(KEY_SENSORS):
+        ydata.append([])
 
     lines = []
-    for index in range(2):
+    for i in range(KEY_SENSORS):
         lines.append(ax.plot([],[],lw=2)[0])
 
     ani = animation.FuncAnimation(fig, run, data_gen, blit=False, interval=10, repeat=False, init_func=init)
@@ -95,14 +96,20 @@ else:
             t = -dt
             while (True):
                 t +=dt
-                yield t, random.randrange(MAX_VAL), random.randrange(MAX_VAL)
+                output = [t]
+                for i in range(KEY_SENSORS):
+                    output.append(random.randrange(MAX_VAL))
+                yield output
         data = random_data
     else:
-        def real_data():
+        def real_data():      # must communicate with minicom for actual data
             t = -dt
             while (True):
                 t +=dt
-                yield t, 500, 1000 # must communicate with minicom for actual data
+                output = [t]
+                for i in range(KEY_SENSORS):
+                    output.append(100 * (i + 1))
+                yield output
         data = real_data
 
     display_scroll(data)
