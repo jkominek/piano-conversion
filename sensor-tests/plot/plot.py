@@ -84,6 +84,44 @@ def display_scroll(data_gen):
     ani = animation.FuncAnimation(fig, run, data_gen, blit=False, interval=10, repeat=False, init_func=init)
     plt.show()
 
+import serial, time, parse
+def get_USB_data():
+    not_connected = True
+    tries = 0
+    while(not_connected):
+        try:
+            ser = serial.Serial(
+              port='/dev/ttyUSB0',
+              baudrate = 115200,
+              parity=serial.PARITY_NONE,
+              stopbits=serial.STOPBITS_ONE,
+              bytesize=serial.EIGHTBITS,
+              timeout=1
+            )
+            prefix = ser.read()
+            to_be_yield = ser.read
+        except serial.serialutil.SerialException as e:
+            if "could not open port /dev/ttyUSB0" in str(e):
+                if tries == 10:
+                    print("too many failures, bailing out")
+                    prefix = "Interval of 50ms. Number of ADC is 3"
+                    def to_be_yield():
+                        output = ""
+                        for i in range(int(prefix[-1])):
+                            output += str(100*i) + ","
+                        yield output[:-1]
+                    not_connected = False
+                else:
+                    print("could not open port /dev/ttyUSB0, retrying")
+                    tries += 1
+                    time.sleep(1)
+            else:
+                raise e
+
+    yield prefix                      # need to parse
+    while(True):
+        yield to_be_yield()           # need to parse
+
 
 if args.filename:
     plot(args)
@@ -102,16 +140,15 @@ else:
                 yield output
         data = random_data
     else:
-        # must communicate with minicom for actual data
-        dt = 0.05
-        KEY_SENSORS=3
+        dt, KEY_SENSORS = get_USB_data()
         def real_data():
             t = -dt
             while (True):
                 t +=dt
                 output = [t]
-                for i in range(KEY_SENSORS):
-                    output.append(100 * (i + 1))
+                curr_data = get_USB_data()
+                for d in curr_data:
+                    output.append(d)
                 yield output
         data = real_data
 
