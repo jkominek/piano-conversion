@@ -13,9 +13,7 @@ parser.add_argument("--filename")
 parser.add_argument("--dummy", action='store_true')
 args = parser.parse_args()
 
-dt = 0.05
 MAX_VAL=4095
-KEY_SENSORS=9
 
 def plot(args):    
     s1 = np.loadtxt(args.filename, usecols=0).flatten()
@@ -91,6 +89,8 @@ if args.filename:
     plot(args)
 else:
     if args.dummy:
+        dt = 0.05
+        KEY_SENSORS=9
         import random
         def random_data():
             t = -dt
@@ -102,7 +102,10 @@ else:
                 yield output
         data = random_data
     else:
-        def real_data():      # must communicate with minicom for actual data
+        # must communicate with minicom for actual data
+        dt = 0.05
+        KEY_SENSORS=3
+        def real_data():
             t = -dt
             while (True):
                 t +=dt
