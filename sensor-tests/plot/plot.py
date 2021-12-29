@@ -63,7 +63,7 @@ def display_scroll(data_gen):
         xmin, xmax = ax.get_xlim()
 
         if t >= xmax:
-            ax.set_xlim(xmin, 2*xmax)
+            ax.set_xlim(xmin+dt, xmax+dt)
             ax.figure.canvas.draw()
         line.set_data(xdata, ydata)
         return line,
