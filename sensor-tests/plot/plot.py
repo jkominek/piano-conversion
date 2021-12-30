@@ -16,9 +16,15 @@ args = parser.parse_args()
 
 MAX_VAL=4095
 
-def play(note, distance):
+import mido
+outport = mido.open_output()
+def play(note, distance, wait=False):
     if distance < 1000: #MAX_VAL/512:
         print("play note", 60+note, "with hammer distance", distance)
+        msg = mido.Message('note_on', note=60+note, velocity = distance*3 % 128)
+        outport.send(msg)
+        if wait:
+            time.sleep(1)
 
 def plot(args):    
     s1 = np.loadtxt(args.filename, usecols=0).flatten()
@@ -182,5 +188,5 @@ else:
     else:
         for t, *distances in data():
             for i, yi in enumerate(distances):
-                play(i, yi)
+                play(i, yi, wait=True)
 
