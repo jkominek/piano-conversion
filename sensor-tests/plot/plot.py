@@ -11,9 +11,14 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--filename")
 parser.add_argument("--dummy", action='store_true')
+parser.add_argument("--graph", action='store_true')
 args = parser.parse_args()
 
 MAX_VAL=4095
+
+def play(note, distance):
+    if distance < 1000: #MAX_VAL/512:
+        print("play note", 60+note, "with hammer distance", distance)
 
 def plot(args):    
     s1 = np.loadtxt(args.filename, usecols=0).flatten()
@@ -58,6 +63,7 @@ def display_scroll(data_gen):
         t, *y = data
         xdata.append(t)
         for i, yi in enumerate(y):
+            play(i, yi)
             ydata[i].append(yi)
         xmin, xmax = ax.get_xlim()
 
@@ -171,6 +177,10 @@ else:
                 yield output
         data = real_data
 
-    display_scroll(data)
-
+    if args.graph:
+        display_scroll(data)
+    else:
+        for t, *distances in data():
+            for i, yi in enumerate(distances):
+                play(i, yi)
 
