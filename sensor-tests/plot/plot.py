@@ -164,9 +164,6 @@ else:
         KEY_SENSORS=9
         import random
         def random_data():
-            #parsed = parse_prefix(
-            #        'Interval of {}ms. Number of ADC is {}'.format(int(dt*1000),KEY_SENSORS))
-            #yield (parsed[0], parsed[1])
             yield '# Interval of {}ms. Number of ADC is {}\n'.format(int(dt*1000),KEY_SENSORS)
             t = -dt
             while (True):
@@ -180,6 +177,7 @@ else:
         USB = get_USB_data()
         dt, KEY_SENSORS = next(USB)
         def real_data():
+            yield '# Interval of {}ms. Number of ADC is {}\n'.format(int(dt*1000),KEY_SENSORS)
             t = -dt
             while (True):
                 t +=dt
