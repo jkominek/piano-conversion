@@ -63,7 +63,9 @@ def plot(args):
 
     fig.tight_layout()
 
-    plt.savefig(args.load[:-4] + ".png", dpi=300, bbox_inches='tight')
+    out_filename = args.load[:-4] + ".png"
+    plt.savefig(out_filename, dpi=300, bbox_inches='tight')
+    print("Plot saved into", out_filename)
 
 def display_scroll(data_gen):
     def init():
@@ -132,7 +134,7 @@ def get_USB_data():
                         return output[:-2]
                     break
                 else:
-                    print("could not open port /dev/ttyACM0, retrying")
+                    print("could not open port /dev/ttyACM0, retrying (check cables and that you are root)")
                     tries += 1
                     time.sleep(1)
             else:
