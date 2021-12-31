@@ -8,10 +8,13 @@ import argparse
 #plt.style.use('fivethirtyeight')
 #plt.xkcd() 
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--filename")
-parser.add_argument("--dummy", action='store_true')
-parser.add_argument("--graph", action='store_true')
+parser = argparse.ArgumentParser(description="Get data from /dev/ttyACM0 from USB (no argument required) " +
+          "or from a file (--load argument) or generated randomly (--dummy argument). Data can be " +
+          "1) displayed in an oscilloscope-like window (no argument required) or "
+          "2) saved in a TXT file (--save argument)  or as an image in a PNG file (implicit from --load argument)")
+parser.add_argument("--load", help="Load file LOAD with TXT extension and plot its content in LOAD.PNG")
+parser.add_argument("--dummy", help="Use random data instead of connecting to USB", action='store_true')
+parser.add_argument("--save", help="Save data in a file named SAVE for later plotting")
 args = parser.parse_args()
 
 MAX_VAL=4095
@@ -20,10 +23,22 @@ def play(note, distance):
     if distance < 1000: #MAX_VAL/512:
         print("play note", 60+note, "with hammer distance", distance)
 
-def plot(args):    
-    s1 = np.loadtxt(args.filename, usecols=0).flatten()
-    s2 = np.loadtxt(args.filename, usecols=1).flatten()
-    s3 = np.loadtxt(args.filename, usecols=2).flatten()
+import serial, time
+from parse import parse
+def parse_prefix(prefix):
+    print(prefix)
+    parsed = parse("Interval of {}ms. Number of ADC is {}", prefix)
+    return int(parsed[0])/1000, int(parsed[1])
+
+def plot(args):
+    f=open(args.load, 'r')
+    dt, KEY_SENSORS = parse_prefix(f.readline().replace("#", " ").strip())
+    f.close()
+
+    print("hardcoding 3 ADCs instead of what is in the file")
+    s1 = np.loadtxt(args.load, usecols=0).flatten()
+    s2 = np.loadtxt(args.load, usecols=1).flatten()
+    s3 = np.loadtxt(args.load, usecols=2).flatten()
 
     t = dt * np.arange(len(s1))
 
@@ -48,7 +63,7 @@ def plot(args):
 
     fig.tight_layout()
 
-    plt.savefig(args.filename[:-4] + ".png", dpi=300, bbox_inches='tight')
+    plt.savefig(args.load[:-4] + ".png", dpi=300, bbox_inches='tight')
 
 def display_scroll(data_gen):
     def init():
@@ -89,12 +104,6 @@ def display_scroll(data_gen):
 
     ani = animation.FuncAnimation(fig, run, data_gen, blit=False, interval=10, repeat=False, init_func=init)
     plt.show()
-
-import serial, time
-from parse import parse
-def parse_prefix(prefix):
-    parsed = parse("Interval of {}ms. Number of ADC is {}", prefix)
-    return int(parsed[0])/1000, int(parsed[1])
 
 def get_USB_data():
     tries = 0
@@ -147,7 +156,7 @@ def get_USB_data():
         yield to_be_returned
 
 
-if args.filename:
+if args.load:
     plot(args)
 else:
     if args.dummy:
@@ -155,6 +164,10 @@ else:
         KEY_SENSORS=9
         import random
         def random_data():
+            #parsed = parse_prefix(
+            #        'Interval of {}ms. Number of ADC is {}'.format(int(dt*1000),KEY_SENSORS))
+            #yield (parsed[0], parsed[1])
+            yield '# Interval of {}ms. Number of ADC is {}\n'.format(int(dt*1000),KEY_SENSORS)
             t = -dt
             while (True):
                 t +=dt
@@ -177,10 +190,16 @@ else:
                 yield output
         data = real_data
 
-    if args.graph:
+    if not args.save:
         display_scroll(data)
     else:
-        for t, *distances in data():
-            for i, yi in enumerate(distances):
-                play(i, yi)
+        with open(args.save, "w") as f:
+            for d in data():
+                if type(d) is str and d.startswith("#"):
+                    f.write(d)
+                else:
+                    t, *distances = d
+                    f.write(" ".join([str(d) for d in distances]) + "\n")
+                    for i, yi in enumerate(distances):
+                        play(i, yi)
 
