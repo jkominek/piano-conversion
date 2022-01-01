@@ -15,6 +15,7 @@ parser = argparse.ArgumentParser(description="Get data from /dev/ttyACM0 from US
 parser.add_argument("--load", help="Load file LOAD with TXT extension and plot its content in LOAD.PNG")
 parser.add_argument("--dummy", help="Use random data instead of connecting to USB", action='store_true')
 parser.add_argument("--save", help="Save data in a file named SAVE for later plotting")
+parser.add_argument("--no-cohere", help="Do not include cohere panel in the saved PNG", action='store_true')
 args = parser.parse_args()
 
 MAX_VAL=4095
@@ -48,7 +49,7 @@ def plot(args):
     t = dt * np.arange(len(s[0]))
 
     fig, axs = 1,1
-    if KEY_SENSORS == 3:
+    if KEY_SENSORS == 3 and not args.no_cohere:
         fig, axs = plt.subplots(2, 1)
     else:
         fig, ax_one = plt.subplots(1, 1)
@@ -56,14 +57,14 @@ def plot(args):
 
     for i in range(KEY_SENSORS):
         axs[0].plot(t, s[i])
+    axs[0].legend(["CNY70", "QRE1113", "EAITRCA6"], ncol=1, bbox_to_anchor=(1,1), loc="upper left")
     axs[0].set_xlim(0, t[-1])
     axs[0].set_xlabel('time')
     axs[0].set_ylim(bottom=0)
     axs[0].set_ylabel('signals')
     axs[0].grid(True)
 
-    if KEY_SENSORS == 3:
-        axs[0].legend(["CNY70", "QRE1113", "EAITRCA6"], ncol=1, bbox_to_anchor=(1,1), loc="upper left")
+    if KEY_SENSORS == 3 and not args.no_cohere:
         try:
             cxy1, f1 = axs[1].cohere(s[0], s[1], 256, 1. / dt, label="\nCNY70\nQRE1113\n")
             cxy2, f2 = axs[1].cohere(s[0], s[2], 256, 1. / dt, label="\nCNY70\nEAITRCA6\n")
