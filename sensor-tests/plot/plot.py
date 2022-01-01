@@ -27,7 +27,7 @@ def play(note, distance, wait=False):
         msg = mido.Message('note_on', note=60+note, velocity = distance*3 % 128)
         outport.send(msg)
         if wait:
-            time.sleep(1)
+            time.sleep(wait)
 
 import serial, time
 from parse import parse
@@ -210,5 +210,5 @@ else:
                 t, *distances = d
                 f.write(" ".join([str(d) for d in distances]) + "\n")
                 for i, yi in enumerate(distances):
-                    play(i, yi, wait=True)
+                    play(i, yi, wait=dt)
 
