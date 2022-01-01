@@ -140,9 +140,10 @@ def get_USB_data():
                 if tries == 10:
                     print("too many failures, bailing out")
                     prefix = b'Interval of 50ms. Number of ADC is 3\r\n'
+                    KEY_SENSORS = parse_prefix(prefix.decode().strip())[1]
                     def next_data():
                         output = b""
-                        for i in range(parse_prefix(prefix)[1]):
+                        for i in range(KEY_SENSORS):
                             output += str(500*(i+1)).encode() + b", "
                         return output[:-2]
                     break
@@ -154,7 +155,6 @@ def get_USB_data():
                 raise e
 
     prefix = prefix.decode().strip()
-    print(prefix)
     parsed = parse_prefix(prefix)
     yield (parsed[0], parsed[1])
 
