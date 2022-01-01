@@ -166,7 +166,6 @@ else:
         KEY_SENSORS=9
         import random
         def random_data():
-            yield '# Interval of {}ms. Number of ADC is {}\n'.format(int(dt*1000),KEY_SENSORS)
             t = -dt
             while (True):
                 t +=dt
@@ -179,7 +178,6 @@ else:
         USB = get_USB_data()
         dt, KEY_SENSORS = next(USB)
         def real_data():
-            yield '# Interval of {}ms. Number of ADC is {}\n'.format(int(dt*1000),KEY_SENSORS)
             t = -dt
             while (True):
                 t +=dt
@@ -194,12 +192,10 @@ else:
         display_scroll(data)
     else:
         with open(args.save, "w") as f:
+            f.write('# Interval of {}ms. Number of ADC is {}\n'.format(int(dt*1000),KEY_SENSORS))
             for d in data():
-                if type(d) is str and d.startswith("#"):
-                    f.write(d)
-                else:
-                    t, *distances = d
-                    f.write(" ".join([str(d) for d in distances]) + "\n")
-                    for i, yi in enumerate(distances):
-                        play(i, yi)
+                t, *distances = d
+                f.write(" ".join([str(d) for d in distances]) + "\n")
+                for i, yi in enumerate(distances):
+                    play(i, yi)
 
