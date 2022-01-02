@@ -1,5 +1,10 @@
 # Summary
-I tested an Everligth EAITRCA6 a QRE1113 preassembled by sparkfun in the center (https://www.sparkfun.com/products/9453) and a well-known CNY70 by VISHAY on the right. The datasheet for the QRE1113 reports a response time of 20us, whereas the EAITRCA6's one depends on the load resistance (page 5 of the datasheet). The CNY70 datasheet does not mention time. The first two are quite smaller than the third, which (depending on your goals) can be a pro or a con. For me smaller is better.
+I tested an Everligth EAITRCA6 a QRE1113 preassembled by sparkfun in the center (https://www.sparkfun.com/products/9453) and a well-known CNY70 by VISHAY on the right. The datasheet for the QRE1113 reports a response time of 20us, whereas the EAITRCA6's one depends on the load resistance (page 5 of the datasheet). The CNY70 datasheet does not mention time. The first two are quite smaller than the third, which (depending on your goals) can be a pro or a con. For me smaller is better, because:
+* each sensor is more distant from the next, reducing crosstalk among neighbors
+* there is more tolerance to centering each sensor on each sensed surface (hammer or keystick)
+* there is less requirement on vertical space
+* there is more room to place sensor protectors in front of the hammers and have them avoid slamming into the sensors themselves
+* from the previous two, it is more feasible to have blinkers, further reducing crosstalk among neighbors
 
 ## Results
 I did many measurements, posting here the most representative ones.
