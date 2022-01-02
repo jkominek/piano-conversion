@@ -9,7 +9,7 @@ I tested an Everligth EAITRCA6 a QRE1113 preassembled by sparkfun in the center 
 ## Results
 I did many measurements, posting here the most representative ones.
 I first tested the sensors in the open, obtaining [this file](plot/no_objects.txt) with just somewhat constant value.
-I then placed an object close to all, obtaining [this file](plot/close_objects.txt) which is worth showing in a plot
+I then placed an object close to all, obtaining [this file](plot/close_object.txt) which is worth showing in a plot
 
 ![close object plot](plot/close_object.png)
 
