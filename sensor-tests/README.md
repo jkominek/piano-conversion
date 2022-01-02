@@ -13,19 +13,26 @@ I then placed an object close to all, obtaining [this file](plot/close_object.tx
 
 ![close object plot](plot/close_object.png)
 
-As you can see the QRE1113 looks unclean. But hey, this is on open air with handheld object, so... let's ignore that for a moment. I oscillated the object far and close a few times, obtaining [this file](plot/oscillating_object.txt) and this plot
+As you can see the QRE1113 data looks unclean. But hey, this is on open air with handheld object, so... let's ignore that for a moment. I oscillated the object far and close a few times, obtaining [this file](plot/oscillating_object.txt) and this plot
 
 ![oscillating object plot](plot/oscillating_object.png)
 
-Again not clear results. So I tried again, obtaining this plot (sadly I've accidentally deleted the source data)
+Again not clean results from the QRE1113. So I tried again, obtaining this plot (sadly I've accidentally deleted the source data)
 
 ![oscillating again plot](plot/oscillating_again.png)
 
-Time to put the whole thing in the piano.
+In this case the QRE1113 looked the best data.
 
+I then placed the whole thing in the piano, under the back of the keys. Pressing the key would look "distant" from the sensor.
+First, I arranged the board in such a way that both the QRE1113 and the EAITRCA6 where under the same key, and obtained [this data](plot/same_key.txt) and its corresponding plot
+
+![same key](plot/same_key.png)
+
+In this case both sensors where close to the edge of the key (on opposite sides obviously). The CNY70 was under a different key, which I alternatively pressed as it can be seen.
 
 ![close object plot](QRE_centered.png)
 
+Usual QRE1113 does not provide clean data results.
 
 # Datasheets
 * EAITRCA6 https://everlightamericas.com/index.php?controller=attachment&id_attachment=1546
