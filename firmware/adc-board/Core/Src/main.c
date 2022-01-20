@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "usbd_cdc_if.h"
+//#include "usbd_cdc_if.h"
 #include "hdlc.h"
 /* USER CODE END Includes */
 
@@ -49,7 +49,6 @@ DMA_HandleTypeDef hdma_adc1;
 DMA_HandleTypeDef hdma_adc2;
 DMA_HandleTypeDef hdma_adc3;
 
-TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim4;
 
 UART_HandleTypeDef huart1;
@@ -73,7 +72,6 @@ static void MX_USART1_UART_Init(void);
 static void MX_USART3_UART_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_TIM4_Init(void);
-static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -89,9 +87,9 @@ uint32_t sample_time = 0;
 // Instruct the compiler to align these to cache-line boundaries
 // They'll always be read/written as blocks, independently from
 // the others, or anything else.
-__attribute__ ((aligned (32))) uint16_t adc1_buffer[7];
-__attribute__ ((aligned (32))) uint16_t adc2_buffer[7];
-__attribute__ ((aligned (32))) uint16_t adc3_buffer[8];
+__attribute__ ((aligned (32))) uint16_t adc1_buffer[7*4];
+__attribute__ ((aligned (32))) uint16_t adc2_buffer[7*4];
+__attribute__ ((aligned (32))) uint16_t adc3_buffer[8*4];
 
 // Represents what we need to know for a sensor.
 // Values in here should only be altered by external
@@ -170,10 +168,12 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USB_DEVICE_Init();
   MX_TIM4_Init();
-  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
   HDLC_Init(&huart3, &hdma_usart3_rx);
+
+  printf("foobar!\n");
+
 
   // put some plausible values in the autodetection routines.
   for(int i=0; i<22; i++) {
@@ -205,11 +205,11 @@ int main(void)
   }
 
   HAL_Delay(10);
-  HAL_ADCEx_Calibration_Start(&hadc1, ADC_CALIB_OFFSET_LINEARITY, ADC_SINGLE_ENDED);
+  HAL_ADCEx_Calibration_Start(&hadc1, ADC_CALIB_OFFSET, ADC_SINGLE_ENDED);
   HAL_Delay(10);
-  HAL_ADCEx_Calibration_Start(&hadc2, ADC_CALIB_OFFSET_LINEARITY, ADC_SINGLE_ENDED);
+  HAL_ADCEx_Calibration_Start(&hadc2, ADC_CALIB_OFFSET, ADC_SINGLE_ENDED);
   HAL_Delay(10);
-  HAL_ADCEx_Calibration_Start(&hadc3, ADC_CALIB_OFFSET_LINEARITY, ADC_SINGLE_ENDED);
+  HAL_ADCEx_Calibration_Start(&hadc3, ADC_CALIB_OFFSET, ADC_SINGLE_ENDED);
   HAL_Delay(10);
 
   HDLC_Send_Frame(&huart3, 0x03, "calibdone", 9);
@@ -217,9 +217,9 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim4);
 
   // start timer
-  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc1_buffer, 7);
-  HAL_ADC_Start_DMA(&hadc2, (uint32_t*)adc2_buffer, 7);
-  HAL_ADC_Start_DMA(&hadc3, (uint32_t*)adc3_buffer, 8);
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc1_buffer, 7*4);
+  HAL_ADC_Start_DMA(&hadc2, (uint32_t*)adc2_buffer, 7*4);
+  HAL_ADC_Start_DMA(&hadc3, (uint32_t*)adc3_buffer, 8*4);
   HAL_TIM_OC_Start(&htim4, TIM_CHANNEL_4);
 
   /* USER CODE END 2 */
@@ -343,8 +343,8 @@ void PeriphCommonClock_Config(void)
   PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_ADC|RCC_PERIPHCLK_USART1
                               |RCC_PERIPHCLK_USART2|RCC_PERIPHCLK_USART3;
   PeriphClkInitStruct.PLL2.PLL2M = 4;
-  PeriphClkInitStruct.PLL2.PLL2N = 16;
-  PeriphClkInitStruct.PLL2.PLL2P = 16;
+  PeriphClkInitStruct.PLL2.PLL2N = 30;
+  PeriphClkInitStruct.PLL2.PLL2P = 4;
   PeriphClkInitStruct.PLL2.PLL2Q = 16;
   PeriphClkInitStruct.PLL2.PLL2R = 2;
   PeriphClkInitStruct.PLL2.PLL2RGE = RCC_PLL2VCIRANGE_3;
@@ -417,7 +417,7 @@ static void MX_ADC1_Init(void)
   */
   sConfig.Channel = ADC_CHANNEL_7;
   sConfig.Rank = ADC_REGULAR_RANK_1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_16CYCLES_5;
+  sConfig.SamplingTime = ADC_SAMPLETIME_32CYCLES_5;
   sConfig.SingleDiff = ADC_SINGLE_ENDED;
   sConfig.OffsetNumber = ADC_OFFSET_NONE;
   sConfig.Offset = 0;
@@ -522,7 +522,7 @@ static void MX_ADC2_Init(void)
   */
   sConfig.Channel = ADC_CHANNEL_3;
   sConfig.Rank = ADC_REGULAR_RANK_1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_16CYCLES_5;
+  sConfig.SamplingTime = ADC_SAMPLETIME_32CYCLES_5;
   sConfig.SingleDiff = ADC_SINGLE_ENDED;
   sConfig.OffsetNumber = ADC_OFFSET_NONE;
   sConfig.Offset = 0;
@@ -627,7 +627,7 @@ static void MX_ADC3_Init(void)
   */
   sConfig.Channel = ADC_CHANNEL_2;
   sConfig.Rank = ADC_REGULAR_RANK_1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_16CYCLES_5;
+  sConfig.SamplingTime = ADC_SAMPLETIME_32CYCLES_5;
   sConfig.SingleDiff = ADC_SINGLE_ENDED;
   sConfig.OffsetNumber = ADC_OFFSET_NONE;
   sConfig.Offset = 0;
@@ -699,45 +699,6 @@ static void MX_ADC3_Init(void)
 }
 
 /**
-  * @brief TIM2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_TIM2_Init(void)
-{
-
-  /* USER CODE BEGIN TIM2_Init 0 */
-
-  /* USER CODE END TIM2_Init 0 */
-
-  TIM_MasterConfigTypeDef sMasterConfig = {0};
-
-  /* USER CODE BEGIN TIM2_Init 1 */
-
-  /* USER CODE END TIM2_Init 1 */
-  htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 1;
-  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 2333;
-  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_OnePulse_Init(&htim2, TIM_OPMODE_SINGLE) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_UPDATE;
-  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN TIM2_Init 2 */
-
-  /* USER CODE END TIM2_Init 2 */
-
-}
-
-/**
   * @brief TIM4 Initialization Function
   * @param None
   * @retval None
@@ -759,7 +720,7 @@ static void MX_TIM4_Init(void)
   htim4.Instance = TIM4;
   htim4.Init.Prescaler = 1;
   htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim4.Init.Period = 7999;
+  htim4.Init.Period = 7499;
   htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim4) != HAL_OK)
@@ -1053,6 +1014,8 @@ struct sensortrip {
 	float velocity;
 };
 
+uint32_t adc1_dma_cnts = 0, adc2_dma_cnts = 0, adc3_dma_cnts = 0;
+
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
 	uint32_t now = sample_time;
@@ -1061,19 +1024,70 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 	int cnt = 7;
 	int offset;
 	if(hadc==&hadc1) {
-		buf = adc1_buffer;
-		offset = 0;
+		for(int i=0; i<7; i++) {
+			state[  i].freading = (float)(65535-adc1_buffer[i]);
+		}
+		adc1_dma_cnts++;
 	} else if(hadc==&hadc2) {
-		buf = adc2_buffer;
-		offset = 7;
+		for(int i=0; i<7; i++) {
+			state[7+i].freading = (float)(65535-adc2_buffer[i]);
+		}
+		adc2_dma_cnts++;
 	} else if(hadc==&hadc3){
-		buf = adc3_buffer;
-		cnt = 8;
-		offset = 14;
+		for(int i=0; i<8; i++) {
+			state[14+i].freading = (float)(65535-adc3_buffer[i]);
+		}
+		adc3_dma_cnts++;
 	} else {
 		return;
 	}
 
+	if(hadc==&hadc1) {
+		/*
+		struct {
+			uint32_t n,x,y,z;
+			float a;
+			float b;
+		} chunk;
+		chunk.n = now;
+		chunk.x = adc1_dma_cnts;
+		chunk.y = adc2_dma_cnts;
+		chunk.z = adc3_dma_cnts;
+		chunk.a = state[9].freading;
+		chunk.b = state[10].freading;
+		*/
+		{
+			float chunk[2] = {
+					(float)(65535-adc2_buffer[2]),
+					(float)(65535-adc2_buffer[3])
+			};
+			HDLC_Send_Frame(&huart3, 0x0A, (uint8_t*)&chunk, sizeof(chunk));
+		}
+		{
+			float chunk[2] = {
+					(float)(65535-adc2_buffer[7+2]),
+					(float)(65535-adc2_buffer[7+3])
+			};
+			HDLC_Send_Frame(&huart3, 0x0A, (uint8_t*)&chunk, sizeof(chunk));
+		}
+		{
+			float chunk[2] = {
+					(float)(65535-adc2_buffer[14+2]),
+					(float)(65535-adc2_buffer[14+3])
+			};
+			HDLC_Send_Frame(&huart3, 0x0A, (uint8_t*)&chunk, sizeof(chunk));
+		}
+		{
+			float chunk[2] = {
+					(float)(65535-adc2_buffer[21+2]),
+					(float)(65535-adc2_buffer[21+3])
+			};
+			HDLC_Send_Frame(&huart3, 0x0A, (uint8_t*)&chunk, sizeof(chunk));
+		}
+	}
+
+
+	/*
 	for(int i=0; i<cnt; i++) {
 		int idx = offset + i;
 
@@ -1155,7 +1169,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 			}
 		}
 	}
-
+	 */
 }
 
 /* USER CODE END 4 */
@@ -1199,4 +1213,3 @@ void assert_failed(uint8_t *file, uint32_t line)
 }
 #endif /* USE_FULL_ASSERT */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
