@@ -7,3 +7,4 @@ _autosave*
 *.tmp
 *.zip
 fp-info-cache
+.*$
