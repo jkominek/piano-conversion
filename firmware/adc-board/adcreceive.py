@@ -4,12 +4,48 @@ import serial
 import struct
 import time
 import threading
+import atexit
+from math import log10
+import rtmidi
+import sys
+
+midiout = rtmidi.MidiOut()
+if len(midiout.get_ports())>1:
+    midiout.open_port(1)
+else:
+    midiout.open_port(0)
 
 prevtime = 0
 timeinc = 0
 
 prevclock = 0
 prevnow = 0.0
+
+channel2midi = [23,27,25,25,26,24,24,23,22,21,22,21,27,26,28,29,30,31,28,29,30,31]
+channel2midi = [ x + (60-24) for x in channel2midi ]
+for midinote in set(channel2midi):
+    midiout.send_message([0x80, midinote, 64])
+def chanvel2midi(velocity, channel, noteon=True):
+    midinote = channel2midi[channel]
+    if noteon:
+        minvel = 7000.0
+        maxvel = 100000.0
+    else:
+        minvel = -100
+        maxvel = -3500
+    mps = 7.0 * (velocity - minvel) / (maxvel - minvel)
+    if mps <= 0.0:
+        midivel = 1
+        cc88vel = 0
+    else:
+        vel = 57.96 + 71.3*log10(mps)
+        midivel = round(vel)
+        if midivel < 1:
+            midivel = 1
+            cc88vel = 0
+        else:
+            cc88vel = round(127 * (vel % 1))
+    return (midinote, midivel, cc88vel)
 
 def handle_message(msg):
     global prevtime
@@ -50,16 +86,24 @@ def handle_message(msg):
         prevclock = clock
         prevnow = now
     elif msgtype == 0x08:
-        print("sensor trip", msg)
+        #velocity, channel = struct.unpack("fB", msg[:5])
+        #print("sensor trip", velocity, channel, midinote, midivel)
+        pass
     elif msgtype == 0x0A:
-        print("raw sensor", msg)
-
+        cnt = (len(msg) // 4)
+        print(*struct.unpack(("".join(["f"]*cnt)), msg))
     elif msgtype == 0x12:
-        print(time.time(), "note on", struct.unpack("Bf", msg))
-    elif msgtype == 0x13: # strike duration
-        print(time.time(), "note off", struct.unpack("Bf", msg))
+        midinote, midivel, cc88vel = chanvel2midi(*struct.unpack("fB", msg[:5]))
+        print(time.time(), "ON ", midinote, midivel, cc88vel)
+        midiout.send_message([0xB0, 88, cc88vel])
+        midiout.send_message([0x90, midinote, midivel])
+    elif msgtype == 0x13:
+        midinote, midivel, cc88vel = chanvel2midi(*struct.unpack("fB", msg[:5]), noteon=False)
+        print(time.time(), "OFF", midinote, midivel, cc88vel)
+        midiout.send_message([0xB0, 88, cc88vel])
+        midiout.send_message([0x80, midinote, midivel])
     elif msgtype == 0x14: # damper up
-        print(time.time(), "pre-note on", struct.unpack("Bf", msg))
+        print(time.time(), "pre-note on", struct.unpack("fB", msg[:5]))
     elif msgtype == 0x20:
         t = struct.unpack("I", msg[:4])[0]
         adcbytes = msg[4:]
@@ -103,7 +147,10 @@ def sendmsg(msgtype, body=b''):
         msg = bytes([0x7E] + newbytes + [0x7E])
     port.write(msg)
 
-port = serial.Serial(port="/dev/ttyUSB0", baudrate=3000000, timeout=0.000001)
+portname = "/dev/ttyUSB0"
+if len(sys.argv)>1:
+    portname = sys.argv[1]
+port = serial.Serial(port=portname, baudrate=3000000, timeout=0.000001)
 buf = b''
 sendmsg(0xff, b'')
 while True:

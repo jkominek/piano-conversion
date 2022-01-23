@@ -33,7 +33,8 @@
 ENTRY(Reset_Handler)
 
 /* Highest address of the user mode stack */
-_estack = ORIGIN(RAM_D1) + LENGTH(RAM_D1) - 16;	/* end of "RAM_D1" Ram type memory */
+/* these were RAM_D1 not DTCMRAM */
+_estack = ORIGIN(DTCMRAM) + LENGTH(DTCMRAM) - 16;	/* end of "DTCMRAM" Ram type memory */
 
 _Min_Heap_Size = 0x200 ;	/* required amount of heap  */
 _Min_Stack_Size = 0x400 ;	/* required amount of stack */
@@ -164,7 +165,7 @@ SECTIONS
     __bss_end__ = _ebss;
   } >RAM_D1
 
-  /* User_heap_stack section, used to check that there is enough "RAM_D1" Ram  type memory left */
+  /* User_heap_stack section, used to check that there is enough "DTCMRAM" Ram  type memory left */
   ._user_heap_stack :
   {
     . = ALIGN(8);
@@ -173,7 +174,7 @@ SECTIONS
     . = . + _Min_Heap_Size;
     . = . + _Min_Stack_Size;
     . = ALIGN(8);
-  } >RAM_D1
+  } >DTCMRAM /*was RAM_D1*/
 
   /* Remove information from the compiler libraries */
   /DISCARD/ :

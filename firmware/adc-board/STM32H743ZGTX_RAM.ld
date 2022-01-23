@@ -60,7 +60,7 @@ SECTIONS
     KEEP(*(.isr_vector)) /* Startup code */
     . = ALIGN(4);
   } >RAM_D1
-
+  
   /* The program code and other data into "RAM_D1" Ram type memory */
   .text :
   {

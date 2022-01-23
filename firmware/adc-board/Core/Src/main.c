@@ -84,12 +84,13 @@ static void MX_TIM4_Init(void);
 uint32_t sample_rate = 15000;
 uint32_t sample_time = 0;
 
+#define DMASIZE 4
 // Instruct the compiler to align these to cache-line boundaries
 // They'll always be read/written as blocks, independently from
 // the others, or anything else.
-__attribute__ ((aligned (32))) uint16_t adc1_buffer[7*4];
-__attribute__ ((aligned (32))) uint16_t adc2_buffer[7*4];
-__attribute__ ((aligned (32))) uint16_t adc3_buffer[8*4];
+__attribute__ ((aligned (32))) uint16_t adc1_buffer[7*DMASIZE];
+__attribute__ ((aligned (32))) uint16_t adc2_buffer[7*DMASIZE];
+__attribute__ ((aligned (32))) uint16_t adc3_buffer[8*DMASIZE];
 
 // Represents what we need to know for a sensor.
 // Values in here should only be altered by external
@@ -97,31 +98,53 @@ __attribute__ ((aligned (32))) uint16_t adc3_buffer[8*4];
 // updates to this structure should be done as atomically
 // as possible. prepare a new copy on the stack, disable
 // interrupts, bcopy into this array, and reenable.
+// TODO get this stored in DTCM
 struct sensorconf {
-	uint32_t above_noise_counts;
-	// Settings
-	float rise_first_cutoff;
-	float rise_second_cutoff;
-	// only used for key sticks
-	float drop_first_cutoff;
-	float drop_second_cutoff;
-	float shift;
-	float scale;
-	// LPF
-	// we keep this in case we end up running different
-	// boards/sensors/whatever at different sample rates.
-	// we can then compute alpha0 and alpha1 appropriately.
-	// the expense of holding 2 additional floats in ram
-	// on this board is negligible.
-	float cutoff_freq;
-	// these are calculated from cutoff_freq
-	float alpha0, alpha1;
-
 	// True means we're watching a hammer; rises only
 	_Bool hammer;
-	// only used for key sticks
-	_Bool stick_up;
+	// Hammer stuff
+	// absolute position must be above this to trigger derivative calculations
+	// that's a prereq for a note to occur. it should, ideally, be between
+	// "impact" and the let off point.
+	float minpos;
+
+	// Key stick stuff
+	int hammerchan; // corresponding hammer
+	int offpos;     // reading at which to trip to off
 } conf[22];
+
+struct sensorstate {
+	uint32_t notesent; // 0=nothing sent recently, otherwise time of send
+	float sentval; // the velocity we sent.
+	_Bool notesounding; // we've sent a noteon, and haven't yet sent a noteoff for it
+} state[22];
+
+struct sensortrip {
+	float velocity;
+	uint8_t chan;
+};
+
+#define BUFSIZE 32
+// TODO move these into DTCM
+int bufferptrs[3] = { 0 }; // points to the locations we'll write to next. one past the most recent value.
+float sensorbuffer[22][BUFSIZE] = { 0.0 };
+float derivs[22][3] = { 0.0 } ;
+int derividxs[22] = { 0 };
+
+#define FIR_LEN 13
+// TODO want this in DTCM also
+// scipy.signal.savgol_coeffs(13, 2, deriv=1, use='dot', delta=0.01)
+// the delta doesn't matter, so it was chosen to bring the values to ~1.0
+float filter[FIR_LEN] = { -3.2967032967033107, -2.7472527472527473,
+		-2.197802197802188, -1.64835164835163, -1.0989010989010746,
+		-0.5494505494505213, 2.9531932455029164e-14, 0.5494505494505779,
+		1.098901098901124, 1.6483516483516676, 2.1978021978022086,
+		2.7472527472527473, 3.296703296703284 };
+// supposedly argerich can play 11.52 notes/second
+// 16000 samples per second. let's leave her some room,
+// and assume 16 notes/second. 16000/16 = 1000
+#define MINCYCLESBETWEENNOTES 500
+
 
 /* USER CODE END 0 */
 
@@ -172,37 +195,50 @@ int main(void)
 
   HDLC_Init(&huart3, &hdma_usart3_rx);
 
-  printf("foobar!\n");
-
-
   // put some plausible values in the autodetection routines.
+  // and get the state initialized.
   for(int i=0; i<22; i++) {
-  	conf[i].hammer = 1;
-  	conf[i].stick_up = 0;
-  	conf[i].rise_first_cutoff = 5000.0;
-  	conf[i].rise_second_cutoff = 25000.0;
-  	conf[i].shift = 8.00912961;
-  	conf[i].scale = 40.7102516;
-  	conf[i].cutoff_freq = 1000.0;
-  }
+	// hammer default
+  	conf[i].minpos = 15000;
 
-  conf[8].hammer = 0;
-  conf[8].rise_first_cutoff  = 8500.0;
-  conf[8].rise_second_cutoff = 9000.0; //13000.0;
-  conf[8].drop_first_cutoff = 13000.0;
-  conf[8].drop_second_cutoff = 6000.0;
-  conf[8].cutoff_freq = 500.0;
-  conf[8].shift = 12.17098712;
-  conf[8].scale = 26.92805961;
+  	// keystick default
+  	conf[i].offpos = 9000;
 
-  {
-	  float dt = 1.0 / ((float)sample_rate);
-	  for(int i=0; i<22; i++) {
-		  float RC = 1.0 / (2.0 * M_PI * conf[i].cutoff_freq);
-		  conf[i].alpha0 = dt / (RC + dt);
-		  conf[i].alpha1 = 1.0 - conf[i].alpha0;
-	  }
+  	state[i].notesent = 0;
+  	state[i].sentval = 0.0;
+  	state[i].notesounding = 0;
+
   }
+  // the hammers
+  conf[0].hammer = 1;
+  conf[1].hammer = 1;
+  conf[2].hammer = 1;
+  conf[4].hammer = 1;
+  conf[6].hammer = 1;
+  conf[9].minpos = 20000;
+  conf[9].hammer = 1;
+  conf[10].hammer = 1;
+  conf[18].hammer = 1;
+  conf[18].minpos = 12000;
+  conf[19].hammer = 1;
+  conf[20].hammer = 1;
+  conf[21].hammer = 1;
+  // key sticks
+  conf[3].hammerchan = 2;
+  conf[5].hammerchan = 6;
+  conf[5].offpos = 5000;
+  conf[7].hammerchan = 0;
+  conf[7].offpos = 5000;
+  conf[8].hammerchan = 10;
+  conf[11].hammerchan = 9;
+  conf[11].offpos = 5000;
+  conf[12].hammerchan = 1;
+  conf[13].hammerchan = 4;
+  conf[13].offpos = 5000;
+  conf[14].hammerchan = 18;
+  conf[15].hammerchan = 19;
+  conf[16].hammerchan = 20;
+  conf[17].hammerchan = 21;
 
   HAL_Delay(10);
   HAL_ADCEx_Calibration_Start(&hadc1, ADC_CALIB_OFFSET, ADC_SINGLE_ENDED);
@@ -217,9 +253,9 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim4);
 
   // start timer
-  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc1_buffer, 7*4);
-  HAL_ADC_Start_DMA(&hadc2, (uint32_t*)adc2_buffer, 7*4);
-  HAL_ADC_Start_DMA(&hadc3, (uint32_t*)adc3_buffer, 8*4);
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc1_buffer, 7*DMASIZE);
+  HAL_ADC_Start_DMA(&hadc2, (uint32_t*)adc2_buffer, 7*DMASIZE);
+  HAL_ADC_Start_DMA(&hadc3, (uint32_t*)adc3_buffer, 8*DMASIZE);
   HAL_TIM_OC_Start(&htim4, TIM_CHANNEL_4);
 
   /* USER CODE END 2 */
@@ -996,180 +1032,174 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	}
 }
 
-struct rawstream {
-	float data[32];
-	// channels over 22 indicate not used.
-	uint8_t channels[4];
-};
+static inline __attribute__((always_inline)) float computefilter(int chan, int idxs[])
+{
+	float v = 0.0;
+	for(int i=0; i<FIR_LEN; i++) {
+		// TODO check to see what the compiler-emitted assembly looks like.
+		// if we're not using the fused multiply and add instruction, fix it.
+		v += filter[i] * sensorbuffer[chan][idxs[i]];
+	}
+	return v;
+}
 
-struct sensorstate {
-	float freading;
-	// Time we see our initial event occur
-	uint32_t event_start_time;
-	_Bool running;
-} state[22];
-
-struct sensortrip {
-	uint8_t channel;
-	float velocity;
-};
-
-uint32_t adc1_dma_cnts = 0, adc2_dma_cnts = 0, adc3_dma_cnts = 0;
-
+// TODO move this into ITCM?
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
 	uint32_t now = sample_time;
 
+	// Set up the variations on the copy loop
 	uint16_t *buf;
 	int cnt = 7;
-	int offset;
+	int offset = 0;
+	int whichadc;
+	int idxs[FIR_LEN] = {0};
 	if(hadc==&hadc1) {
-		for(int i=0; i<7; i++) {
-			state[  i].freading = (float)(65535-adc1_buffer[i]);
-		}
-		adc1_dma_cnts++;
+		buf = adc1_buffer;
+		whichadc = 0;
 	} else if(hadc==&hadc2) {
-		for(int i=0; i<7; i++) {
-			state[7+i].freading = (float)(65535-adc2_buffer[i]);
-		}
-		adc2_dma_cnts++;
+		buf = adc2_buffer;
+		offset = 7;
+		whichadc = 1;
 	} else if(hadc==&hadc3){
-		for(int i=0; i<8; i++) {
-			state[14+i].freading = (float)(65535-adc3_buffer[i]);
-		}
-		adc3_dma_cnts++;
+		buf = adc3_buffer;
+		cnt = 8;
+		offset = 14;
+		whichadc = 2;
 	} else {
 		return;
 	}
 
-	if(hadc==&hadc1) {
-		/*
-		struct {
-			uint32_t n,x,y,z;
-			float a;
-			float b;
-		} chunk;
-		chunk.n = now;
-		chunk.x = adc1_dma_cnts;
-		chunk.y = adc2_dma_cnts;
-		chunk.z = adc3_dma_cnts;
-		chunk.a = state[9].freading;
-		chunk.b = state[10].freading;
-		*/
-		{
-			float chunk[2] = {
-					(float)(65535-adc2_buffer[2]),
-					(float)(65535-adc2_buffer[3])
-			};
-			HDLC_Send_Frame(&huart3, 0x0A, (uint8_t*)&chunk, sizeof(chunk));
-		}
-		{
-			float chunk[2] = {
-					(float)(65535-adc2_buffer[7+2]),
-					(float)(65535-adc2_buffer[7+3])
-			};
-			HDLC_Send_Frame(&huart3, 0x0A, (uint8_t*)&chunk, sizeof(chunk));
-		}
-		{
-			float chunk[2] = {
-					(float)(65535-adc2_buffer[14+2]),
-					(float)(65535-adc2_buffer[14+3])
-			};
-			HDLC_Send_Frame(&huart3, 0x0A, (uint8_t*)&chunk, sizeof(chunk));
-		}
-		{
-			float chunk[2] = {
-					(float)(65535-adc2_buffer[21+2]),
-					(float)(65535-adc2_buffer[21+3])
-			};
-			HDLC_Send_Frame(&huart3, 0x0A, (uint8_t*)&chunk, sizeof(chunk));
+	int bufptr = bufferptrs[whichadc];
+
+	// Copy the ADC buffers into the main circular buffer.
+	for(int samp=0; samp<DMASIZE; samp++) {
+		// each channel in there
+		for(int i=0; i<cnt; i++) {
+			sensorbuffer[offset+i][(bufptr+samp) % BUFSIZE] = (float)(65535 - buf[samp*cnt+i]);
 		}
 	}
 
+	// update bufferptrs to reflect new data
+	bufptr = bufferptrs[whichadc] = (bufferptrs[whichadc] + DMASIZE) % BUFSIZE;
 
-	/*
-	for(int i=0; i<cnt; i++) {
-		int idx = offset + i;
+	// if we've been asked to stream a sensor out the serial port...
+	if(0) {
+		float buffer[1];
+		buffer[0] = sensorbuffer[11][bufptr];
+	    // read the DMASIZE values before bufptr
+		HDLC_Send_Frame(&huart3, 0x0A, (uint8_t*)buffer, sizeof(buffer));
+	}
 
-		float previous = state[idx].freading;
-		float new = conf[idx].alpha0 * (float)(65535-buf[i]) + conf[idx].alpha1 * previous;
-		state[idx].freading = new;
+	// TODO fill idxs with enough indexes to do two FIR/deriv calculations
+	// for now-DMABUF/2 and now.
+	for(int idx=0; idx<FIR_LEN; idx++) {
+		// start from bufptr, which represents the next spot to write to
+		// subtract one to get back to the most recent value
+		// then go back by the length of the FIR filter
+		// then add back the idx we want
+		// that might be negative, so add BUFSIZE before doing %BUFSIZE.
+		idxs[idx] = ((bufptr - 1 - FIR_LEN + idx) + BUFSIZE) % BUFSIZE;
+	}
+	// index of the middle value for the filter
+	// division is right for odd numbers
+	int mid = idxs[FIR_LEN/2];
 
-		if(conf[idx].hammer) {
-			// this channel is a hammer
-			if((new > conf[idx].rise_first_cutoff) && (previous <= conf[idx].rise_first_cutoff))
-			{
-				state[idx].event_start_time = now;
-				state[idx].running = 1;
-			}
-			else if(state[idx].running && (new > conf[idx].rise_second_cutoff) && (previous <= conf[idx].rise_second_cutoff))
-			{
-				state[idx].running = 0;
+#define INFDERIV(chan) { derivs[chan][derividxs[chan]] = INFINITY; derividxs[chan] = (1 + derividxs[chan]) % 3; }
 
-				uint32_t start = state[idx].event_start_time;
-				uint32_t duration;
+	// We'll process the chunk we just got.
+	for(int chan=offset; chan<offset+cnt; chan++) {
+		if(conf[chan].hammer) {
+			// Hammer
 
-				if(now > start) {
-					duration = now - start;
+			// note that anywhere we skip this and don't compute the
+			// derivative, we put +INF in for the current derivative.
+			// this ensures that when we go to check to see if there
+			// is a derivative peak, we don't use stale data.
+
+			// This represents the "don't rapidly send multiple note-ons"
+			// condition. At least MINCYCLESBETWEENNOTES has to pass before
+			// we'll even look at the data again.
+			if(state[chan].notesent) {
+				// we've sent something recently.
+				if(state[chan].notesent < now) {
+					// no wrap situation
+					if(state[chan].notesent < (now - MINCYCLESBETWEENNOTES)) {
+						// enough time has passed.
+						state[chan].notesent = 0;
+					} else {
+						// not enough time, ignore
+						INFDERIV(chan);
+						continue;
+					}
 				} else {
-					// wrap around case. subtract off the start first, then add now,
-					// so we don't overflow our arithmetic. this will come up every
-					// ~79.5 hours of uptime.
-					duration = (UINT32_MAX - start) + now;
+					// we've wrapped
+					if((state[chan].notesent + MINCYCLESBETWEENNOTES) < now) {
+						// also enough time as passed
+						state[chan].notesent = 0;
+					} else {
+						// not enough time, ignore
+						INFDERIV(chan);
+						continue;
+					}
 				}
-				struct sensortrip msg;
-				msg.channel = idx;
-				msg.velocity = (conf[idx].shift - log2f((float)duration))*conf[idx].scale;
-				HDLC_Send_Frame(&huart3, 0x08, (uint8_t*)&msg, sizeof(msg));
 			}
+
+			// This is the "the string can't sound until the hammer is close
+			// enough" condition. If we're not close, don't look at the data.
+			if(sensorbuffer[chan][mid] < conf[chan].minpos) {
+				// hammer is too low
+				INFDERIV(chan);
+				continue;
+			}
+
+			// Ok, now we need the derivative
+			float v = computefilter(chan, idxs);
+			int didx = derividxs[chan]; // where we're putting our value
+			derivs[chan][derividxs[chan]] = v;
+
+			float derivold, derivmid, derivnew;
+			derivnew = v;
+			derivmid = derivs[chan][(didx + 3 - 1) % 3];
+			derivold = derivs[chan][(didx + 3 - 2) % 3];
+
+			// increment the spot we'll put the derivative
+			derividxs[chan] = (1 + derividxs[chan]) % 3;
+
+			// if derivmid is equal to either of the others, then we don't
+			// actually trigger. but we're dealing with a float computed from
+			// FIR_LEN input values. equality is unlikely.
+			if(derivmid > 0.0 && derivmid > derivold && derivmid > derivnew) {
+				state[chan].notesent = now;
+				state[chan].sentval = v;
+				state[chan].notesounding = 1;
+
+				struct sensortrip msg;
+				msg.chan = chan;
+				msg.velocity = derivmid;
+				HDLC_Send_Frame(&huart3, 0x12, (uint8_t*)&msg, sizeof(msg));
+			}
+
 		} else {
-			// this channel is a key stick
-			if(new > conf[idx].rise_first_cutoff && previous < conf[idx].rise_first_cutoff)
-			{
-				state[idx].running = 1;
-				state[idx].event_start_time = now; // we don't actually do anything with this.
-			}
-			if(state[idx].running && new > conf[idx].rise_second_cutoff && previous < conf[idx].rise_second_cutoff)
-			{
-				state[idx].running = 0;
+			// Key stick
 
-				struct sensortrip msg;
-				msg.channel = idx;
-				msg.velocity = 1.0;
-				// key/damper is UP. upstream firmware will now wait for us before
-				// sending a note off. if it doesn't get this before (or close to?)
-				// a note on, it should immediately generate the note off. key was
-				// probably tapped as a very light staccato.
-				HDLC_Send_Frame(&huart3, 0x08, (uint8_t*)&msg, sizeof(msg));
-			}
-			else if(new < conf[idx].drop_first_cutoff && previous >= conf[idx].drop_first_cutoff)
-			{
-				state[idx].event_start_time = now;
-				state[idx].running = 1;
-			}
-			else if(state[idx].running && new < conf[idx].drop_second_cutoff && previous >= conf[idx].drop_second_cutoff)
-			{
-				state[idx].running = 0;
+			int hammerchan = conf[chan].hammerchan;
+			if(state[hammerchan].notesounding) {
+				if(sensorbuffer[chan][mid] < conf[chan].offpos) {
+					// we've dropped low enough. we're dampening now,
+					// so mark the note as stopped.
+					state[hammerchan].notesounding = 0;
 
-				uint32_t start = state[idx].event_start_time;
-				uint32_t duration;
-
-				if(now > start) {
-					duration = now - start;
-				} else {
-					// wrap around case. subtract off the start first, then add now,
-					// so we don't overflow our arithmetic. this will come up every
-					// ~79.5 hours of uptime.
-					duration = (UINT32_MAX - start) + now;
+					struct sensortrip msg;
+					msg.chan = chan;
+					// this is actually the derivative from a few
+					// samples ago. good enough.
+					msg.velocity = computefilter(chan, idxs);
+					HDLC_Send_Frame(&huart3, 0x13, (uint8_t*)&msg, sizeof(msg));
 				}
-				struct sensortrip msg;
-				msg.channel = idx;
-				msg.velocity = (conf[idx].shift - log2f((float)duration))*conf[idx].scale;
-				HDLC_Send_Frame(&huart3, 0x08, (uint8_t*)&msg, sizeof(msg));
 			}
 		}
 	}
-	 */
 }
 
 /* USER CODE END 4 */
