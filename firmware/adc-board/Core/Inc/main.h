@@ -32,7 +32,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+extern uint16_t collectstats;
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

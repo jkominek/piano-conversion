@@ -116,10 +116,19 @@ struct sensorconf {
 struct sensorstate {
 	uint32_t notesent; // 0=nothing sent recently, otherwise time of send
 	float sentval; // the velocity we sent.
+	_Bool damperup;
 	_Bool notesounding; // we've sent a noteon, and haven't yet sent a noteoff for it
 } state[22];
 
-struct sensortrip {
+uint16_t collectstats = 0;
+struct sensorstat {
+	uint16_t min;
+	uint16_t max;
+	uint32_t sum;
+	uint32_t count;
+} stats[22];
+
+struct __attribute__((__packed__)) sensortrip {
 	float velocity;
 	uint8_t chan;
 };
@@ -198,16 +207,16 @@ int main(void)
   // put some plausible values in the autodetection routines.
   // and get the state initialized.
   for(int i=0; i<22; i++) {
-	// hammer default
-  	conf[i].minpos = 15000;
+	  // hammer default
+	  conf[i].minpos = 15000;
 
-  	// keystick default
-  	conf[i].offpos = 9000;
+	  // keystick default
+	  conf[i].offpos = 9000;
 
-  	state[i].notesent = 0;
-  	state[i].sentval = 0.0;
-  	state[i].notesounding = 0;
-
+	  state[i].notesent = 0;
+	  state[i].sentval = 0.0;
+	  state[i].damperup = 0;
+	  state[i].notesounding = 0;
   }
   // the hammers
   conf[0].hammer = 1;
@@ -273,12 +282,25 @@ int main(void)
 	  // if(lots) { output new clock message }
 	  uint32_t clock_rate = sample_rate * 64; // 64 seconds; should be a bitshift
 	  if(  ((sample_time < last_clock_pulse) &&
-		    ((UINT32_MAX - last_clock_pulse) + sample_time > clock_rate))
+		    ((UINT32_MAX - last_clock_pulse) + sample_time >= clock_rate))
 		|| ((sample_time > last_clock_pulse) &&
-			(sample_time - last_clock_pulse > clock_rate)) ) {
+			(sample_time - last_clock_pulse >= clock_rate)) ) {
 		  // we've passed clock_rate worth of samples, so we'll send another clock message
 		  HDLC_Send_Frame(&huart3, 0x07, (uint8_t*)&sample_time, sizeof(uint32_t));
 		  last_clock_pulse = sample_time;
+	  }
+
+	  if(collectstats) {
+		  if((sample_time % collectstats)==0) {
+			  // we should be collecting stats. send them out.
+			  HDLC_Send_Frame(&huart3, 0x0C, (uint8_t*)stats, sizeof(stats));
+			  for(int i=0; i<22; i++) {
+				  stats[i].min = -1;
+				  stats[i].max = 0;
+				  stats[i].sum = 0;
+				  stats[i].count = 0;
+			  }
+		  }
 	  }
 
 	  // this will bail out rather quickly if we haven't received
@@ -1043,6 +1065,14 @@ static inline __attribute__((always_inline)) float computefilter(int chan, int i
 	return v;
 }
 
+static inline uint16_t min(uint16_t a, uint16_t b) {
+	return (a<b) ? a : b;
+}
+
+static inline uint16_t max(uint16_t a, uint16_t b) {
+	return (a>b) ? a : b;
+}
+
 // TODO move this into ITCM?
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
@@ -1076,7 +1106,16 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 	for(int samp=0; samp<DMASIZE; samp++) {
 		// each channel in there
 		for(int i=0; i<cnt; i++) {
-			sensorbuffer[offset+i][(bufptr+samp) % BUFSIZE] = (float)(65535 - buf[samp*cnt+i]);
+			int chan = offset+i;
+			uint16_t v = 65535 - buf[samp*cnt+i];
+			sensorbuffer[chan][(bufptr+samp) % BUFSIZE] = (float)(v);
+
+			if(collectstats) {
+				stats[chan].min = min(stats[chan].min, v);
+				stats[chan].max = max(stats[chan].max, v);
+				stats[chan].count++;
+				stats[chan].sum += v;
+			}
 		}
 	}
 
@@ -1177,27 +1216,65 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 				struct sensortrip msg;
 				msg.chan = chan;
 				msg.velocity = derivmid;
-				HDLC_Send_Frame(&huart3, 0x12, (uint8_t*)&msg, sizeof(msg));
+				HDLC_Send_Frame(&huart3, 0x08, (uint8_t*)&msg, sizeof(msg));
 			}
 
 		} else {
 			// Key stick
 
 			int hammerchan = conf[chan].hammerchan;
+
+			// if the damper is up
+			if(state[chan].damperup) {
+				if(sensorbuffer[chan][mid] < conf[chan].offpos - 32) {
+					// damper appears to have dropped back down.
+					state[chan].damperup = 0;
+
+					if(state[hammerchan].notesounding) {
+						// our hammer has a note sounding. issue a note off.
+						state[hammerchan].notesounding = 0;
+
+						struct sensortrip msg;
+						msg.chan = chan;
+						// this is actually the derivative from a few
+						// samples ago. good enough. key stick moves slowly.
+						msg.velocity = computefilter(chan, idxs);
+						HDLC_Send_Frame(&huart3, 0x08, (uint8_t*)&msg, sizeof(msg));
+					}
+				}
+			} else {
+				// damper is _down_
+				if(sensorbuffer[chan][mid] > conf[chan].offpos + 32) {
+					// damper appears to have been raised.
+					state[chan].damperup = 1;
+
+					// if we wanted to send "pre-lift" messages
+					/*
+					struct sensortrip msg;
+					msg.chan = chan;
+					msg.velocity = computefilter(chan, idxs);
+					HDLC_Send_Frame(&huart3, 0x08, (uint8_t*)&msg, sizeof(msg));
+					*/
+				}
+			}
+
+/*
 			if(state[hammerchan].notesounding) {
 				if(sensorbuffer[chan][mid] < conf[chan].offpos) {
 					// we've dropped low enough. we're dampening now,
 					// so mark the note as stopped.
 					state[hammerchan].notesounding = 0;
+					state[hammerchan].damperup = 0;
 
 					struct sensortrip msg;
 					msg.chan = chan;
 					// this is actually the derivative from a few
 					// samples ago. good enough.
 					msg.velocity = computefilter(chan, idxs);
-					HDLC_Send_Frame(&huart3, 0x13, (uint8_t*)&msg, sizeof(msg));
+					HDLC_Send_Frame(&huart3, 0x08, (uint8_t*)&msg, sizeof(msg));
 				}
 			}
+*/
 		}
 	}
 }

@@ -1,5 +1,6 @@
 #include "hdlc.h"
 #include "stm32h7xx_hal.h"
+#include "main.h"
 
 #include <string.h>
 
@@ -77,11 +78,15 @@ void HDLC_Send_Frame(UART_HandleTypeDef *uart, uint8_t msgtype, uint8_t* rawmsg,
 	HAL_UART_Transmit(uart, msg, offset, 1);
 }
 
-struct statusreport {
-	// which request for status we're responding to
-	uint16_t responseto_msgid;
+// not performance critical, so we'll pack this
+// for the wire.
+struct __attribute__((__packed__)) statusreport {
 	// the 96 bits of processor unique id
 	uint32_t uniqueid[3];
+
+	uint32_t devid;
+	uint32_t revid;
+	uint32_t flashsize;
 };
 
 void HDLC_Process_Frame(uint8_t origin, uint8_t *buf, int size)
@@ -104,9 +109,16 @@ void HDLC_Process_Frame(uint8_t origin, uint8_t *buf, int size)
 	msgtype = buf[0];
 	bcopy(buf+1, &msgid, 2);
 
+#define ACK(msgid) HDLC_Send_Frame(uart, 0x00, (uint8_t*)&msgid, sizeof(uint16_t));
+#define NACK(msgid) HDLC_Send_Frame(uart, 0x01, (uint8_t*)&msgid, sizeof(uint16_t));
+
+	// TODO bring anything interesting out of here, via a function
+	// call into main.c which receives a point to the start of the
+	// interesting part of the buffer, and an updated length.
 	switch(msgtype) {
 	case 0x02: {
-		HDLC_Send_Frame(uart, 0x00, (uint8_t*)&msgid, sizeof(uint16_t));
+		ACK(msgid);
+		// do we need to sleep, to give the message time to transmit?
 		NVIC_SystemReset();
 		break;
 	}
@@ -116,21 +128,32 @@ void HDLC_Process_Frame(uint8_t origin, uint8_t *buf, int size)
 	case 0x05: {
 		// status request
 		struct statusreport statusmsg;
-		statusmsg.responseto_msgid = msgid;
-
+		statusmsg.uniqueid[0] = HAL_GetUIDw0();
+		statusmsg.uniqueid[1] = HAL_GetUIDw1();
+		statusmsg.uniqueid[2] = HAL_GetUIDw2();
+		statusmsg.devid = HAL_GetDEVID();
+		statusmsg.revid = HAL_GetREVID();
+		// derived this expression from the code for HAL_GetUIDw0
+		statusmsg.flashsize = READ_REG(*((uint32_t *)FLASHSIZE_BASE));
 		HDLC_Send_Frame(uart, 0x06, &statusmsg, sizeof(statusmsg));
 		break;
 	}
 	case 0x09:
 		// configure sensor trip points / filtering
-		;
+		// maybe operate on single channels at once
+		// channel, field, value ?
+		nack_count ++;
+		NACK(msgid);
+		break;
 	case 0x0B:
 		// configure sensor streaming
-		;
+		bcopy(buf+3, &collectstats, sizeof(uint16_t));
+		ACK(msgid);
+		break;
 	default: {
 		// NACK everything unrecognized
 		nack_count ++;
-		HDLC_Send_Frame(uart, 0x01, (uint8_t*)&msgid, sizeof(uint16_t));
+		NACK(msgid);
 		break;
 	}
 	}
@@ -151,6 +174,7 @@ void HDLC_Process_Input()
 
 	for(int ptr=prev_ptr; ptr != new_ptr; ptr = (ptr + 1) % DMA_BUFFER_SIZE) {
 		uint8_t b = dma_buffer[ptr];
+		dma_buffer[ptr] = 0;
 		if(b == 0x7E) {
 			// frame end
 			if(is_escape) {
@@ -158,7 +182,7 @@ void HDLC_Process_Input()
 				bad_frame_count ++;
 				is_escape = 0;
 			} else {
-				if(command_buffer_idx > 4)
+				if(command_buffer_idx >= 4)
 					HDLC_Process_Frame(0, command_buffer, command_buffer_idx);
 				else
 					runt_frame_count ++;
@@ -185,4 +209,6 @@ void HDLC_Process_Input()
 			command_buffer[command_buffer_idx++] = b;
 		}
 	}
+
+	printf("%i %i\n", bad_frame_count, parityerror_frame_count);
 }
