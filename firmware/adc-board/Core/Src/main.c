@@ -79,18 +79,24 @@ static void MX_TIM4_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+// important stuff in here!
+struct systemstatus status;
+
 // we should compute sample_rate from the clock
 // and timer configuration.
-uint32_t sample_rate = 15000;
-uint32_t sample_time = 0;
+uint32_t sample_rate = 16000;
 
-#define DMASIZE 4
+#define DMASIZE 1
 // Instruct the compiler to align these to cache-line boundaries
 // They'll always be read/written as blocks, independently from
 // the others, or anything else.
-__attribute__ ((aligned (32))) uint16_t adc1_buffer[7*DMASIZE];
-__attribute__ ((aligned (32))) uint16_t adc2_buffer[7*DMASIZE];
-__attribute__ ((aligned (32))) uint16_t adc3_buffer[8*DMASIZE];
+// We also move them into the .dmabuffers section, which is the
+// only thing in RAM_D3, so as to minimize contention between
+// DMA copying the ADC values into RAM, and everything else we do.
+__attribute__ ((aligned (32))) __attribute__(( section(".dmabuffers") )) uint16_t adc1_buffer[7*DMASIZE];
+// adc2 drops some DMAs here and there.
+__attribute__ ((aligned (32))) __attribute__(( section(".dmabuffers") )) uint16_t adc2_buffer[7*DMASIZE];
+__attribute__ ((aligned (32))) __attribute__(( section(".dmabuffers") )) uint16_t adc3_buffer[8*DMASIZE];
 
 // Represents what we need to know for a sensor.
 // Values in here should only be altered by external
@@ -110,7 +116,7 @@ struct sensorconf {
 
 	// Key stick stuff
 	int hammerchan; // corresponding hammer
-	int offpos;     // reading at which to trip to off
+	float offpos;     // reading at which to trip to off
 } conf[22];
 
 struct sensorstate {
@@ -154,6 +160,57 @@ float filter[FIR_LEN] = { -3.2967032967033107, -2.7472527472527473,
 // and assume 16 notes/second. 16000/16 = 1000
 #define MINCYCLESBETWEENNOTES 500
 
+_Bool update_setting(uint8_t channel, uint8_t setting, uint32_t value)
+{
+	if(channel<0 || channel>=22) {
+		return 0;
+	}
+	switch(setting) {
+	case 0: {
+		// channel type
+		if(value==0 || value==1) {
+			conf[channel].hammer = value;
+			return 1;
+		}
+		break;
+	}
+	case 1: {
+		// hammer minpos
+		float v = *((float *)&value);
+		if(conf[channel].hammer && v>1.0 && v<65535.0) {
+			conf[channel].minpos = v;
+			return 1;
+		}
+		break;
+	}
+	case 2: {
+		// damper off pos
+		float v = *((float *)&value);
+		if((!conf[channel].hammer) && v>1.0 && v<65535.0) {
+			conf[channel].offpos = v;
+			return 1;
+		}
+		break;
+	}
+	case 3: {
+		// hammer channel for this dampener
+		if(conf[channel].hammer)
+			// channel is a hammer, not a dampener, can't set this.
+			return 0;
+		if(value<0 || value>=22)
+			// channel out of range
+			return 0;
+		if(!conf[value].hammer)
+			// target channel isn't a hammer!
+			return 0;
+		conf[channel].hammerchan = value;
+		return 1;
+	}
+	}
+
+	// couldn't successfully process whatever it was.
+	return 0;
+}
 
 /* USER CODE END 0 */
 
@@ -257,6 +314,24 @@ int main(void)
   HAL_ADCEx_Calibration_Start(&hadc3, ADC_CALIB_OFFSET, ADC_SINGLE_ENDED);
   HAL_Delay(10);
 
+
+  {
+	  // fill out / initialize the system status struct
+	  status.uniqueid[0] = HAL_GetUIDw0();
+	  status.uniqueid[1] = HAL_GetUIDw1();
+	  status.uniqueid[2] = HAL_GetUIDw2();
+	  status.devid = HAL_GetDEVID();
+	  status.revid = HAL_GetREVID();
+	  // derived this expression from the code for HAL_GetUIDw0
+	  status.flashsize = READ_REG(*((uint32_t *)FLASHSIZE_BASE));
+
+	  // this one is actually important, we use it in places
+	  status.sample_time = 0;
+	  status.adc1_dmas = 0;
+	  status.adc2_dmas = 0;
+	  status.adc3_dmas = 0;
+  }
+
   HDLC_Send_Frame(&huart3, 0x03, "calibdone", 9);
 
   HAL_TIM_Base_Start_IT(&htim4);
@@ -281,17 +356,17 @@ int main(void)
 	  // how much time has passed since our last clock message?
 	  // if(lots) { output new clock message }
 	  uint32_t clock_rate = sample_rate * 64; // 64 seconds; should be a bitshift
-	  if(  ((sample_time < last_clock_pulse) &&
-		    ((UINT32_MAX - last_clock_pulse) + sample_time >= clock_rate))
-		|| ((sample_time > last_clock_pulse) &&
-			(sample_time - last_clock_pulse >= clock_rate)) ) {
+	  if(  ((status.sample_time < last_clock_pulse) &&
+		    ((UINT32_MAX - last_clock_pulse) + status.sample_time >= clock_rate))
+		|| ((status.sample_time > last_clock_pulse) &&
+			(status.sample_time - last_clock_pulse >= clock_rate)) ) {
 		  // we've passed clock_rate worth of samples, so we'll send another clock message
-		  HDLC_Send_Frame(&huart3, 0x07, (uint8_t*)&sample_time, sizeof(uint32_t));
-		  last_clock_pulse = sample_time;
+		  HDLC_Send_Frame(&huart3, 0x07, (uint8_t*)&(status.sample_time), sizeof(uint32_t));
+		  last_clock_pulse = status.sample_time;
 	  }
 
 	  if(collectstats) {
-		  if((sample_time % collectstats)==0) {
+		  if((status.sample_time % collectstats)==0) {
 			  // we should be collecting stats. send them out.
 			  HDLC_Send_Frame(&huart3, 0x0C, (uint8_t*)stats, sizeof(stats));
 			  for(int i=0; i<22; i++) {
@@ -567,7 +642,7 @@ static void MX_ADC2_Init(void)
   hadc2.Init.NbrOfConversion = 7;
   hadc2.Init.DiscontinuousConvMode = DISABLE;
   hadc2.Init.ExternalTrigConv = ADC_EXTERNALTRIG_T4_TRGO;
-  hadc2.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_RISING;
+  hadc2.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_FALLING;
   hadc2.Init.ConversionDataManagement = ADC_CONVERSIONDATA_DMA_CIRCULAR;
   hadc2.Init.Overrun = ADC_OVR_DATA_PRESERVED;
   hadc2.Init.LeftBitShift = ADC_LEFTBITSHIFT_NONE;
@@ -1050,7 +1125,7 @@ static void MX_GPIO_Init(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	if(htim == &htim4) {
-		sample_time += 1;
+		status.sample_time += 1;
 	}
 }
 
@@ -1076,7 +1151,7 @@ static inline uint16_t max(uint16_t a, uint16_t b) {
 // TODO move this into ITCM?
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
-	uint32_t now = sample_time;
+	uint32_t now = status.sample_time;
 
 	// Set up the variations on the copy loop
 	uint16_t *buf;
@@ -1087,15 +1162,18 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 	if(hadc==&hadc1) {
 		buf = adc1_buffer;
 		whichadc = 0;
+		status.adc1_dmas++;
 	} else if(hadc==&hadc2) {
 		buf = adc2_buffer;
 		offset = 7;
 		whichadc = 1;
+		status.adc2_dmas++;
 	} else if(hadc==&hadc3){
 		buf = adc3_buffer;
 		cnt = 8;
 		offset = 14;
 		whichadc = 2;
+		status.adc3_dmas++;
 	} else {
 		return;
 	}

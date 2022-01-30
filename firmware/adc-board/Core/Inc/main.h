@@ -33,6 +33,23 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 extern uint16_t collectstats;
+extern uint32_t sample_time;
+
+struct systemstatus {
+	// the 96 bits of processor unique id
+	uint32_t uniqueid[3];
+
+	uint32_t devid;
+	uint32_t revid;
+	uint32_t flashsize;
+
+	uint32_t sample_time;
+	uint32_t adc1_dmas;
+	uint32_t adc2_dmas;
+	uint32_t adc3_dmas;
+};
+extern struct systemstatus status;
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -52,6 +69,8 @@ extern uint16_t collectstats;
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
+// value is really just 4 bytes. the interpretation depends on the setting
+extern _Bool update_setting(uint8_t channel, uint8_t setting, uint32_t value);
 
 /* USER CODE BEGIN EFP */
 

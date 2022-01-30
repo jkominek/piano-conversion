@@ -7,6 +7,14 @@
 #define DMA_BUFFER_SIZE 1024
 #define COMMAND_BUFFER_SIZE 512
 
+// TODO move a bunch of this into some sort of
+// "channel" struct, which we hook into
+// with just the tiniest shims. also we should
+// see about registering an interrupt handler
+// to at least copy from the dmabuffer into the
+// relevant command buffer.
+// then migrate all of the functions below to
+// take the channel struct as an argument.
 uint8_t dma_buffer[DMA_BUFFER_SIZE];
 uint8_t command_buffer[COMMAND_BUFFER_SIZE];
 int command_buffer_idx;
@@ -20,8 +28,6 @@ _Bool is_escape;
 UART_HandleTypeDef *uart;
 DMA_HandleTypeDef *dma_uart;
 
-// we'll need to make this a bit smarter when we get this
-// running on the main board. we'll need 8 different buffers.
 void HDLC_Init(UART_HandleTypeDef *_uart, DMA_HandleTypeDef *_dma_uart)
 {
 	// see above comment
@@ -61,11 +67,12 @@ void HDLC_Send_Frame(UART_HandleTypeDef *uart, uint8_t msgtype, uint8_t* rawmsg,
 	UPDATE_PARITY(msgtype);
 	APPEND_TO_FRAME(msgtype);
 
-	UPDATE_PARITY(*((uint8_t*)&msgid));
-	APPEND_TO_FRAME(*((uint8_t*)&msgid));
-
+	// make sure to serialize in network byte order
 	UPDATE_PARITY(*(1+(uint8_t*)&msgid));
 	APPEND_TO_FRAME(*(1+(uint8_t*)&msgid));
+
+	UPDATE_PARITY(*((uint8_t*)&msgid));
+	APPEND_TO_FRAME(*((uint8_t*)&msgid));
 	msgid++;
 
 	for(int i=0; i<len; i++) {
@@ -77,17 +84,6 @@ void HDLC_Send_Frame(UART_HandleTypeDef *uart, uint8_t msgtype, uint8_t* rawmsg,
 
 	HAL_UART_Transmit(uart, msg, offset, 1);
 }
-
-// not performance critical, so we'll pack this
-// for the wire.
-struct __attribute__((__packed__)) statusreport {
-	// the 96 bits of processor unique id
-	uint32_t uniqueid[3];
-
-	uint32_t devid;
-	uint32_t revid;
-	uint32_t flashsize;
-};
 
 void HDLC_Process_Frame(uint8_t origin, uint8_t *buf, int size)
 {
@@ -127,24 +123,26 @@ void HDLC_Process_Frame(uint8_t origin, uint8_t *buf, int size)
 		;
 	case 0x05: {
 		// status request
-		struct statusreport statusmsg;
-		statusmsg.uniqueid[0] = HAL_GetUIDw0();
-		statusmsg.uniqueid[1] = HAL_GetUIDw1();
-		statusmsg.uniqueid[2] = HAL_GetUIDw2();
-		statusmsg.devid = HAL_GetDEVID();
-		statusmsg.revid = HAL_GetREVID();
-		// derived this expression from the code for HAL_GetUIDw0
-		statusmsg.flashsize = READ_REG(*((uint32_t *)FLASHSIZE_BASE));
-		HDLC_Send_Frame(uart, 0x06, &statusmsg, sizeof(statusmsg));
+		HDLC_Send_Frame(uart, 0x06, &status, sizeof(struct systemstatus));
 		break;
 	}
-	case 0x09:
+	case 0x09: {
 		// configure sensor trip points / filtering
 		// maybe operate on single channels at once
 		// channel, field, value ?
-		nack_count ++;
-		NACK(msgid);
+		uint8_t channel;
+		uint8_t setting;
+		uint32_t value;
+		bcopy(buf+3, &channel, 1);
+		bcopy(buf+4, &setting, 1);
+		bcopy(buf+5, &value, sizeof(uint32_t));
+		if(update_setting(channel, setting, value)) {
+			ACK(msgid);
+		} else {
+			NACK(msgid);
+		}
 		break;
+	}
 	case 0x0B:
 		// configure sensor streaming
 		bcopy(buf+3, &collectstats, sizeof(uint16_t));
@@ -184,7 +182,9 @@ void HDLC_Process_Input()
 			} else {
 				if(command_buffer_idx >= 4)
 					HDLC_Process_Frame(0, command_buffer, command_buffer_idx);
-				else
+				else if(command_buffer_idx > 0)
+					// two frame ends in a row doesn't make a run, so
+					// require that we received _some_ bytes inbetween
 					runt_frame_count ++;
 			}
 			command_buffer_idx = 0;
@@ -198,6 +198,7 @@ void HDLC_Process_Input()
 
 		if(is_escape) {
 			b ^= 0x10;
+			is_escape = 0;
 		}
 
 		if(command_buffer_idx >= (COMMAND_BUFFER_SIZE - 1)) {

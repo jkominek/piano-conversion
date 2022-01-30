@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
-# DEPRECATING THIS REAL SOON NOW
-# good stuff should be moved into util.py
-# and then separate tools written on top of that
+# PARTIAL, and needs to be brought over to using util.py
 
 import serial
 import serial.tools.list_ports

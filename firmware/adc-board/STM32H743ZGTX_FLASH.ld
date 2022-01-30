@@ -175,6 +175,11 @@ SECTIONS
     . = . + _Min_Stack_Size;
     . = ALIGN(8);
   } >DTCMRAM /*was RAM_D1*/
+  
+  .dmabuffers (NOLOAD) :
+  {
+    KEEP(*(.dmabuffers))
+  } >RAM_D3
 
   /* Remove information from the compiler libraries */
   /DISCARD/ :
