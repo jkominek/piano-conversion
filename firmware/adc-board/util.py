@@ -41,20 +41,22 @@ def connectmidi():
         midiout.send_message([0x80, midinote, 64])
     return midiout
 
-def vel2midi(velocity, noteon=True):
+def vel2midi(velocity, noteon=True,
+             minvel=None, maxvel=None):
     if noteon==False and velocity>0.0:
         #print(f"prelift damper {midinote} {velocity}")
         pass
         return (0,0)
-    if noteon:
-        minvel = 7000.0
-        maxvel = 100000.0
-    else:
-        minvel = -0
-        maxvel = -1000
-    mps = 7.5 * (velocity - minvel) / (maxvel - minvel)
+    #if noteon:
+    #    minvel = 7000.0
+    #    maxvel = 100000.0
+    #else:
+    #    minvel = -0
+    #    maxvel = -1000
+    mps = 7.25 * (velocity - minvel) / (maxvel - minvel)
+    mps += 0.25
     minmidivel = 1 if noteon else 32
-    if mps <= 0.0001:
+    if mps <= 0.001:
         midivel = minmidivel
         cc88vel = 0
     else:
