@@ -98,113 +98,25 @@ Text Label 5250 2350 0    50   ~ 0
 C2
 Text Label 5400 2300 0    50   ~ 0
 E2
+Wire Wire Line
+	5400 1950 5400 2050
+Wire Wire Line
+	5400 2050 5750 2050
+Wire Wire Line
+	5750 2050 5750 3050
+Text Label 5600 2050 0    50   ~ 0
+NEG
 $Comp
-L Mechanical:MountingHole H2
-U 1 1 603B371C
-P 2450 2600
-F 0 "H2" H 2550 2646 50  0000 L CNN
-F 1 "MountingHole" H 2550 2555 50  0000 L CNN
-F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 2450 2600 50  0001 C CNN
-F 3 "~" H 2450 2600 50  0001 C CNN
-	1    2450 2600
-	1    0    0    -1  
-$EndComp
-$Comp
-L Mechanical:MountingHole H3
-U 1 1 603B3BE4
-P 2450 2800
-F 0 "H3" H 2550 2846 50  0000 L CNN
-F 1 "MountingHole" H 2550 2755 50  0000 L CNN
-F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 2450 2800 50  0001 C CNN
-F 3 "~" H 2450 2800 50  0001 C CNN
-	1    2450 2800
-	1    0    0    -1  
-$EndComp
-$Comp
-L Sensor_Proximity:CNY70 U3
-U 1 1 603B4077
-P 6200 2700
-F 0 "U3" H 6200 3017 50  0000 C CNN
-F 1 "CNY70" H 6200 2926 50  0000 C CNN
-F 2 "OptoDevice:Vishay_CNY70" H 6200 2500 50  0001 C CNN
-F 3 "https://www.vishay.com/docs/83751/cny70.pdf" H 6200 2800 50  0001 C CNN
-	1    6200 2700
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Sensor_Proximity:CNY70 U4
-U 1 1 603B4EA1
-P 6850 2700
-F 0 "U4" H 6850 3017 50  0000 C CNN
-F 1 "CNY70" H 6850 2926 50  0000 C CNN
-F 2 "OptoDevice:Vishay_CNY70" H 6850 2500 50  0001 C CNN
-F 3 "https://www.vishay.com/docs/83751/cny70.pdf" H 6850 2800 50  0001 C CNN
-	1    6850 2700
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Connector:Conn_01x10_Male J1
-U 1 1 603B6392
-P 5400 1750
-F 0 "J1" V 5235 1678 50  0000 C CNN
-F 1 "Conn_01x10_Male" V 5326 1678 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Angled_1x10_Pitch2.54mm" H 5400 1750 50  0001 C CNN
-F 3 "~" H 5400 1750 50  0001 C CNN
-	1    5400 1750
+L Connector:Conn_01x06_Male J1
+U 1 1 603D757B
+P 5200 1750
+F 0 "J1" V 5262 1994 50  0000 L CNN
+F 1 "Conn_01x06_Male" V 5353 1994 50  0000 L CNN
+F 2 "Pin_Headers:Pin_Header_Angled_1x06_Pitch2.54mm" H 5200 1750 50  0001 C CNN
+F 3 "~" H 5200 1750 50  0001 C CNN
+	1    5200 1750
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	6100 3000 6100 3050
-Wire Wire Line
-	5400 1950 5400 2250
-Wire Wire Line
-	5400 2250 6100 2250
-Wire Wire Line
-	6100 2250 6100 2400
-Wire Wire Line
-	5500 1950 5500 2200
-Wire Wire Line
-	5500 2200 6300 2200
-Wire Wire Line
-	6300 2200 6300 2400
-Wire Wire Line
-	5600 1950 5600 2150
-Wire Wire Line
-	5600 2150 6750 2150
-Wire Wire Line
-	6750 2150 6750 2400
-Wire Wire Line
-	5700 1950 5700 2100
-Wire Wire Line
-	5700 2100 6950 2100
-Wire Wire Line
-	6950 2100 6950 2400
-Wire Wire Line
-	5800 1950 5800 2050
-Wire Wire Line
-	5800 2050 7150 2050
-Wire Wire Line
-	7150 2050 7150 3050
-Wire Wire Line
-	7150 3050 6950 3050
-Wire Wire Line
-	6950 3050 6950 3000
-Wire Wire Line
-	6750 3000 6750 3050
-Wire Wire Line
-	6750 3050 6300 3050
-Wire Wire Line
-	6300 3050 6300 3000
-Wire Wire Line
-	5600 3050 6100 3050
-Text Label 7000 2050 0    50   ~ 0
-NEG
-Text Label 5800 2250 0    50   ~ 0
-C3
-Text Label 5950 2200 0    50   ~ 0
-E3
-Text Label 6500 2150 0    50   ~ 0
-C4
-Text Label 6650 2100 0    50   ~ 0
-E4
+	5600 3050 5750 3050
 $EndSCHEMATC
