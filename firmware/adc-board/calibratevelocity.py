@@ -28,10 +28,13 @@ for keyname, settings in configuration['keys'].items():
 
 velocities = { }
 
-ls = [ l.split()[:5] for l in open("vr.txt").readlines() ]
-ls = { l[0]: [[float(l[3]), float(l[4])],
-              [float(l[1]), float(l[2])]] for l in ls }
-velocities = ls
+try:
+    ls = [ l.split()[:5] for l in open("vr.txt").readlines() ]
+    ls = { l[0]: [[float(l[3]), float(l[4])],
+                  [float(l[1]), float(l[2])]] for l in ls }
+    velocities = ls
+except:
+    pass
 
 def process_velocity(handler, now, channel, velocity):
     board = handler.board

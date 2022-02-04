@@ -69,11 +69,9 @@ extern struct systemstatus status;
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
-// value is really just 4 bytes. the interpretation depends on the setting
-extern _Bool update_setting(uint8_t channel, uint8_t setting, uint32_t value);
 
 /* USER CODE BEGIN EFP */
-
+extern _Bool update_setting(uint8_t, uint8_t, uint32_t);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/

@@ -69,15 +69,15 @@ def calibratekey(board, name, hammer, damper, baseline):
     dpressdata = [ ]
     print(f"Press and hold {name} until instructed")
     h.sendmsg(0x0B, struct.pack("H", round(16000/CADENCE)))
-    pressed = [False]
+    pressed = [0]
     def pressdetector(t, stats):
         hpressdata.append(stats[hammer]['max'])
         dpressdata.append(stats[damper]['max'])
         if (stats[hammer]['mean'] >= hbasemm + 6.0 * hbasestd) and \
            (stats[damper]['mean'] >= dbasemm + 6.0 * dbasestd):
-            pressed[0] = True
+            pressed[0] += 1
     h.statscollector = pressdetector
-    while not pressed[0]:
+    while pressed[0] < 10:
         time.sleep(0.1)
     time.sleep(0.2)
     h.statscollector = None
@@ -154,8 +154,15 @@ connectboards()
 configuration = json.load(open("pianoconf.json"))
 keys = configuration['keys']
 baselines = { }
-for board in configuration['boards'].keys():
+def gatherthread(board):
     baselines[board] = gatherbaseline(board)
+threads = [ ]    
+for board in configuration['boards'].keys():
+    t = threading.Thread(target=gatherthread, args=(board,))
+    t.start()
+    threads.append(t)
+for t in threads:
+    t.join()
 
 for note in notesort(keys.keys()):
     board, hammer, damper = keys[note]

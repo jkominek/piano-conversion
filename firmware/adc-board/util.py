@@ -53,6 +53,8 @@ def vel2midi(velocity, noteon=True,
     #else:
     #    minvel = -0
     #    maxvel = -1000
+    if velocity < minvel:
+        print(f"{velocity} below {minvel}")
     mps = 7.25 * (velocity - minvel) / (maxvel - minvel)
     mps += 0.25
     minmidivel = 1 if noteon else 32

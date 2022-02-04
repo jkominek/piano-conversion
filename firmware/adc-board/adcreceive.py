@@ -84,6 +84,8 @@ configuration = {
   }
 }    
 
+datafile = open("rawdata","w")
+
 class PortHandler(object):
     def __init__(self, portname):
         self.port = serial.Serial(port=portname, baudrate=3000000, timeout=0.000001)
@@ -175,7 +177,7 @@ class PortHandler(object):
             self.print("our status info was requested.")
         elif msgtype == 0x06:
             uniqueid = msg[:12]
-            devid, revid, flashsize, sample_time, *dmas = struct.unpack("IIIIIII", msg[12:])
+            devid, revid, flashsize, wakes, sample_time, *dmas = struct.unpack("IIIIIIII", msg[12:])
             devid = {
               0x450: "H742/743/753/750"
             }.get(devid, "UnknownDev!!")
@@ -187,7 +189,7 @@ class PortHandler(object):
             }.get(revid, "UnknownRev")
             self.board = uniqueid.hex()
             self.commsgood = True
-            self.print(f"status {devid} Rev{revid} {flashsize}kB {sample_time} {dmas}")
+            self.print(f"status {devid} Rev{revid} {flashsize}kB {wakes} {sample_time} {dmas}")
             # based on the received uniqueid, consult our calibration tables,
             # and send the board new configuration.
         elif msgtype == 0x07:
@@ -205,6 +207,7 @@ class PortHandler(object):
             self.prevclock = clock
             self.prevnow = now
         elif msgtype == 0x08:
+            return
             vel, channel = struct.unpack("fB", msg)
             noteon = hammers[channel]
             midinote = configuration[self.board]["channel2midi"][channel]
@@ -215,8 +218,10 @@ class PortHandler(object):
             midiout.send_message([0xB0, 88, cc88vel])
             midiout.send_message([0x90 if noteon else 0x80, midinote, midivel])
         elif msgtype == 0x0A:
-            cnt = (len(msg) // 4)
-            self.print(*struct.unpack(("".join(["f"]*cnt)), msg))
+            cnt = (len(msg) >> 1)
+            for v in struct.unpack(("".join(["H"]*cnt)), msg):
+                datafile.write(str(v)+"\n")
+            #self.print(*struct.unpack(("".join(["H"]*cnt)), msg))
         elif msgtype == 0x0C:
             if len(msg) != 264:
                 return
@@ -228,7 +233,8 @@ class PortHandler(object):
                 max = parsed[i*4+1]
                 sum = parsed[i*4+2]
                 count = parsed[i*4+3]
-                stats[i] = { 'min': min, 'max': max, 'mean': round(float(sum)/count, 2) }
+                if count > 0:
+                    stats[i] = { 'min': min, 'max': max, 'mean': round(float(sum)/count, 2) }
             if self.statscollector:
                 self.statscollector(time.time(), stats)
             #self.print(time.time(), "stats", stats)
@@ -333,13 +339,16 @@ def generatebaseline(secs=10.0):
             mins = [ v[1]['min'] for v in cd ]
             maxs = [ v[1]['max'] for v in cd ]
             means = [ v[1]['mean'] for v in cd ]
-            bb.append({'min': min(mins), 'max': max(maxs),
-                       'mean': np.mean(means),
-                       'std': np.std(means)})
-            print(f"{b} {chan:2d} {min(mins):5d}   {round(np.mean(means)):5d} {round(np.std(means)):5d}   {max(maxs):5d}")
+            try:
+                bb.append({'min': min(mins), 'max': max(maxs),
+                           'mean': np.mean(means),
+                           'std': np.std(means)})
+                print(f"{b} {chan:2d} {min(mins):5d}   {round(np.mean(means)):5d} {round(np.std(means)):5d}   {max(maxs):5d}")
+            except:
+                pass
     return baseline
 
-baseline = generatebaseline(3)
+#baseline = generatebaseline(3)
 
 def boardmeantime(paircounts):
     # gets dictionary of (sensor,sensor)->[times]
@@ -427,7 +436,7 @@ def activitymonitor(baseline):
             if len(active)==2:
                 pair = tuple(sorted(active))
                 paircounts.setdefault(board, { }).setdefault(pair, [ ]).append(t)
-            print("activity", board, active, "crosstalk", crosstalk)
+            #print("activity", board, active, "crosstalk", crosstalk)
 
     for h in handlers:
         h.statscollector = functools.partial(activitycollector, h.board)
@@ -447,7 +456,7 @@ def activitymonitor(baseline):
         h.statscollector = functools.partial(activitycollector, h.board)
         h.sendmsg(0x0B, struct.pack("H", 0))
 
-activitymonitor(baseline)
+#activitymonitor(baseline)
 
 # infinite loop while the automatic processing runs.
 while True:

@@ -211,5 +211,5 @@ void HDLC_Process_Input()
 		}
 	}
 
-	printf("%i %i\n", bad_frame_count, parityerror_frame_count);
+	//printf("%i %i\n", bad_frame_count, parityerror_frame_count);
 }
