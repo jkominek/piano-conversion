@@ -1,0 +1,25 @@
+Put a CNY70 on a motorized stage, aimed at a white surface.
+Moved it around, linearly, then at random, taking measurements
+of the output. Phototransistor was fed into a TIA. High voltage
+on the PT was 3.2584V. Reference voltage on the opamp was 1.9799V.
+So there was 1.2749V across the phototransistor.
+
+Voltages were measured with a EEVBlog 121GW multimeter.
+Motion provided by a Creality Ender 3 V2.
+Distances confirmed with Mitutoyo CD-6" ASX digital calipers.
+
+poscommanded,posmeasured
+5,4.66
+10,9.66
+15,14.66
+20,19.57
+
+All millimeters. Looks like the first column of the data needs -0.33
+applied.  I think I was smashing the sensor into the target by 0.33mm.
+Explains why it goes flat <=0.33
+
+Maximum possible value for the raw data is ~1.9799V.
+
+Gnuplot command for reasonable plot is
+
+plot [0:] "2022-02-04-sensorlog.txt" using ($1-0.33):(1.9799-$2) with point
