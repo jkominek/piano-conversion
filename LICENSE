@@ -1,9 +1,11 @@
 Imported KiCad libraries have differing licenses which may or may
-not be included in this repository. Apologies.
+not be included in this repository. Apologies. If I'm using a library
+which has an unacceptable license to you, let me know and I'll
+recreate the symbol/footprints as necessary.
 
 
 
-Copyright 2020 Jay Kominek
+Copyright 2020-2022 Jay Kominek
 
 Permission to use, copy, modify, and/or distribute this software for
 any purpose with or without fee is hereby granted, provided that the
