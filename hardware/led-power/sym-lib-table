@@ -1,3 +1,4 @@
 (sym_lib_table
-  (lib (name MCP1501)(type Legacy)(uri ${KIPRJMOD}/MCP1501.lib)(options "")(descr ""))
+  (lib (name "MCP1501")(type "Legacy")(uri "${KIPRJMOD}/MCP1501.lib")(options "")(descr ""))
+  (lib (name "STM32G030Fx")(type "KiCad")(uri "${KIPRJMOD}/../STM32G030Fx.kicad_sym")(options "")(descr ""))
 )
