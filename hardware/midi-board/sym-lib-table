@@ -1,3 +1,4 @@
 (sym_lib_table
-  (lib (name Symbols)(type Legacy)(uri "C:/Users/Jay Kominek/Dropbox/Piano Conversion/Symbols.lib")(options "")(descr ""))
+  (lib (name "Symbols")(type "Legacy")(uri "/home/jkominek/Dropbox/Piano Conversion/hardware/Symbols.lib")(options "")(descr ""))
+  (lib (name "STM32G030Fx")(type "KiCad")(uri "${KIPRJMOD}/../STM32G030Fx.kicad_sym")(options "")(descr ""))
 )
