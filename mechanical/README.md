@@ -17,3 +17,11 @@ to everyone. They might give you some ideas.
   * Some simple blocks intended to mount onto single slot 4040 extrusions and hold the keybed from the side.
 * mounting_plate
   * Adapter which holds my larger PCBs to the dual-slot 4040 extrusions.
+
+More stuff will be forth coming.
+
+# Sources of useful things
+
+* Amazon is full of cheap hardware.
+* McMaster-Carr, if you're not aware of it, will sell you just about every mechanical widget there is, for the right place.
+* Misumi is my preferred supplier for aluminum extrusions. They'll cut and customize them for very reasonable prices, and are very precise.
