@@ -1262,7 +1262,6 @@
     )
   )
 
-
   (junction (at 154.94 48.26) (diameter 0) (color 0 0 0 0)
     (uuid 0e3c9968-d7e8-4229-a564-29b7296a95a1)
   )
@@ -2307,7 +2306,7 @@
     (property "Value" "MountingHole" (id 1) (at 231.14 97.663 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "Mounting_Holes:MountingHole_3.2mm_M3_Pad_Via" (id 2) (at 228.6 96.52 0)
+    (property "Footprint" "MountingHole:MountingHole_3.2mm_M3" (id 2) (at 228.6 96.52 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 228.6 96.52 0)
@@ -2324,7 +2323,7 @@
     (property "Value" "MountingHole" (id 1) (at 231.14 102.743 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "Mounting_Holes:MountingHole_3.2mm_M3_Pad_Via" (id 2) (at 228.6 101.6 0)
+    (property "Footprint" "MountingHole:MountingHole_3.2mm_M3" (id 2) (at 228.6 101.6 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 228.6 101.6 0)
@@ -2341,7 +2340,7 @@
     (property "Value" "MountingHole" (id 1) (at 231.14 107.823 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "Mounting_Holes:MountingHole_3.2mm_M3_Pad_Via" (id 2) (at 228.6 106.68 0)
+    (property "Footprint" "MountingHole:MountingHole_3.2mm_M3" (id 2) (at 228.6 106.68 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 228.6 106.68 0)
@@ -3025,13 +3024,13 @@
       (reference "FB6") (unit 1) (value "FB") (footprint "Inductor_SMD:L_0805_2012Metric_Pad1.05x1.20mm_HandSolder")
     )
     (path "/00000000-0000-0000-0000-00005fd6773d"
-      (reference "H1") (unit 1) (value "MountingHole") (footprint "Mounting_Holes:MountingHole_3.2mm_M3_Pad_Via")
+      (reference "H1") (unit 1) (value "MountingHole") (footprint "MountingHole:MountingHole_3.2mm_M3")
     )
     (path "/00000000-0000-0000-0000-00005fd68379"
-      (reference "H2") (unit 1) (value "MountingHole") (footprint "Mounting_Holes:MountingHole_3.2mm_M3_Pad_Via")
+      (reference "H2") (unit 1) (value "MountingHole") (footprint "MountingHole:MountingHole_3.2mm_M3")
     )
     (path "/00000000-0000-0000-0000-00005fd689c8"
-      (reference "H3") (unit 1) (value "MountingHole") (footprint "Mounting_Holes:MountingHole_3.2mm_M3_Pad_Via")
+      (reference "H3") (unit 1) (value "MountingHole") (footprint "MountingHole:MountingHole_3.2mm_M3")
     )
     (path "/00000000-0000-0000-0000-00005fd0bc62"
       (reference "J1") (unit 1) (value "MIDI OUT") (footprint "footprints:SDS-50J")
