@@ -1,6 +1,11 @@
 import pcbnew
 import itertools
 
+# NOTE
+# the boards don't have netclasses, or anything specifying min
+# trace widths or spacings, so pcbnew will let you make things
+# which don't pass DRC. that makes this largely unhelpful. grrr.
+
 # Generates mechanical layouts for sensorboards.
 # You can vary all sorts of parameters and probably get a reasonable
 # part placement and board outline instantly, instead of having to

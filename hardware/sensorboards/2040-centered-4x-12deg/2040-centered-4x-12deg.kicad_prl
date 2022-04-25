@@ -64,11 +64,11 @@
       35,
       36
     ],
-    "visible_layers": "000fcff_80000001",
+    "visible_layers": "000b0ff_80000001",
     "zone_display_mode": 0
   },
   "meta": {
-    "filename": "2020-centered-4x-12deg.kicad_prl",
+    "filename": "2040-centered-4x-12deg.kicad_prl",
     "version": 3
   },
   "project": {
