@@ -70,16 +70,20 @@ def vel2midi(velocity, noteon=True):
 #[2, 6, 4, 4, 5, 3, 3, 2, 1, 0, 1, 0, 6, 5, 7, 8, 9, 10, 7, 8, 9, 10]
 
 configuration = {
-  "29002a001651393238353835": {
-    # lowest notes, #4
-    "channel2midi":
-    [ x + 44 for x in [2, 6, 4, 4, 5, 3, 3, 2, 1, 0, 1, 0, 6, 5, 7, 8, 9, 10, 7, 8, 9, 10] ]
-  },
-  "2b002a001651393238353835": {
-    # next lowest, #5
-    "channel2midi":
-    [ x + 55 for x in [2, 6, 4, 4, 5, 3, 3, 2, 1, 0, 1, 0, 6, 5, 7, 8, 9, 10, 7, 8, 9, 10] ]    
-  }
+    "29002a001651393238353835": {
+        # lowest notes, #4
+        "channel2midi":
+        [ x + 44 for x in [2, 6, 4, 4, 5, 3, 3, 2, 1, 0, 1, 0, 6, 5, 7, 8, 9, 10, 7, 8, 9, 10] ]
+    },
+    "2b002a001651393238353835": {
+        # next lowest, #5
+        "channel2midi":
+        [ x + 55 for x in [2, 6, 4, 4, 5, 3, 3, 2, 1, 0, 1, 0, 6, 5, 7, 8, 9, 10, 7, 8, 9, 10] ]
+    },
+    "25002a001651393238353835": {
+        "channel2midi":
+        [ x + 66 for x in [2, 6, 4, 4, 5, 3, 3, 2, 1, 0, 1, 0, 6, 5, 7, 8, 9, 10, 7, 8, 9, 10] ]
+    }
 }    
 
 class PortHandler(object):
@@ -440,6 +444,7 @@ def activitymonitor(baseline):
         print(board, boardmeantime(paircounts[board]))
         rankings = computesensorpairing(paircounts[board])
         open(board+".json", "w").write(json.dumps(rankings))
+        print(f"wrote json for {board}")
 
     for h in handlers:
         h.statscollector = functools.partial(activitycollector, h.board)
