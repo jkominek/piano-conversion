@@ -203,9 +203,7 @@ class PortHandler(object):
             }.get(revid, "UnknownRev")
             self.board = uniqueid.hex()
             self.commsgood = True
-            self.print(f"status {devid} Rev{revid} {flashsize}kB {sample_time} {dmas}")
-            # based on the received uniqueid, consult our calibration tables,
-            # and send the board new configuration.
+            self.statushandler(devid, revid, flashsize, sample_time, dmas)
         elif msgtype == 0x07:
             # we could hypothetically be more clever and
             # track the time every frame boundary byte comes
@@ -244,6 +242,11 @@ class PortHandler(object):
             #self.print(time.time(), "stats", stats)
         elif msgtype == 0x7F:
             self.print("error")
+
+    def statushandler(self, devid, revid, flashsize, sample_time, dmas):
+        self.print(f"status {devid} Rev{revid} {flashsize}kB {sample_time} {dmas}")
+        # based on the received uniqueid, consult our calibration tables,
+        # and send the board new configuration.
 
     def loop(self):
         buf = b''
