@@ -55,6 +55,7 @@ UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
 UART_HandleTypeDef huart3;
 DMA_HandleTypeDef hdma_usart3_rx;
+DMA_HandleTypeDef hdma_usart3_tx;
 
 /* USER CODE BEGIN PV */
 
@@ -337,6 +338,8 @@ int main(void)
   }
 
   HDLC_Send_Frame(&huart3, 0x03, "calibdone", 9);
+  HDLC_Send_Frame(&huart3, 0x03, "calibdone", 9);
+  HDLC_Send_Frame(&huart3, 0x03, "calibdone", 9);
 
   HAL_TIM_Base_Start_IT(&htim1);
 
@@ -385,7 +388,7 @@ int main(void)
 		  }
 	  }
 
-	  /* USER CODE END WHILE */
+    /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
@@ -1094,6 +1097,9 @@ static void MX_DMA_Init(void)
   /* DMA1_Stream1_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Stream1_IRQn);
+  /* DMA1_Stream2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream2_IRQn);
   /* DMA2_Stream0_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA2_Stream0_IRQn, 1, 0);
   HAL_NVIC_EnableIRQ(DMA2_Stream0_IRQn);
@@ -1171,6 +1177,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	if(htim == &htim1) {
 		status.sample_time += 1;
 	}
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+{
+	if(huart==&huart3)
+		HDLC_DMA_Send_Complete(huart);
 }
 
 static inline __attribute__((always_inline)) float computefilter(int chan, int idxs[])

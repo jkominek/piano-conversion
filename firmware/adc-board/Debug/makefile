@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (9-2020-q2-update)
+# Toolchain: GNU Tools for STM32 (10.3-2021.10)
 ################################################################################
 
 -include ../makefile.init
@@ -47,14 +47,14 @@ BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ART
 EXECUTABLES += \
 adc-board.elf \
 
+MAP_FILES += \
+adc-board.map \
+
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
 adc-board.list \
-
-OBJCOPY_BIN += \
-adc-board.bin \
 
 
 # All Target
@@ -64,7 +64,7 @@ all: main-build
 main-build: adc-board.elf secondary-outputs
 
 # Tool invocations
-adc-board.elf: $(OBJS) $(USER_OBJS) C:\Users\Jay\ Kominek\STM32CubeIDE\workspace\adc-board\STM32H743ZGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+adc-board.elf adc-board.map: $(OBJS) $(USER_OBJS) C:\Users\Jay\ Kominek\STM32CubeIDE\workspace\adc-board\STM32H743ZGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	arm-none-eabi-gcc -o "adc-board.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\Jay Kominek\STM32CubeIDE\workspace\adc-board\STM32H743ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="adc-board.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
@@ -79,17 +79,12 @@ adc-board.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-adc-board.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "adc-board.bin"
-	@echo 'Finished building: $@'
-	@echo ' '
-
 # Other Targets
 clean:
-	-$(RM) adc-board.bin adc-board.elf adc-board.list default.size.stdout
+	-$(RM) adc-board.elf adc-board.list adc-board.map default.size.stdout
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_BIN)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'

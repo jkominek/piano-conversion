@@ -62,6 +62,7 @@ extern DMA_HandleTypeDef hdma_adc2;
 extern DMA_HandleTypeDef hdma_adc3;
 extern TIM_HandleTypeDef htim1;
 extern DMA_HandleTypeDef hdma_usart3_rx;
+extern DMA_HandleTypeDef hdma_usart3_tx;
 extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
 extern UART_HandleTypeDef huart3;
@@ -236,6 +237,20 @@ void DMA1_Stream1_IRQHandler(void)
 }
 
 /**
+  * @brief This function handles DMA1 stream2 global interrupt.
+  */
+void DMA1_Stream2_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA1_Stream2_IRQn 0 */
+
+  /* USER CODE END DMA1_Stream2_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_usart3_tx);
+  /* USER CODE BEGIN DMA1_Stream2_IRQn 1 */
+
+  /* USER CODE END DMA1_Stream2_IRQn 1 */
+}
+
+/**
   * @brief This function handles TIM1 update interrupt.
   */
 void TIM1_UP_IRQHandler(void)
@@ -286,15 +301,16 @@ void USART3_IRQHandler(void)
 	// we should've only been triggered by the character match, clear that
 	SET_BIT(USART3->ICR, USART_ICR_CMCF);
 
-	HDLC_Process_Input();
 
-	// skip running the HAL's generic handler. we know exactly
-	// what needs to happen.
-	if(0) {
   /* USER CODE END USART3_IRQn 0 */
   HAL_UART_IRQHandler(&huart3);
   /* USER CODE BEGIN USART3_IRQn 1 */
-	}
+
+  // Every time we get any sort of UART IRQ, we'll
+  // attempt to reprocess the input buffer. If there
+  // is nothing to do, then the check is probably
+  // as fast as checking what kind of interrupt it was.
+  HDLC_Process_Input();
 
   /* USER CODE END USART3_IRQn 1 */
 }

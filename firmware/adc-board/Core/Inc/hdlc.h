@@ -12,5 +12,6 @@
 
 extern void HDLC_Init(UART_HandleTypeDef *, DMA_HandleTypeDef *);
 extern void HDLC_Send_Frame(UART_HandleTypeDef *, uint8_t, uint8_t*, uint16_t);
+extern void HDLC_DMA_Send_Complete(UART_HandleTypeDef *);
 
 #endif /* INC_HDLC_H_ */

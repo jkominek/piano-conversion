@@ -49,20 +49,50 @@ void HDLC_Init(UART_HandleTypeDef *_uart, DMA_HandleTypeDef *_dma_uart)
 
 uint16_t msgid = 0;
 
+// we don't have protection for wrap-around in this code.
+// OUT_BUF_SIZE needs to be significantly larger than any
+// burst of stuff we might want to send, or we'll corrupt
+// packets.
+#define OUT_BUF_SIZE 512
+_Bool DMA_IN_PROGRESS = 0;
+__attribute__ ((aligned (32))) __attribute__(( section(".dmabuffers") )) uint8_t out_buffer[OUT_BUF_SIZE];
+uint16_t out_write = 0;
+uint16_t out_sent = 0;
 #define UPDATE_PARITY(b) { parity ^= b; }
-#define APPEND_TO_FRAME(b) { if((b==0x7E)||(b==0x7D)){ msg[offset++] = 0x7D; msg[offset++] = b ^ 0x10; } else { msg[offset++] = b; } }
+#define INC_WRITE_IDX(i) { out_write = (out_write + i) % OUT_BUF_SIZE; }
+
+static inline void APPEND_TO_FRAME(uint8_t b)
+{
+	if((b==0x7E)||(b==0x7D)) {
+		out_buffer[out_write] = 0x7D;
+		out_buffer[(out_write+1) % OUT_BUF_SIZE] = b ^ 0x10;
+		INC_WRITE_IDX(2);
+	} else {
+		out_buffer[out_write] = b;
+		INC_WRITE_IDX(1);
+	}
+}
 
 // adds our standard "headers" to every message, and
 // then applies async hdlc framing
 void HDLC_Send_Frame(UART_HandleTypeDef *uart, uint8_t msgtype, uint8_t* rawmsg, uint16_t len)
 {
+	__disable_irq();
+
 	// start and stop frame bytes, possibly escaping every byte,
 	// parity byte(s), and another one for good measure.
-	uint8_t msg[2+1+(len<<1)+2+1];
 	uint8_t parity = 0;
 	// hdlc encode rawmsg to msg
-	msg[0] = 0x7E;
-	int offset = 1;
+
+	// is a DMA in progress? is the previous byte in the buffer a 0x7E?
+	// then don't waste time sending this one. we don't need to send
+	// back-to-back frame boundaries. for the minimum possible message
+	// size this would reduce bandwidth consumption by 16%.
+	if(!(DMA_IN_PROGRESS && out_buffer[out_sent]==0x7E))
+	{
+		out_buffer[out_write] = 0x7E;
+		INC_WRITE_IDX(1);
+	}
 
 	UPDATE_PARITY(msgtype);
 	APPEND_TO_FRAME(msgtype);
@@ -80,9 +110,48 @@ void HDLC_Send_Frame(UART_HandleTypeDef *uart, uint8_t msgtype, uint8_t* rawmsg,
 		APPEND_TO_FRAME(rawmsg[i]);
 	}
 	APPEND_TO_FRAME(parity);
-	msg[offset++] = 0x7E;
+	out_buffer[out_write] = 0x7E;
+	INC_WRITE_IDX(1);
 
-	HAL_UART_Transmit(uart, msg, offset, 1);
+	if(DMA_IN_PROGRESS) {
+		// do nothing, the bytes are in the buffer and the pointers updated.
+	} else {
+		if(out_write > out_sent) {
+			HAL_UART_Transmit_DMA(uart, out_buffer + out_sent, out_write - out_sent);
+			out_sent = out_write;
+		} else {
+			HAL_UART_Transmit_DMA(uart, out_buffer + out_sent, OUT_BUF_SIZE - out_sent);
+			out_sent = 0;
+		}
+		DMA_IN_PROGRESS = 1;
+	}
+
+	__enable_irq();
+}
+
+void HDLC_DMA_Send_Complete(UART_HandleTypeDef *uart)
+{
+	__disable_irq();
+	DMA_IN_PROGRESS = 0;
+	if(out_write == out_sent) {
+		// no change to the buffer.
+		__enable_irq();
+		return;
+	}
+
+	// note, if there was wrapping we'll retrigger ourselves
+	// so that the wrapped portion is sent in two chunks.
+
+	if(out_write > out_sent) {
+		// no wrapping has occurred
+		HAL_UART_Transmit_DMA(uart, out_buffer + out_sent, out_write - out_sent);
+		out_sent = out_write;
+	} else {
+		// wrapping happened
+		HAL_UART_Transmit_DMA(uart, out_buffer + out_sent, OUT_BUF_SIZE - out_sent);
+		out_sent = 0;
+	}
+	__enable_irq();
 }
 
 void HDLC_Process_Frame(uint8_t origin, uint8_t *buf, int size)
