@@ -53,7 +53,7 @@ uint16_t msgid = 0;
 // OUT_BUF_SIZE needs to be significantly larger than any
 // burst of stuff we might want to send, or we'll corrupt
 // packets.
-#define OUT_BUF_SIZE 512
+#define OUT_BUF_SIZE 1024
 _Bool DMA_IN_PROGRESS = 0;
 __attribute__ ((aligned (32))) __attribute__(( section(".dmabuffers") )) uint8_t out_buffer[OUT_BUF_SIZE];
 uint16_t out_write = 0;
@@ -132,12 +132,13 @@ void HDLC_Send_Frame(UART_HandleTypeDef *uart, uint8_t msgtype, uint8_t* rawmsg,
 void HDLC_DMA_Send_Complete(UART_HandleTypeDef *uart)
 {
 	__disable_irq();
-	DMA_IN_PROGRESS = 0;
 	if(out_write == out_sent) {
-		// no change to the buffer.
+		// no change to the buffer. or the buffer is totally hosed.
+		DMA_IN_PROGRESS = 0;
 		__enable_irq();
 		return;
 	}
+	// note, DMA_IN_PROGRESS is remaining true
 
 	// note, if there was wrapping we'll retrigger ourselves
 	// so that the wrapped portion is sent in two chunks.
