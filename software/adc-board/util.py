@@ -79,11 +79,15 @@ def vel2midi(velocity, noteon=True,
     return (midivel, cc88vel)
 
 class PortHandler(object):
-    def __init__(self, portname):
+    def __init__(self, portname, preserve=None):
         self.port = serial.Serial(port=portname, baudrate=3000000, timeout=0.000001)
+        self.preserve = preserve
         self.MSGID = 666
+
         self.callbacks = { } # msgid references thunks
         self.velocityhandler = None
+        self.statscollector = None
+
         self.prevtime = 0
         self.timeinc = 0
         self.prevclock = 0
@@ -158,6 +162,9 @@ class PortHandler(object):
         for v in msg[:-1]:
             calcparity ^= v
         parity = msg[-1]
+        if parity != calcparity:
+            self.print(f"bad parity on len {len(msg)} msg")
+            return
 
         if len(msg) < 4:
             self.print("runt frame")
@@ -223,8 +230,11 @@ class PortHandler(object):
             if self.velocityhandler:
                 self.velocityhandler(self, now, channel, vel)
         elif msgtype == 0x0A:
-            cnt = (len(msg) // 4)
-            self.print(*struct.unpack(("".join(["f"]*cnt)), msg))
+            cnt = (len(msg) // 2)
+            if len(msg) % 2:
+                print(f"bad raw sensor data packet; {len(msg)} bytes")
+            else:
+                self.print(time.time(), *struct.unpack(("".join(["H"]*cnt)), msg))
         elif msgtype == 0x0C:
             if len(msg) != 264:
                 return
@@ -252,9 +262,16 @@ class PortHandler(object):
         buf = b''
         while self.running:
             try:
-                buf += self.port.read(64)
+                v = self.port.read(64)
+                buf += v
+                if self.preserve:
+                    self.preserve.write(v)
             except serial.SerialTimeoutException:
-                pass
+                # only bother flushing once there isn't
+                # anything to process. considering our
+                # timeout, that'll happen often enough.
+                if self.preserve:
+                    self.preserve.flush()
             if len(buf)>4096:
                 self.print("buffer overflow")
                 sys.exit(-1)
@@ -294,7 +311,7 @@ class PortHandler(object):
 
 validports = [ ]
 handlers = [ ]
-def connectboards():
+def connectboards(preserve=False):
     # connect to all of the devices available to us                    
     for port in serial.tools.list_ports.comports():
         if port.vid==1027 and port.pid==24597:
@@ -302,7 +319,10 @@ def connectboards():
     print(validports)
 
     for p in validports:
-        h = PortHandler(p)
+        kwargs = { }
+        if preserve:
+            kwargs['preserve'] = open(p.replace("/","_"), "wb")
+        h = PortHandler(p, **kwargs)
         while not h.commsgood:
             time.sleep(0.1)
         handlers.append(h)
