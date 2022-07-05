@@ -1,0 +1,6 @@
+(fp_lib_table
+  (lib (name "OptoDevice")(type "KiCad")(uri "${KIPRJMOD}/../../OptoDevice.pretty")(options "")(descr ""))
+  (lib (name "TestPoint")(type "KiCad")(uri "${KIPRJMOD}/../../TestPoint.pretty")(options "")(descr ""))
+  (lib (name "Mounting_Holes")(type "KiCad")(uri "/home/davide/.local/share/kicad/6.0/footprints/Mounting_Holes")(options "")(descr ""))
+  (lib (name "Pin_Headers")(type "KiCad")(uri "/home/davide/.local/share/kicad/6.0/footprints/Pin_Headers")(options "")(descr ""))
+)
