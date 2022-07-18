@@ -3,10 +3,12 @@ QRE1113Screen();
 module QRE1113Screen() { 
 $fs=0.1;        // resolution in mm
 $fa=1;          // resolution in degrees
-hole_r = 3.2/2;
-thickn = 3;
-thickt = 6;
-bolt_r = 6/2;   
+
+thickn = 3;     // thickness of the screen
+thickt = 6;     // thickness with tolerance to remove pieces
+
+hole_r = 3.2/2;  // M3 is 3mm normally 0.2mm of clearance
+bolt_r = 7/2;    // in most cases is 5.5mm so 7mm should be fine
   
     difference() {
         cube([48.5, 38, 3]);
