@@ -13,6 +13,8 @@ bolt_r = 7/2;    // in most cases is 5.5mm so 7mm should be fine
 fbx = 11.6;      // position of the first bolt, x
 fby = 9.5;       // position of the first bolt, y
 
+hxd = 12.6;      // x distance between holes
+
 module bolt_hole() cylinder(thickt, hole_r, hole_r);
 module bolt_groove() cylinder(thickt, bolt_r, bolt_r);
 
@@ -23,14 +25,14 @@ module bolt_groove() cylinder(thickt, bolt_r, bolt_r);
         translate([fbx, fby, thickn/2])
             bolt_groove();
 
-        translate([fbx + 12.4, fby, -1])
+        translate([fbx + hxd, fby, -1])
             bolt_hole();
-        translate([fbx + 12.4, fby, thickn/2])
+        translate([fbx + hxd, fby, thickn/2])
             bolt_groove();
 
-        translate([fbx + 12.4 + 12.6, fby, -1])
+        translate([fbx + 2*hxd, fby, -1])
             bolt_hole();
-        translate([fbx + 12.4 + 12.6, fby, thickn/2])
+        translate([fbx + 2*hxd, fby, thickn/2])
             bolt_groove();
 
         translate([fbx, 20 + fby, -1])
@@ -38,14 +40,14 @@ module bolt_groove() cylinder(thickt, bolt_r, bolt_r);
         translate([fbx, 20 + fby, thickn/2])
             bolt_groove();
 
-        translate([fbx + 12.4, 20 + fby, -1])
+        translate([fbx + hxd, 20 + fby, -1])
             bolt_hole();
-        translate([fbx + 12.4, 20 + fby, thickn/2])
+        translate([fbx + hxd, 20 + fby, thickn/2])
             bolt_groove();
 
-        translate([fbx + 12.4 + 12.6, 20 + fby, -1])
+        translate([fbx + 2*hxd, 20 + fby, -1])
             bolt_hole();
-        translate([fbx + 12.4 + 12.6, 20 + fby, thickn/2])
+        translate([fbx + 2*hxd, 20 + fby, thickn/2])
             bolt_groove();
 
         translate([5.7-6.5/2, 20-4.5/2, -1]) cube([6.5,4.5,6]);
