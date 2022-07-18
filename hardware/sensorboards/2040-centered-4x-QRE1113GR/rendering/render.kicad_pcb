@@ -1047,8 +1047,8 @@
     (fp_circle (center 0 0) (end 3.45 0) (layer "F.CrtYd") (width 0.05) (fill none) (tstamp 4db55cb8-197b-4402-871f-ce582b65664b))
     (pad "" np_thru_hole circle (at 0 0) (size 3.2 3.2) (drill 3.2) (layers *.Cu *.Mask) (tstamp 9186dae5-6dc3-4744-9f90-e697559c6ac8))
     (model "${KIPRJMOD}/QRE1113-screen.wrl"
-      (offset (xyz -116.1 -11.7 0))
-      (scale (xyz 0.39 0.39 0.39))
+      (offset (xyz -116.6 -12.05 0))
+      (scale (xyz 0.3937 0.3937 0.3937))
       (rotate (xyz 0 0 0))
     )
   )
