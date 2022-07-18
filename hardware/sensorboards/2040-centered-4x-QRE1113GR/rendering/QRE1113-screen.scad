@@ -4,6 +4,9 @@ module QRE1113Screen() {
 $fs=0.1;         // resolution in mm
 $fa=1;           // resolution in degrees
 
+boardx = 49;    // x dimension of the screen
+boardy = 38;    // y dimension of the screen
+
 thickn = 3;      // thickness of the screen
 thickt = 6;      // thickness with tolerance to remove pieces
 
@@ -15,12 +18,23 @@ fby = 9.5;       // position of the first bolt, y
 
 hxd = 12.6;      // x distance between holes
 
+smx = 2.9;       // required minimum x clearance for the sensor
+smy = 3.6;       // required minimum y clearance for the sensor
+
+stx = 6.5;       // required total x clearance for the pins
+sty = 4.5; // this should be equal to smy!!!
+
+sbx = 4.1;       // distance x of sensor from board
+sby = boardy -   // start with the board
+      fby -      // move by distance y of sensor from board
+      20/2;      // move by half distance between holes
+
 module bolt_hole() cylinder(thickt, hole_r, hole_r);
 module bolt_groove() cylinder(thickt, bolt_r, bolt_r);
-module sensor_hole() cube([6.5, 4.5, thickt]);
+module sensor_hole() cube([smx, smy, thickt]);
 
     difference() {
-        cube([49, 38, 3]);
+        cube([boardx, boardy, 3]);
         translate([fbx, fby, -1])
             bolt_hole();
         translate([fbx, fby, thickn/2])
@@ -51,13 +65,13 @@ module sensor_hole() cube([6.5, 4.5, thickt]);
         translate([fbx + 2*hxd, 20 + fby, thickn/2])
             bolt_groove();
 
-        translate([5.7 - 6.5/2,          20 -4.5/2, -1])
+        translate([sbx,          sby, -1])
             sensor_hole();
-        translate([5.7 - 6.5/2 + 12.6,   20 -4.5/2, -1])
+        translate([sbx + 12.6,   sby, -1])
             sensor_hole();
-        translate([5.7 - 6.5/2 + 12.6*2, 20 -4.5/2, -1])
+        translate([sbx + 12.6*2, sby, -1])
             sensor_hole();
-        translate([5.7 - 6.5/2 + 12.6*3, 20 -4.5/2, -1])
+        translate([sbx + 12.6*3, sby, -1])
             sensor_hole();
     }
 }
