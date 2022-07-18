@@ -19,7 +19,7 @@ module bolt_hole() cylinder(thickt, hole_r, hole_r);
 module bolt_groove() cylinder(thickt, bolt_r, bolt_r);
 
     difference() {
-        cube([48.5, 38, 3]);
+        cube([49, 38, 3]);
         translate([fbx, fby, -1])
             bolt_hole();
         translate([fbx, fby, thickn/2])
