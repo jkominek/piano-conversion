@@ -17,6 +17,7 @@ hxd = 12.6;      // x distance between holes
 
 module bolt_hole() cylinder(thickt, hole_r, hole_r);
 module bolt_groove() cylinder(thickt, bolt_r, bolt_r);
+module sensor_hole() cube([6.5, 4.5, thickt]);
 
     difference() {
         cube([49, 38, 3]);
@@ -50,9 +51,13 @@ module bolt_groove() cylinder(thickt, bolt_r, bolt_r);
         translate([fbx + 2*hxd, 20 + fby, thickn/2])
             bolt_groove();
 
-        translate([5.7 - 6.5/2,          20 -4.5/2, -1]) cube([6.5,4.5,6]);
-        translate([5.7 - 6.5/2 + 12.6,   20 -4.5/2, -1]) cube([6.5,4.5,6]);
-        translate([5.7 - 6.5/2 + 12.6*2, 20 -4.5/2, -1]) cube([6.5,4.5,6]);
-        translate([5.7 - 6.5/2 + 12.6*3, 20 -4.5/2, -1]) cube([6.5,4.5,6]);
+        translate([5.7 - 6.5/2,          20 -4.5/2, -1])
+            sensor_hole();
+        translate([5.7 - 6.5/2 + 12.6,   20 -4.5/2, -1])
+            sensor_hole();
+        translate([5.7 - 6.5/2 + 12.6*2, 20 -4.5/2, -1])
+            sensor_hole();
+        translate([5.7 - 6.5/2 + 12.6*3, 20 -4.5/2, -1])
+            sensor_hole();
     }
 }
