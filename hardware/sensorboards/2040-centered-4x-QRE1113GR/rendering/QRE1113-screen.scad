@@ -26,13 +26,13 @@ module bolt_groove() cylinder(thickt, bolt_r, bolt_r);
         translate([fbx + 12.4, 20 + fby, -1]) bolt_hole();
         translate([fbx + 12.4 + 12.6, 20 + fby, -1]) bolt_hole();
 
-        translate([fbx, fby, 1.5]) bolt_groove();
-        translate([fbx + 12.4, fby, 1.5]) bolt_groove();
-        translate([fbx + 12.4 + 12.6, fby, 1.5]) bolt_groove();
+        translate([fbx, fby, thickn/2]) bolt_groove();
+        translate([fbx + 12.4, fby, thickn/2]) bolt_groove();
+        translate([fbx + 12.4 + 12.6, fby, thickn/2]) bolt_groove();
 
-        translate([fbx, 20 + fby, 1.5]) bolt_groove();
-        translate([fbx + 12.4, 20 + fby, 1.5]) bolt_groove();
-        translate([fbx + 12.4 + 12.6, 20 + fby, 1.5]) bolt_groove();
+        translate([fbx, 20 + fby, thickn/2]) bolt_groove();
+        translate([fbx + 12.4, 20 + fby, thickn/2]) bolt_groove();
+        translate([fbx + 12.4 + 12.6, 20 + fby, thickn/2]) bolt_groove();
 
         translate([5.7-6.5/2, 20-4.5/2, -1]) cube([6.5,4.5,6]);
         translate([5.7-6.5/2+12.6, 20-4.5/2, -1]) cube([6.5,4.5,6]);
