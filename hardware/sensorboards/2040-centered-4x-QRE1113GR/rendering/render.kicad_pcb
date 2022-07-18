@@ -910,7 +910,7 @@
     (pad "" np_thru_hole circle (at 0 0) (size 3.2 3.2) (drill 3.2) (layers *.Cu *.Mask) (tstamp 9186dae5-6dc3-4744-9f90-e697559c6ac8))
     (model "${KIPRJMOD}/QRE1113-screen.wrl"
       (offset (xyz -116.5 -11.8 0))
-      (scale (xyz 0.3937 0.3937 0.3937))
+      (scale (xyz 1 1 1))
       (rotate (xyz 0 0 0))
     )
   )
