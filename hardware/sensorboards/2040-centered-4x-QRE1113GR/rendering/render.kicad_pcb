@@ -1409,12 +1409,12 @@
     (fp_circle (center 0 0) (end 3.2 0) (layer "Cmts.User") (width 0.15) (fill none) (tstamp 6bd115d6-07e0-45db-8f2e-3cbb0429104f))
     (fp_circle (center 0 0) (end 3.45 0) (layer "F.CrtYd") (width 0.05) (fill none) (tstamp 97fe2a5c-4eee-4c7a-9c43-47749b396494))
     (pad "" np_thru_hole circle (at 0 0) (size 3.2 3.2) (drill 3.2) (layers *.Cu *.Mask) (tstamp f1a9fb80-4cc4-410f-9616-e19c969dcab5))
-    (model "${KIPRJMOD}/HFSQN4-1050-500.igs"
+    (model "${KIPRJMOD}/HFSQN4-1050-100.igs"
       (offset (xyz -130 -11 -13))
       (scale (xyz 1 1 1))
       (rotate (xyz -90 0 90))
     )
-    (model "${KIPRJMOD}/HFS5-4040-500.igs"
+    (model "${KIPRJMOD}/HFS5-4040-150.igs"
       (offset (xyz -125 -11 -23))
       (scale (xyz 1 1 1))
       (rotate (xyz -90 0 90))
