@@ -14,7 +14,7 @@ hole_r = 3.2/2;  // M3 is 3mm normally 0.2mm of clearance
 bolt_r = 7/2;    // in most cases is 5.5mm so 7mm should be fine
 
 fbx = 11.85;     // position of the first bolt, x
-fby = 9.5;       // position of the first bolt, y
+fby = 10;        // position of the first bolt, y
 
 hxd = 12.6;      // x distance between holes
 
