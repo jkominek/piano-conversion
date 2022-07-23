@@ -18,16 +18,17 @@ fby = 10;        // position of the first bolt, y
 
 hxd = 12.6;      // x distance between holes
 
-smx = 2.9;       // required minimum x clearance for the sensor
-smy = 3.6;       // required minimum y clearance for the sensor
+smx = 3;         // required x clearance for the sensor
+smy = 3.7;       // required y clearance for the sensor
 
 stx = 6.5;       // required total x clearance for the pins
 sty = 4.5; // this should be equal to smy!!!
 
 sbx = 4.1;       // distance x of sensor from board
-sby = boardy -   // start with the board
-      fby -      // move by distance y of sensor from board
-      20/2;      // move by half distance between holes
+sby =            // distance y of sensor from board is
+      fby +      // distance y of bolt from board PLUS
+      20/2 -     // half distance between holes MINUS
+      smy/2;     // half of the y size of the sensorhole
 
 module bolt_hole() cylinder(thickt, hole_r, hole_r);
 module bolt_groove() cylinder(thickt, bolt_r, bolt_r);
