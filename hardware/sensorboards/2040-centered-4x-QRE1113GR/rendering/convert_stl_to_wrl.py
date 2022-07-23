@@ -8,7 +8,6 @@ mesh = FreeCAD.getDocument("Unnamed").getObject("QRE1113_screen").Mesh.copy()
 
 matrix = App.Matrix()
 factor = 1 / 2.54                           # Grrrrrrr: https://github.com/KiCad/kicad-packages3D/issues/405
-factor = factor * 1.01                      # not sure where this error is coming from but otherwise measurements do not match on KiCad
 matrix.scale(factor,factor,factor)
 mesh.transform(matrix)
 
