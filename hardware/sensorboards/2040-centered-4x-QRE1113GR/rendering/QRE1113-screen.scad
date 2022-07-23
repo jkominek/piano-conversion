@@ -1,5 +1,9 @@
 QRE1113Screen();
 
+// DS in comments below means DataSheet available
+// from the manufacturer at
+// https://www.onsemi.com/pdf/datasheet/qre1113-d.pdf
+
 module QRE1113Screen() { 
 $fs=0.1;         // resolution in mm
 $fa=1;           // resolution in degrees
@@ -19,9 +23,16 @@ fby = 10;        // position of the first bolt, y
 hxd = 12.6;      // x distance between holes
 
 smx = 3;         // required x clearance for the sensor
+                 // 2.5-2.9 according to DS
+                 // 2.2 in Davide's sample
 smy = 3.7;       // required y clearance for the sensor
+                 // 3.2-3.6 according to DS
+                 // 3.2 in Davide's sample
 
-stx = 6.5;       // required total x clearance for the pins
+stx = 6;         // required total x clearance for the pins
+                 // 4.4-4.8 according to DS
+                 // 6.5 in Davide's Sparkfun-assembled sample
+
 sty = smy;       // pins are all in X
 
 sbx = 4.1;       // distance x of sensor from board
@@ -29,6 +40,10 @@ sby =            // distance y of sensor from board is
       fby +      // distance y of bolt from board PLUS
       20/2 -     // half distance between holes MINUS
       smy/2;     // half of the y size of the sensorhole
+
+pbx =            // distance x of pins from board is
+      sbx -      // same as the sensor MINUS (closer)
+      (stx - smx) / 2; // difference between sensor and groove
 
 module bolt_hole() cylinder(thickt, hole_r, hole_r);
 module bolt_groove() cylinder(thickt, bolt_r, bolt_r);
@@ -69,22 +84,22 @@ module sensor_groove() cube([stx, sty, thickt]);
 
         translate([sbx,          sby, -1])
             sensor_hole();
-        translate([sbx,          sby, thickn/2])
+        translate([pbx,          sby, -3*thickn/2])
             sensor_groove();
 
         translate([sbx + 12.6,   sby, -1])
             sensor_hole();
-        translate([sbx + 12.6,   sby, thickn/2])
+        translate([pbx + 12.6,   sby, -3*thickn/2])
             sensor_groove();
 
         translate([sbx + 12.6*2, sby, -1])
             sensor_hole();
-        translate([sbx + 12.6*2, sby, thickn/2])
+        translate([pbx + 12.6*2, sby, -3*thickn/2])
             sensor_groove();
 
         translate([sbx + 12.6*3, sby, -1])
             sensor_hole();
-        translate([sbx + 12.6*3, sby, thickn/2])
+        translate([pbx + 12.6*3, sby, -3*thickn/2])
             sensor_groove();
     }
 }
