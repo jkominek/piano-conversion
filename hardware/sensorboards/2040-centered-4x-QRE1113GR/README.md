@@ -6,9 +6,9 @@ The image depicts an assembly of sensorboards on thick and thin rails (in dark g
 The thick rails will be used for hammer sensors. The hammers will come from down in this picture
 and the keys are "inside the screen" toward the left.
 
-The lighter grey "sensor screen" will absorb at least part of the hammer impacts.
+The lighter grey "sensor protector" will absorb at least part of the hammer impacts.
 All the hammer boards will have those installed, but it is not shown on the board
-to the right to show better the board itself. There is a levitating "sensor screen"
+to the right to show better the board itself. There is a levitating "sensor protector"
 on the left, showing the other side with the clearance for the pins.
 
 The board on the left, on the thinner extrusion is identical to the others. The assembly

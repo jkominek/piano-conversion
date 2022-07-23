@@ -350,7 +350,7 @@
     (property "Sheetfile" "2040-centered-4x-QRE1113GR.kicad_sch")
     (property "Sheetname" "")
     (attr exclude_from_pos_files)
-    (fp_text reference "Plastic screen" (at 0 -4.2) (layer "F.SilkS")
+    (fp_text reference "Sensor protector" (at 0 -4.2) (layer "F.SilkS")
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp fea7c5d1-76d6-41a0-b5e3-29889dbb8ce0)
     )
@@ -361,7 +361,7 @@
     (fp_circle (center 0 0) (end 3.2 0) (layer "Cmts.User") (width 0.15) (fill none) (tstamp 9aedbb9e-8340-4899-b813-05b23382a36b))
     (fp_circle (center 0 0) (end 3.45 0) (layer "F.CrtYd") (width 0.05) (fill none) (tstamp 4db55cb8-197b-4402-871f-ce582b65664b))
     (pad "" np_thru_hole circle (at 0 0) (size 3.2 3.2) (drill 3.2) (layers *.Cu *.Mask) (tstamp 9186dae5-6dc3-4744-9f90-e697559c6ac8))
-    (model "${KIPRJMOD}/QRE1113-screen.wrl"
+    (model "${KIPRJMOD}/QRE1113-protector.wrl"
       (offset (xyz -59 -12.3 0))
       (scale (xyz 1 1 1))
       (rotate (xyz -90 0 -30))
@@ -923,7 +923,7 @@
     (property "Sheetfile" "2040-centered-4x-QRE1113GR.kicad_sch")
     (property "Sheetname" "")
     (attr exclude_from_pos_files)
-    (fp_text reference "Plastic screen" (at 0 -4.2) (layer "F.SilkS")
+    (fp_text reference "Sensor Protector" (at 0 -4.2) (layer "F.SilkS")
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp fea7c5d1-76d6-41a0-b5e3-29889dbb8ce0)
     )
@@ -934,7 +934,7 @@
     (fp_circle (center 0 0) (end 3.2 0) (layer "Cmts.User") (width 0.15) (fill none) (tstamp 9aedbb9e-8340-4899-b813-05b23382a36b))
     (fp_circle (center 0 0) (end 3.45 0) (layer "F.CrtYd") (width 0.05) (fill none) (tstamp 4db55cb8-197b-4402-871f-ce582b65664b))
     (pad "" np_thru_hole circle (at 0 0) (size 3.2 3.2) (drill 3.2) (layers *.Cu *.Mask) (tstamp 9186dae5-6dc3-4744-9f90-e697559c6ac8))
-    (model "${KIPRJMOD}/QRE1113-screen.wrl"
+    (model "${KIPRJMOD}/QRE1113-protector.wrl"
       (offset (xyz -116.9 -12.3 0))
       (scale (xyz 1 1 1))
       (rotate (xyz 0 0 0))
