@@ -26,11 +26,11 @@ hxd = 12.6;      // x distance between holes
 smx = 3;         // required x clearance for the sensor
                  // 2.5-2.9 according to DS
                  // 2.2 in Davide's sample
-smy = 3.7;       // required y clearance for the sensor
+smy = 4;         // required y clearance for the sensor
                  // 3.2-3.6 according to DS
                  // 3.2 in Davide's sample
 
-stx = 6;         // required total x clearance for the pins
+stx = 8;         // required total x clearance for the pins
                  // 4.4-4.8 according to DS
                  // 6.5 in Davide's Sparkfun-assembled sample
 
