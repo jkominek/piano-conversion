@@ -1,6 +1,6 @@
 These are the KiCad files for a sensorboard containing 4 QRE1113GR (surface mount) as in the raytracing below
 
-![Raytracing of the sensorboard](render/render.jpg)
+![Raytracing of the sensorboard](rendering/render.jpg)
 
 The image depicts an assembly of sensorboards on thick and thin rails (in dark gray, on the top).
 The thick rails will be used for hammer sensors. The hammers will come from down in this picture
@@ -22,4 +22,4 @@ the highest notes of the piano).
 Note also that the 3D model of the sensor is taken from a different one and not very accurate
 neither quantitatively (i.e. dimensions are incorrect) nor qualitatively (for example it does
 not show the little "dips" where the LED and the phototransistors are).
-The subdirectory render contains more information on the 3D render process
+The subdirectory rendering contains more information on the 3D render process
