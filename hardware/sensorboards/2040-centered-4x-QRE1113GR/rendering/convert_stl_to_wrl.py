@@ -1,4 +1,5 @@
 # run with `freecadcmd convert_stl_to_wrl.py` or equivalent in your OS (I believe is freecadcmd.exe in Windows)
+# the input file is exported from /mechanical/QRE1113-protector.scad
 
 import FreeCAD
 import Mesh
