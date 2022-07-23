@@ -22,7 +22,7 @@ smx = 3;         // required x clearance for the sensor
 smy = 3.7;       // required y clearance for the sensor
 
 stx = 6.5;       // required total x clearance for the pins
-sty = 4.5; // this should be equal to smy!!!
+sty = smy;       // pins are all in X
 
 sbx = 4.1;       // distance x of sensor from board
 sby =            // distance y of sensor from board is
@@ -33,6 +33,7 @@ sby =            // distance y of sensor from board is
 module bolt_hole() cylinder(thickt, hole_r, hole_r);
 module bolt_groove() cylinder(thickt, bolt_r, bolt_r);
 module sensor_hole() cube([smx, smy, thickt]);
+module sensor_groove() cube([stx, sty, thickt]);
 
     difference() {
         cube([boardx, boardy, 3]);
@@ -68,11 +69,22 @@ module sensor_hole() cube([smx, smy, thickt]);
 
         translate([sbx,          sby, -1])
             sensor_hole();
+        translate([sbx,          sby, thickn/2])
+            sensor_groove();
+
         translate([sbx + 12.6,   sby, -1])
             sensor_hole();
+        translate([sbx + 12.6,   sby, thickn/2])
+            sensor_groove();
+
         translate([sbx + 12.6*2, sby, -1])
             sensor_hole();
+        translate([sbx + 12.6*2, sby, thickn/2])
+            sensor_groove();
+
         translate([sbx + 12.6*3, sby, -1])
             sensor_hole();
+        translate([sbx + 12.6*3, sby, thickn/2])
+            sensor_groove();
     }
 }
