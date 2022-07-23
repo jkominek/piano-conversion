@@ -13,6 +13,7 @@ boardy = 38;    // y dimension of the screen
 
 thickn = 3;      // thickness of the screen
 thickt = 6;      // thickness with tolerance to remove pieces
+thickp = 1;      // thickness of the (groove for the) pins
 
 hole_r = 3.2/2;  // M3 is 3mm normally 0.2mm of clearance
 bolt_r = 7/2;    // in most cases is 5.5mm so 7mm should be fine
@@ -84,22 +85,22 @@ module sensor_groove() cube([stx, sty, thickt]);
 
         translate([sbx,          sby, -1])
             sensor_hole();
-        translate([pbx,          sby, -3*thickn/2])
+        translate([pbx,          sby, thickp-thickt])
             sensor_groove();
 
         translate([sbx + 12.6,   sby, -1])
             sensor_hole();
-        translate([pbx + 12.6,   sby, -3*thickn/2])
+        translate([pbx + 12.6,   sby, thickp-thickt])
             sensor_groove();
 
         translate([sbx + 12.6*2, sby, -1])
             sensor_hole();
-        translate([pbx + 12.6*2, sby, -3*thickn/2])
+        translate([pbx + 12.6*2, sby, thickp-thickt])
             sensor_groove();
 
         translate([sbx + 12.6*3, sby, -1])
             sensor_hole();
-        translate([pbx + 12.6*3, sby, -3*thickn/2])
+        translate([pbx + 12.6*3, sby, thickp-thickt])
             sensor_groove();
     }
 }
