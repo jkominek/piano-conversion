@@ -23,3 +23,7 @@ Note also that the 3D model of the sensor is taken from a different one and not 
 neither quantitatively (i.e. dimensions are incorrect) nor qualitatively (for example it does
 not show the little "dips" where the LED and the phototransistors are).
 The subdirectory rendering contains more information on the 3D render process
+
+If you want to avoid the hassle of ordering, I am trying to make the whole process easier for you,
+but it is not fully working yet. You can track that progress
+[here](https://www.pcbway.com/project/shareproject/W341931AX1N3_gerber_54f46d6c.html)
